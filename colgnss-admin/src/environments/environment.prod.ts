@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: '/api/v1',
+  apiUrl: 'https://colgnss-api.onrender.com/api/v1',
   wsUrl: '',
 };
