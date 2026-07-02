@@ -15,13 +15,13 @@ export class Subscription {
   @Column({ type: 'varchar', length: 20 })
   status: string;
 
-  @Column({ name: 'start_date', type: 'datetime' })
+  @Column({ name: 'start_date', type: 'timestamp' })
   startDate: Date;
 
-  @Column({ name: 'end_date', type: 'datetime', nullable: true })
+  @Column({ name: 'end_date', type: 'timestamp', nullable: true })
   endDate: Date | null;
 
-  @Column({ name: 'trial_end_date', type: 'datetime', nullable: true })
+  @Column({ name: 'trial_end_date', type: 'timestamp', nullable: true })
   trialEndDate: Date | null;
 
   @Column({ name: 'auto_renew', default: true })

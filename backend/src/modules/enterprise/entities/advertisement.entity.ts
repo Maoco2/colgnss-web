@@ -35,10 +35,10 @@ export class Advertisement {
   @Column({ name: 'is_active', default: true })
   isActive: boolean;
 
-  @Column({ name: 'start_date', type: 'datetime', nullable: true })
+  @Column({ name: 'start_date', type: 'timestamp', nullable: true })
   startDate: Date | null;
 
-  @Column({ name: 'end_date', type: 'datetime', nullable: true })
+  @Column({ name: 'end_date', type: 'timestamp', nullable: true })
   endDate: Date | null;
 
   @Column({ name: 'total_clicks', type: 'int', default: 0 })

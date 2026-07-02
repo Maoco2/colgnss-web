@@ -36,10 +36,10 @@ export class Session {
   @Column({ name: 'is_active', default: true })
   isActive: boolean;
 
-  @Column({ name: 'login_at', type: 'datetime' })
+  @Column({ name: 'login_at', type: 'timestamp' })
   loginAt: Date;
 
-  @Column({ name: 'logout_at', type: 'datetime', nullable: true })
+  @Column({ name: 'logout_at', type: 'timestamp', nullable: true })
   logoutAt: Date | null;
 
   @ManyToOne(() => User)

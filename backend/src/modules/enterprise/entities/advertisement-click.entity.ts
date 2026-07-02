@@ -25,7 +25,7 @@ export class AdvertisementClick {
   @Column({ type: 'varchar', nullable: true, length: 255 })
   page: string | null;
 
-  @Column({ name: 'clicked_at', type: 'datetime' })
+  @Column({ name: 'clicked_at', type: 'timestamp' })
   clickedAt: Date;
 
   @Column({ type: 'float', default: 0 })
