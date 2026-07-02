@@ -1,0 +1,19 @@
+.settings-container { padding: 24px; }
+.page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+.page-title { font-size: 22px; font-weight: 700; color: #1a1a2e; margin: 0; }
+.page-subtitle { font-size: 13px; color: #94a3b8; }
+.header-actions { display: flex; gap: 12px; align-items: center; }
+.search-field { width: 280px; }
+.loading-state { text-align: center; padding: 48px; color: #94a3b8; }
+.settings-tabs-card { border-radius: 12px; }
+.tab-content { padding: 24px 16px; display: flex; flex-direction: column; gap: 12px; }
+.config-card { padding: 16px; border-radius: 8px; border: 1px solid #e2e8f0; }
+.config-row { display: flex; align-items: center; gap: 16px; }
+.config-info { flex: 1; }
+.config-label { display: block; font-weight: 600; font-size: 14px; color: #1a1a2e; }
+.config-desc { display: block; font-size: 12px; color: #94a3b8; margin-top: 2px; }
+.config-field { min-width: 260px; }
+.config-field mat-form-field { width: 100%; }
+.config-actions { display: flex; align-items: center; }
+.empty-state { text-align: center; padding: 32px; color: #94a3b8; }
+mat-card { background: #fff; border: 1px solid #e2e8f0; }

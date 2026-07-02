@@ -1,0 +1,66 @@
+<div class="settings-container">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Configuración</h1>
+      <span class="page-subtitle">Configuración general del sistema</span>
+    </div>
+    <div class="header-actions">
+      <mat-form-field appearance="outline" subscriptSizing="dynamic" class="search-field">
+        <mat-icon matPrefix>search</mat-icon>
+        <input matInput [value]="searchQuery()" (input)="searchQuery.set($any($event.target).value)" placeholder="Buscar configuración...">
+      </mat-form-field>
+    </div>
+  </div>
+
+  @if (loading()) {
+    <div class="loading-state">Cargando configuración...</div>
+  }
+
+  @if (!loading()) {
+    <mat-card class="settings-tabs-card">
+      <mat-tab-group [selectedIndex]="activeTab()" (selectedIndexChange)="activeTab.set($event)">
+        @for (tab of tabs; track tab.key) {
+          <mat-tab [label]="tab.label">
+            <div class="tab-content">
+              @if (filteredConfigs().length === 0) {
+                <div class="empty-state">No hay configuraciones en esta sección</div>
+              }
+              @for (config of filteredConfigs(); track config.key) {
+                <mat-card class="config-card">
+                  <div class="config-row">
+                    <div class="config-info">
+                      <span class="config-label">{{ config.label }}</span>
+                      <span class="config-desc">{{ config.description || config.key }}</span>
+                    </div>
+                    <div class="config-field">
+                      @if (getFieldType(config) === 'boolean') {
+                        <mat-slide-toggle
+                          [checked]="editedValues()[config.key] === 'true'"
+                          (change)="onToggleChange(config, $event)">
+                        </mat-slide-toggle>
+                      } @else {
+                        <mat-form-field appearance="outline" subscriptSizing="dynamic">
+                          <input
+                            matInput
+                            [type]="getFieldType(config)"
+                            [value]="editedValues()[config.key]"
+                            (input)="editedValues()[config.key] = $any($event.target).value"
+                            (keyup.enter)="saveConfig(config)">
+                        </mat-form-field>
+                      }
+                    </div>
+                    <div class="config-actions">
+                      <button mat-icon-button color="primary" (click)="saveConfig(config)" matTooltip="Guardar">
+                        <mat-icon>save</mat-icon>
+                      </button>
+                    </div>
+                  </div>
+                </mat-card>
+              }
+            </div>
+          </mat-tab>
+        }
+      </mat-tab-group>
+    </mat-card>
+  }
+</div>

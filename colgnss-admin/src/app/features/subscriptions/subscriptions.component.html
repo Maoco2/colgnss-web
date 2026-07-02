@@ -1,0 +1,131 @@
+<div class="subscriptions-container">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Suscripciones</h1>
+      <span class="page-subtitle">Gestión de planes y suscripciones</span>
+    </div>
+  </div>
+
+  @if (loading()) {
+    <div class="skeleton-grid">
+      @for (_ of [1,2,3,4]; track _) {
+        <mat-card class="skeleton-card"><div class="skeleton-icon"></div><div class="skeleton-lines"><div class="skeleton-line short"></div><div class="skeleton-line long"></div></div></mat-card>
+      }
+    </div>
+  }
+
+  @if (!loading() && stats()) {
+    <div class="stats-grid">
+      <mat-card class="stat-card"><mat-icon style="color:#3b82f6">subscriptions</mat-icon><div><span class="stat-label">Total</span><span class="stat-value">{{ stats().total }}</span></div></mat-card>
+      <mat-card class="stat-card"><mat-icon style="color:#22c55e">check_circle</mat-icon><div><span class="stat-label">Activas</span><span class="stat-value">{{ stats().active }}</span></div></mat-card>
+      <mat-card class="stat-card"><mat-icon style="color:#f97316">payments</mat-icon><div><span class="stat-label">MRR</span><span class="stat-value">\${{ (stats().monthlyRevenue || 0) | number:'1.2-2' }}</span></div></mat-card>
+      <mat-card class="stat-card"><mat-icon style="color:#a855f7">pie_chart</mat-icon><div><span class="stat-label">Free / Pro / Ent</span><span class="stat-value">{{ stats().byPlan?.free || 0 }} / {{ stats().byPlan?.professional || 0 }} / {{ stats().byPlan?.enterprise || 0 }}</span></div></mat-card>
+    </div>
+  }
+
+  @if (!loading()) {
+    <div class="charts-row">
+      <mat-card class="chart-card">
+        <mat-card-header><mat-card-title>Ingresos Mensuales</mat-card-title></mat-card-header>
+        <mat-card-content>
+          <div class="chart-container">
+            <canvas baseChart [data]="revenueChartData()" [options]="chartOptions" type="line"></canvas>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      <mat-card class="chart-card">
+        <mat-card-header><mat-card-title>Distribución por Plan</mat-card-title></mat-card-header>
+        <mat-card-content>
+          <div class="chart-container">
+            <canvas baseChart [data]="planChartData()" [options]="doughnutOptions" type="doughnut"></canvas>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <mat-card class="table-card">
+      <mat-tab-group>
+        <mat-tab label="Suscripciones">
+          <div class="table-wrapper">
+            <table mat-table [dataSource]="subscriptions()" class="full-width">
+              <ng-container matColumnDef="user">
+                <th mat-header-cell *matHeaderCellDef>Usuario</th>
+                <td mat-cell *matCellDef="let r">{{ r.userName || r.userId }}</td>
+              </ng-container>
+              <ng-container matColumnDef="plan">
+                <th mat-header-cell *matHeaderCellDef>Plan</th>
+                <td mat-cell *matCellDef="let r">
+                  <mat-chip [color]="getPlanClass(r.plan)" highlighted>{{ r.plan }}</mat-chip>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef>Estado</th>
+                <td mat-cell *matCellDef="let r">
+                  <mat-chip [color]="getStatusClass(r.status)">{{ r.status }}</mat-chip>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="startDate">
+                <th mat-header-cell *matHeaderCellDef>Inicio</th>
+                <td mat-cell *matCellDef="let r">{{ r.startDate | date:'dd/MM/yyyy' }}</td>
+              </ng-container>
+              <ng-container matColumnDef="endDate">
+                <th mat-header-cell *matHeaderCellDef>Fin</th>
+                <td mat-cell *matCellDef="let r">{{ r.endDate ? (r.endDate | date:'dd/MM/yyyy') : '—' }}</td>
+              </ng-container>
+              <ng-container matColumnDef="autoRenew">
+                <th mat-header-cell *matHeaderCellDef>AutoRenov</th>
+                <td mat-cell *matCellDef="let r">
+                  <mat-icon [style.color]="r.autoRenew ? '#22c55e' : '#94a3b8'">{{ r.autoRenew ? 'check_circle' : 'cancel' }}</mat-icon>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="price">
+                <th mat-header-cell *matHeaderCellDef>Precio</th>
+                <td mat-cell *matCellDef="let r">\${{ r.price | number:'1.2-2' }} {{ r.currency }}</td>
+              </ng-container>
+              <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef>Acciones</th>
+                <td mat-cell *matCellDef="let r">
+                  <button mat-icon-button matTooltip="Ver detalle"><mat-icon>visibility</mat-icon></button>
+                </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="subColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: subColumns;"></tr>
+              <tr *matNoDataRow><td colspan="8" class="empty-state">Sin suscripciones</td></tr>
+            </table>
+          </div>
+        </mat-tab>
+        <mat-tab label="Pagos">
+          <div class="table-wrapper">
+            <table mat-table [dataSource]="payments()" class="full-width">
+              <ng-container matColumnDef="user">
+                <th mat-header-cell *matHeaderCellDef>Usuario</th>
+                <td mat-cell *matCellDef="let r">{{ r.userId }}</td>
+              </ng-container>
+              <ng-container matColumnDef="amount">
+                <th mat-header-cell *matHeaderCellDef>Monto</th>
+                <td mat-cell *matCellDef="let r">\${{ r.amount | number:'1.2-2' }} {{ r.currency }}</td>
+              </ng-container>
+              <ng-container matColumnDef="method">
+                <th mat-header-cell *matHeaderCellDef>Método</th>
+                <td mat-cell *matCellDef="let r">{{ r.method }}</td>
+              </ng-container>
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef>Estado</th>
+                <td mat-cell *matCellDef="let r">
+                  <mat-chip [color]="r.status === 'completed' ? 'primary' : r.status === 'failed' ? 'warn' : ''" highlighted>{{ r.status }}</mat-chip>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef>Fecha</th>
+                <td mat-cell *matCellDef="let r">{{ r.createdAt | date:'dd/MM/yyyy' }}</td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="paymentColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: paymentColumns;"></tr>
+              <tr *matNoDataRow><td colspan="5" class="empty-state">Sin pagos registrados</td></tr>
+            </table>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card>
+  }
+</div>

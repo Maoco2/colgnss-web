@@ -1,0 +1,33 @@
+.monitor-container { padding: 24px; }
+.page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+.page-title { font-size: 22px; font-weight: 700; color: #1a1a2e; margin: 0; }
+.page-subtitle { font-size: 13px; color: #94a3b8; }
+.header-actions { display: flex; gap: 8px; }
+.skeleton-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.skeleton-card { padding: 20px; display: flex; gap: 12px; }
+.skeleton-icon { width: 40px; height: 40px; border-radius: 8px; background: #e2e8f0; }
+.skeleton-lines { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+.skeleton-line { height: 12px; background: #e2e8f0; border-radius: 4px; }
+.skeleton-line.short { width: 60%; }
+.skeleton-line.long { width: 100%; }
+.gauge-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+.gauge-card { padding: 20px; border-radius: 12px; }
+.gauge-header { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; font-weight: 600; font-size: 13px; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; }
+.gauge-body { display: flex; flex-direction: column; gap: 8px; }
+.gauge-value { font-size: 36px; font-weight: 800; line-height: 1; }
+.gauge-sub { font-size: 12px; color: #94a3b8; margin-top: 4px; }
+.charts-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+.chart-card { border-radius: 12px; }
+.chart-container { height: 280px; position: relative; }
+.table-card { border-radius: 12px; margin-bottom: 24px; }
+.table-wrapper { overflow-x: auto; }
+.full-width { width: 100%; }
+.metric-chip { padding: 2px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; }
+.thresholds-card { border-radius: 12px; }
+.thresholds-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.threshold-item { padding: 12px; border-left: 3px solid; border-radius: 4px; background: #f8fafc; }
+.threshold-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+.threshold-metric { font-weight: 600; font-size: 14px; color: #1a1a2e; }
+.threshold-severity { font-size: 11px; font-weight: 600; text-transform: uppercase; }
+.threshold-rule { font-size: 12px; color: #64748b; font-family: monospace; }
+mat-card { background: #fff; border: 1px solid #e2e8f0; }

@@ -1,0 +1,133 @@
+<div class="alerts-container">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Alertas</h1>
+      <span class="page-subtitle">Configuración y monitoreo de alertas del sistema</span>
+    </div>
+    <div class="header-actions">
+      <button mat-raised-button color="primary" (click)="openConfigDialog()">
+        <mat-icon>add_alert</mat-icon> Nueva Alerta
+      </button>
+    </div>
+  </div>
+
+  @if (loading()) {
+    <div class="loading-state">Cargando alertas...</div>
+  }
+
+  @if (!loading()) {
+    <mat-card class="table-card">
+      <mat-tab-group>
+        <mat-tab label="Configuraciones">
+          <div class="table-wrapper">
+            <table mat-table [dataSource]="configs()" class="full-width">
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef>Nombre</th>
+                <td mat-cell *matCellDef="let r"><span class="cell-primary">{{ r.name }}</span></td>
+              </ng-container>
+              <ng-container matColumnDef="metric">
+                <th mat-header-cell *matHeaderCellDef>Métrica</th>
+                <td mat-cell *matCellDef="let r"><mat-chip>{{ r.metric }}</mat-chip></td>
+              </ng-container>
+              <ng-container matColumnDef="operator">
+                <th mat-header-cell *matHeaderCellDef>Operador</th>
+                <td mat-cell *matCellDef="let r"><code>{{ getOperatorLabel(r.condition) }}</code></td>
+              </ng-container>
+              <ng-container matColumnDef="threshold">
+                <th mat-header-cell *matHeaderCellDef>Umbral</th>
+                <td mat-cell *matCellDef="let r">{{ r.threshold }}</td>
+              </ng-container>
+              <ng-container matColumnDef="duration">
+                <th mat-header-cell *matHeaderCellDef>Duración</th>
+                <td mat-cell *matCellDef="let r">{{ r.duration }}m</td>
+              </ng-container>
+              <ng-container matColumnDef="channels">
+                <th mat-header-cell *matHeaderCellDef>Canales</th>
+                <td mat-cell *matCellDef="let r">
+                  @for (ch of r.channels; track ch) {
+                    <mat-chip>{{ ch }}</mat-chip>
+                  }
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef>Estado</th>
+                <td mat-cell *matCellDef="let r">
+                  <mat-chip [color]="r.isActive ? 'primary' : ''" highlighted>{{ r.isActive ? 'activa' : 'inactiva' }}</mat-chip>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="lastTriggered">
+                <th mat-header-cell *matHeaderCellDef>Última</th>
+                <td mat-cell *matCellDef="let r">{{ r.lastTriggeredAt ? (r.lastTriggeredAt | date:'dd/MM HH:mm') : '—' }}</td>
+              </ng-container>
+              <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef>Acciones</th>
+                <td mat-cell *matCellDef="let r">
+                  <button mat-icon-button (click)="openConfigDialog(r)" matTooltip="Editar"><mat-icon>edit</mat-icon></button>
+                  <button mat-icon-button color="warn" (click)="deleteConfig(r)" matTooltip="Eliminar"><mat-icon>delete</mat-icon></button>
+                </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="configColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: configColumns;"></tr>
+              <tr *matNoDataRow><td colspan="9" class="empty-state">Sin configuraciones de alerta</td></tr>
+            </table>
+          </div>
+        </mat-tab>
+        <mat-tab label="Eventos">
+          <div class="table-wrapper">
+            <table mat-table [dataSource]="events()" class="full-width">
+              <ng-container matColumnDef="configName">
+                <th mat-header-cell *matHeaderCellDef>Configuración</th>
+                <td mat-cell *matCellDef="let r">{{ r.configName || r.configId }}</td>
+              </ng-container>
+              <ng-container matColumnDef="metric">
+                <th mat-header-cell *matHeaderCellDef>Métrica</th>
+                <td mat-cell *matCellDef="let r">{{ r.metric }}</td>
+              </ng-container>
+              <ng-container matColumnDef="value">
+                <th mat-header-cell *matHeaderCellDef>Valor</th>
+                <td mat-cell *matCellDef="let r">{{ r.value | number:'1.2-2' }}</td>
+              </ng-container>
+              <ng-container matColumnDef="threshold">
+                <th mat-header-cell *matHeaderCellDef>Umbral</th>
+                <td mat-cell *matCellDef="let r">{{ r.threshold }}</td>
+              </ng-container>
+              <ng-container matColumnDef="severity">
+                <th mat-header-cell *matHeaderCellDef>Severidad</th>
+                <td mat-cell *matCellDef="let r">
+                  <mat-chip
+                    [color]="getSeverityClass(r.severity)"
+                    [style.background]="getSeverityColor(r.severity) + '20'"
+                    [style.color]="getSeverityColor(r.severity)"
+                    [style.borderColor]="getSeverityColor(r.severity)">
+                    {{ r.severity }}
+                  </mat-chip>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="message">
+                <th mat-header-cell *matHeaderCellDef>Mensaje</th>
+                <td mat-cell *matCellDef="let r">{{ r.message }}</td>
+              </ng-container>
+              <ng-container matColumnDef="time">
+                <th mat-header-cell *matHeaderCellDef>Hora</th>
+                <td mat-cell *matCellDef="let r">{{ r.triggeredAt | date:'dd/MM HH:mm' }}</td>
+              </ng-container>
+              <ng-container matColumnDef="acknowledged">
+                <th mat-header-cell *matHeaderCellDef>Estado</th>
+                <td mat-cell *matCellDef="let r">
+                  @if (r.status === 'firing') {
+                    <button mat-raised-button color="primary" (click)="acknowledgeEvent(r)">Reconocer</button>
+                  } @else {
+                    <mat-chip [color]="r.status === 'resolved' ? 'primary' : 'accent'">{{ r.status }}</mat-chip>
+                  }
+                </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="eventColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: eventColumns;"></tr>
+              <tr *matNoDataRow><td colspan="8" class="empty-state">Sin eventos de alerta</td></tr>
+            </table>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card>
+  }
+</div>

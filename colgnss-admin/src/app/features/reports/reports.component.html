@@ -1,0 +1,57 @@
+<div class="reports-container">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Reportes</h1>
+      <span class="page-subtitle">Generación y exportación de reportes del sistema</span>
+    </div>
+  </div>
+
+  <mat-card class="filters-card">
+    <div class="filters-row">
+      <span class="filter-label">Filtrar por fecha:</span>
+      <mat-form-field appearance="outline" subscriptSizing="dynamic">
+        <mat-label>Desde</mat-label>
+        <input matInput [matDatepicker]="fromPicker" [value]="startDate()" (dateChange)="startDate.set($event.value)">
+        <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
+        <mat-datepicker #fromPicker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field appearance="outline" subscriptSizing="dynamic">
+        <mat-label>Hasta</mat-label>
+        <input matInput [matDatepicker]="toPicker" [value]="endDate()" (dateChange)="endDate.set($event.value)">
+        <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
+        <mat-datepicker #toPicker></mat-datepicker>
+      </mat-form-field>
+      <button mat-button color="warn" (click)="startDate.set(null); endDate.set(null)">Limpiar</button>
+    </div>
+  </mat-card>
+
+  <div class="cards-grid">
+    @for (report of reportTypes; track report.id) {
+      <mat-card class="report-card">
+        <div class="report-icon">
+          <mat-icon>{{ report.icon }}</mat-icon>
+        </div>
+        <div class="report-body">
+          <h3 class="report-title">{{ report.title }}</h3>
+          <p class="report-desc">{{ report.description }}</p>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="report-actions">
+          @for (fmt of report.formats; track fmt) {
+            <button
+              mat-stroked-button
+              (click)="exportReport(report, fmt)"
+              [disabled]="downloading() === report.id + '_' + fmt"
+              class="format-btn">
+              @if (downloading() === report.id + '_' + fmt) {
+                <mat-progress-bar mode="determinate" [value]="downloadProgress()" class="inline-progress"></mat-progress-bar>
+              }
+              <mat-icon>{{ getFormatIcon(fmt) }}</mat-icon>
+              {{ getFormatLabel(fmt) }}
+            </button>
+          }
+        </div>
+      </mat-card>
+    }
+  </div>
+</div>

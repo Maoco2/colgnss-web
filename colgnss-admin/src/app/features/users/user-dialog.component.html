@@ -1,0 +1,134 @@
+<h2 mat-dialog-title>
+  {{ isEditing() ? 'Editar Usuario' : 'Nuevo Usuario' }}
+</h2>
+
+<mat-dialog-content>
+  <form #userForm="ngForm" class="user-form">
+    <div class="form-section">
+      <h3 class="section-title">Información Personal</h3>
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Nombre</mat-label>
+          <input matInput name="fullName" [(ngModel)]="form().fullName" required
+            #fullNameModel="ngModel" (ngModelChange)="updateField('fullName', $event)">
+          @if (fullNameModel.errors?.['required']) {
+            <mat-error>Nombre requerido</mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Apellido</mat-label>
+          <input matInput name="surname" [(ngModel)]="form().surname" (ngModelChange)="updateField('surname', $event)">
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Email</mat-label>
+          <input matInput name="email" type="email" [(ngModel)]="form().email" required email
+            #emailModel="ngModel" (ngModelChange)="updateField('email', $event)">
+          @if (emailModel.errors?.['required']) {
+            <mat-error>Email requerido</mat-error>
+          }
+          @if (emailModel.errors?.['email']) {
+            <mat-error>Email inválido</mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Teléfono</mat-label>
+          <input matInput name="phone" [(ngModel)]="form().phone" (ngModelChange)="updateField('phone', $event)">
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Profesión</mat-label>
+          <input matInput name="profession" [(ngModel)]="form().profession" (ngModelChange)="updateField('profession', $event)">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Género</mat-label>
+          <mat-select name="gender" [(ngModel)]="form().gender" (selectionChange)="updateField('gender', $event.value)">
+            <mat-option value="">Seleccionar</mat-option>
+            <mat-option value="male">Masculino</mat-option>
+            <mat-option value="female">Femenino</mat-option>
+            <mat-option value="other">Otro</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="form-section">
+      <h3 class="section-title">Cuenta y Rol</h3>
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Rol</mat-label>
+          <mat-select name="role" [(ngModel)]="form().role" required (selectionChange)="updateField('role', $event.value)">
+            @for (r of roles; track r.value) {
+              <mat-option [value]="r.value">{{ r.label }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        <div class="checkbox-group">
+          <mat-checkbox [checked]="form().isActive" (change)="updateField('isActive', $event.checked)">
+            Activo
+          </mat-checkbox>
+          <mat-checkbox [checked]="form().isVerified" (change)="updateField('isVerified', $event.checked)">
+            Verificado
+          </mat-checkbox>
+        </div>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="form-section">
+      <h3 class="section-title">Organización</h3>
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Compañía</mat-label>
+          <input matInput name="company" [(ngModel)]="form().company" (ngModelChange)="updateField('company', $event)">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Universidad</mat-label>
+          <input matInput name="university" [(ngModel)]="form().university" (ngModelChange)="updateField('university', $event)">
+        </mat-form-field>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="form-section">
+      <h3 class="section-title">Ubicación</h3>
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>País</mat-label>
+          <mat-select name="countryId" [(ngModel)]="form().countryId" (selectionChange)="updateField('countryId', $event.value)">
+            <mat-option value="">Seleccionar</mat-option>
+            @for (c of countries; track c.value) {
+              <mat-option [value]="c.value">{{ c.label }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Departamento</mat-label>
+          <input matInput name="departmentId" [(ngModel)]="form().departmentId" (ngModelChange)="updateField('departmentId', $event)">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Ciudad</mat-label>
+          <input matInput name="cityId" [(ngModel)]="form().cityId" (ngModelChange)="updateField('cityId', $event)">
+        </mat-form-field>
+      </div>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancel()" [disabled]="saving()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="save(userForm)" [disabled]="userForm.invalid || saving()">
+    @if (saving()) {
+      <mat-icon>hourglass_top</mat-icon>
+    }
+    {{ isEditing() ? 'Actualizar' : 'Crear' }}
+  </button>
+</mat-dialog-actions>

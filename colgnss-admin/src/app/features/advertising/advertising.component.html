@@ -1,0 +1,121 @@
+<div class="advertising-container">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Publicidad</h1>
+      <span class="page-subtitle">Gestión de campañas publicitarias</span>
+    </div>
+    <div class="header-actions">
+      <button mat-raised-button color="primary" (click)="openAdDialog()">
+        <mat-icon>add</mat-icon> Nuevo Anuncio
+      </button>
+    </div>
+  </div>
+
+  @if (loading()) {
+    <div class="skeleton-grid">
+      @for (_ of [1,2,3,4,5,6]; track _) {
+        <mat-card class="skeleton-card"><div class="skeleton-icon"></div><div class="skeleton-lines"><div class="skeleton-line short"></div><div class="skeleton-line long"></div></div></mat-card>
+      }
+    </div>
+  }
+
+  @if (!loading() && stats()) {
+    <div class="stats-grid">
+      <mat-card class="stat-card"><mat-icon style="color:#3b82f6">campaign</mat-icon><div><span class="stat-label">Total Ads</span><span class="stat-value">{{ stats().totalAds }}</span></div></mat-card>
+      <mat-card class="stat-card"><mat-icon style="color:#22c55e">play_circle</mat-icon><div><span class="stat-label">Activos</span><span class="stat-value">{{ stats().activeAds }}</span></div></mat-card>
+      <mat-card class="stat-card"><mat-icon style="color:#f97316">visibility</mat-icon><div><span class="stat-label">Impresiones</span><span class="stat-value">{{ stats().totalImpressions | number }}</span></div></mat-card>
+      <mat-card class="stat-card"><mat-icon style="color:#a855f7">touch_app</mat-icon><div><span class="stat-label">Clicks</span><span class="stat-value">{{ stats().totalClicks | number }}</span></div></mat-card>
+      <mat-card class="stat-card"><mat-icon style="color:#14b8a6">percent</mat-icon><div><span class="stat-label">CTR</span><span class="stat-value">{{ (stats().clickThroughRate || 0) | number:'1.2-2' }}%</span></div></mat-card>
+      <mat-card class="stat-card"><mat-icon style="color:#eab308">payments</mat-icon><div><span class="stat-label">Revenue</span><span class="stat-value">${{ stats().totalRevenue || stats().totalClicks * 0.5 | number:'1.2-2' }}</span></div></mat-card>
+    </div>
+  }
+
+  @if (!loading()) {
+    <div class="charts-row">
+      <mat-card class="chart-card">
+        <mat-card-header><mat-card-title>Rendimiento Diario</mat-card-title></mat-card-header>
+        <mat-card-content>
+          <div class="chart-container">
+            <canvas baseChart [data]="revenueChartData()" [options]="chartOptions" type="line"></canvas>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      <mat-card class="performance-card">
+        <mat-card-header><mat-card-title>Rendimiento de Campañas</mat-card-title></mat-card-header>
+        <mat-card-content>
+          <div class="perf-list">
+            @for (ad of ads(); track ad.id) {
+              <div class="perf-item">
+                <div class="perf-header">
+                  <span class="perf-name">{{ ad.title }}</span>
+                  <span class="perf-ctr">{{ calcCtr(ad) }} CTR</span>
+                </div>
+                <div class="perf-bar-wrapper">
+                  <div class="perf-bar" [style.width.%]="ad.impressionCount ? (ad.clickCount / ad.impressionCount * 100) : 0" [style.background]="'#3b82f6'"></div>
+                </div>
+                <div class="perf-stats">
+                  <span>{{ ad.impressionCount | number }} impressions</span>
+                  <span>{{ ad.clickCount | number }} clicks</span>
+                </div>
+              </div>
+            }
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <mat-card class="table-card">
+      <mat-card-header><mat-card-title>Anuncios</mat-card-title></mat-card-header>
+      <mat-card-content>
+        <div class="table-wrapper">
+          <table mat-table [dataSource]="ads()" class="full-width">
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef>Nombre</th>
+              <td mat-cell *matCellDef="let r"><span class="cell-primary">{{ r.title }}</span></td>
+            </ng-container>
+            <ng-container matColumnDef="type">
+              <th mat-header-cell *matHeaderCellDef>Tipo</th>
+              <td mat-cell *matCellDef="let r"><mat-chip>{{ r.type }}</mat-chip></td>
+            </ng-container>
+            <ng-container matColumnDef="platform">
+              <th mat-header-cell *matHeaderCellDef>Plataforma</th>
+              <td mat-cell *matCellDef="let r">{{ r.placement || 'web' }}</td>
+            </ng-container>
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef>Estado</th>
+              <td mat-cell *matCellDef="let r">
+                <mat-chip [color]="r.status === 'active' ? 'primary' : r.status === 'expired' ? 'warn' : ''" highlighted>{{ r.status }}</mat-chip>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="impressions">
+              <th mat-header-cell *matHeaderCellDef>Impresiones</th>
+              <td mat-cell *matCellDef="let r">{{ r.impressionCount | number }}</td>
+            </ng-container>
+            <ng-container matColumnDef="clicks">
+              <th mat-header-cell *matHeaderCellDef>Clicks</th>
+              <td mat-cell *matCellDef="let r">{{ r.clickCount | number }}</td>
+            </ng-container>
+            <ng-container matColumnDef="ctr">
+              <th mat-header-cell *matHeaderCellDef>CTR</th>
+              <td mat-cell *matCellDef="let r">{{ calcCtr(r) }}</td>
+            </ng-container>
+            <ng-container matColumnDef="revenue">
+              <th mat-header-cell *matHeaderCellDef>Revenue</th>
+              <td mat-cell *matCellDef="let r">${{ (r.clickCount * 0.5) | number:'1.2-2' }}</td>
+            </ng-container>
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef>Acciones</th>
+              <td mat-cell *matCellDef="let r">
+                <button mat-icon-button (click)="openAdDialog(r)" matTooltip="Editar"><mat-icon>edit</mat-icon></button>
+                <button mat-icon-button color="warn" (click)="deleteAd(r)" matTooltip="Eliminar"><mat-icon>delete</mat-icon></button>
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            <tr *matNoDataRow><td colspan="9" class="empty-state">No hay anuncios registrados</td></tr>
+          </table>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  }
+</div>

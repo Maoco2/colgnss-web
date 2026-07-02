@@ -1,0 +1,72 @@
+<div class="analytics-container">
+  <div class="analytics-header">
+    <div class="header-left">
+      <h1 class="page-title">Analítica</h1>
+      <span class="page-subtitle">Métricas detalladas del sistema</span>
+    </div>
+    <div class="header-right">
+      <mat-form-field appearance="outline" subscriptSizing="dynamic">
+        <mat-label>Desde</mat-label>
+        <input matInput [matDatepicker]="startPicker" [(ngModel)]="startDate" (dateChange)="applyDateFilter()">
+        <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+        <mat-datepicker #startPicker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field appearance="outline" subscriptSizing="dynamic">
+        <mat-label>Hasta</mat-label>
+        <input matInput [matDatepicker]="endPicker" [(ngModel)]="endDate" (dateChange)="applyDateFilter()">
+        <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+        <mat-datepicker #endPicker></mat-datepicker>
+      </mat-form-field>
+      @if (startDate() || endDate()) {
+        <button mat-stroked-button (click)="clearFilters()">Limpiar</button>
+      }
+      <button mat-raised-button color="primary" (click)="exportData()">
+        <mat-icon>download</mat-icon>
+        Exportar
+      </button>
+    </div>
+  </div>
+
+  @if (loading()) {
+    <div class="skeleton-grid">
+      @for (_ of [1,2,3,4,5,6]; track _) {
+        <mat-card class="skeleton-card">
+          <div class="skeleton-header"></div>
+          <div class="skeleton-chart"></div>
+        </mat-card>
+      }
+    </div>
+  }
+
+  <div class="charts-grid">
+    @for (chart of charts(); track chart.id) {
+      <mat-card class="chart-card" [class.loading]="chart.loading">
+        <mat-card-header>
+          <mat-card-title>{{ chart.title }}</mat-card-title>
+          <button mat-icon-button [matMenuTriggerFor]="chartMenu" class="card-menu-btn">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #chartMenu="matMenu">
+            <button mat-menu-item (click)="exportData()">
+              <mat-icon>download</mat-icon> Exportar
+            </button>
+          </mat-menu>
+        </mat-card-header>
+        <mat-card-content>
+          @if (chart.loading) {
+            <div class="chart-skeleton"></div>
+          } @else {
+            <div class="chart-wrapper">
+              <canvas baseChart
+                [data]="chart.data"
+                [options]="chart.options"
+                [type]="chart.type">
+              </canvas>
+            </div>
+          }
+          <p class="chart-description">{{ chart.description }}</p>
+        </mat-card-content>
+      </mat-card>
+    }
+  </div>
+</div>

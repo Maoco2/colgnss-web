@@ -1,0 +1,473 @@
+  ▲ Next.js 14.2.35
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+> [PWA] PWA support is disabled
+> [PWA] PWA support is disabled
+ ✓ Ready in 3.6s
+ ○ Compiling /dashboard/rinex-analysis ...
+ ✓ Compiled /dashboard/rinex-analysis in 7s (2268 modules)
+ GET /dashboard/rinex-analysis 200 in 8186ms
+ ✓ Compiled in 1367ms (1022 modules)
+ GET /dashboard/rinex-analysis 200 in 88ms
+ ✓ Compiled in 1272ms (2266 modules)
+ ✓ Compiled in 828ms (2266 modules)
+ ✓ Compiled in 840ms (2266 modules)
+ ✓ Compiled in 1387ms (2260 modules)
+ ✓ Compiled in 640ms (2260 modules)
+ GET /dashboard/rinex-analysis 200 in 381ms
+ ○ Compiling / ...
+ ✓ Compiled / in 2.7s (2372 modules)
+ ✓ Compiled in 1002ms (2372 modules)
+ ✓ Compiled in 1904ms (2372 modules)
+ ✓ Compiled in 393ms (2372 modules)
+ ✓ Compiled in 567ms (1080 modules)
+ ✓ Compiled in 2.9s (2386 modules)
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 3.3s (2389 modules)
+ GET /_next/static/css/app/layout.css?v=1782885309268 404 in 3924ms
+ GET /_next/static/css/app/layout.css?v=1782885313316 404 in 28ms
+ ✓ Compiled in 1147ms (2389 modules)
+ GET /_next/static/css/app/layout.css?v=1782885319123 404 in 93ms
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ GET / 200 in 653ms
+ GET /_next/static/css/app/layout.css?v=1782885319868 404 in 159ms
+ GET /_next/static/chunks/main-app.js?v=1782885319868 404 in 294ms
+ GET /_next/static/chunks/app-pages-internals.js 404 in 287ms
+ ✓ Compiled in 2.7s (2389 modules)
+ GET / 200 in 274ms
+ GET / 200 in 59ms
+ ○ Compiling /dashboard ...
+ ✓ Compiled /dashboard in 2.2s (2396 modules)
+ ○ Compiling /_not-found ...
+ GET /dashboard 200 in 715ms
+ ✓ Compiled /_not-found in 1339ms (2385 modules)
+ ⨯ Error: Cannot find module './474.js'
+Require stack:
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\server\webpack-runtime.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\server\app\_not-found\page.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\require.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\load-components.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\build\utils.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\dev\hot-middleware.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\dev\hot-reloader-webpack.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\lib\start-server.js
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1568:15)
+    at C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\require-hook.js:55:36
+    at wrapResolveFilename (node:internal/modules/cjs/loader:1122:27)
+    at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1146:10)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1173:12)
+    at Module._load (node:internal/modules/cjs/loader:1345:5)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:260:19)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1689:12)
+    at mod.require (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\require-hook.js:65:28)
+    at require (node:internal/modules/helpers:191:16)
+    at __webpack_require__.f.require (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\server\webpack-runtime.js:198:28)
+    at C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\server\webpack-runtime.js:111:40
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\server\webpack-runtime.js:110:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\server\webpack-runtime.js:162:22)
+    at C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\server\app\_not-found\page.js:1:4135
+    at Object.<anonymous> (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\server\app\_not-found\page.js:1:4181)
+    at Module._compile (node:internal/modules/cjs/loader:1944:14)
+    at Object..js (node:internal/modules/cjs/loader:2084:10)
+    at Module.load (node:internal/modules/cjs/loader:1666:32)
+    at Module._load (node:internal/modules/cjs/loader:1447:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:260:19)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1689:12)
+    at mod.require (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\require-hook.js:65:28)
+    at require (node:internal/modules/helpers:191:16)
+    at requirePage (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\require.js:109:84)
+    at C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\load-components.js:103:84
+    at async loadComponentsImpl (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\load-components.js:103:26)
+    at async DevServer.findPageComponentsImpl (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\next-server.js:714:36)
+    at async DevServer.findPageComponents (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\dev\next-dev-server.js:577:20)
+    at async DevServer.renderErrorToResponseImpl (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\base-server.js:2090:30)
+    at async pipe.req.req (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\base-server.js:2056:30)
+    at async DevServer.pipeImpl (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\base-server.js:922:25)
+    at async C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\dev\next-dev-server.js:339:20
+    at async Span.traceAsyncFn (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\trace\trace.js:154:20)
+    at async DevServer.handleRequest (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\dev\next-dev-server.js:336:24)
+    at async invokeRender (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\lib\router-server.js:179:21)
+    at async handleRequest (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\lib\router-server.js:374:24)
+    at async requestHandlerImpl (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\lib\router-server.js:383:13)
+    at async Server.requestListener (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\lib\start-server.js:141:13) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\.next\\server\\webpack-runtime.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\.next\\server\\app\\_not-found\\page.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\node_modules\\next\\dist\\server\\require.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\node_modules\\next\\dist\\server\\load-components.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\node_modules\\next\\dist\\build\\utils.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\node_modules\\next\\dist\\server\\dev\\hot-middleware.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\node_modules\\next\\dist\\server\\dev\\hot-reloader-webpack.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\node_modules\\next\\dist\\server\\lib\\router-utils\\setup-dev-bundler.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\node_modules\\next\\dist\\server\\lib\\router-server.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\node_modules\\next\\dist\\server\\lib\\start-server.js'
+  ]
+}
+ ⨯ Error: Cannot find module './474.js'
+Require stack:
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\server\webpack-runtime.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\server\app\_not-found\page.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\require.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\load-components.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\build\utils.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\dev\hot-middleware.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\dev\hot-reloader-webpack.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\lib\start-server.js
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1568:15)
+    at C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\require-hook.js:55:36
+    at wrapResolveFilename (node:internal/modules/cjs/loader:1122:27)
+    at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1146:10)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1173:12)
+    at Module._load (node:internal/modules/cjs/loader:1345:5)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:260:19)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1689:12)
+    at mod.require (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\require-hook.js:65:28)
+    at require (node:internal/modules/helpers:191:16)
+    at __webpack_require__.f.require (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\server\webpack-runtime.js:198:28)
+    at C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\server\webpack-runtime.js:111:40
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\server\webpack-runtime.js:110:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\server\webpack-runtime.js:162:22)
+    at C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\server\app\_not-found\page.js:1:4135
+    at Object.<anonymous> (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\server\app\_not-found\page.js:1:4181)
+    at Module._compile (node:internal/modules/cjs/loader:1944:14)
+    at Object..js (node:internal/modules/cjs/loader:2084:10)
+    at Module.load (node:internal/modules/cjs/loader:1666:32)
+    at Module._load (node:internal/modules/cjs/loader:1447:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:260:19)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1689:12)
+    at mod.require (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\require-hook.js:65:28)
+    at require (node:internal/modules/helpers:191:16)
+    at requirePage (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\require.js:109:84)
+    at C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\load-components.js:103:84
+    at async loadComponentsImpl (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\load-components.js:103:26)
+    at async DevServer.findPageComponentsImpl (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\next-server.js:714:36)
+    at async DevServer.findPageComponents (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\dev\next-dev-server.js:577:20)
+    at async DevServer.renderErrorToResponseImpl (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\base-server.js:2090:30)
+    at async pipe.req.req (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\base-server.js:2056:30)
+    at async DevServer.pipeImpl (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\base-server.js:922:25)
+    at async C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\dev\next-dev-server.js:339:20
+    at async Span.traceAsyncFn (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\trace\trace.js:154:20)
+    at async DevServer.handleRequest (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\dev\next-dev-server.js:336:24)
+    at async invokeRender (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\lib\router-server.js:179:21)
+    at async handleRequest (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\lib\router-server.js:374:24)
+    at async requestHandlerImpl (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\lib\router-server.js:383:13)
+    at async Server.requestListener (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\lib\start-server.js:141:13) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\.next\\server\\webpack-runtime.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\.next\\server\\app\\_not-found\\page.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\node_modules\\next\\dist\\server\\require.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\node_modules\\next\\dist\\server\\load-components.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\node_modules\\next\\dist\\build\\utils.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\node_modules\\next\\dist\\server\\dev\\hot-middleware.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\node_modules\\next\\dist\\server\\dev\\hot-reloader-webpack.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\node_modules\\next\\dist\\server\\lib\\router-utils\\setup-dev-bundler.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\node_modules\\next\\dist\\server\\lib\\router-server.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\node_modules\\next\\dist\\server\\lib\\start-server.js'
+  ]
+}
+ ⨯ Error: Cannot find module './474.js'
+Require stack:
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\server\webpack-runtime.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\server\app\_not-found\page.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\require.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\load-components.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\build\utils.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\dev\hot-middleware.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\dev\hot-reloader-webpack.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\lib\start-server.js
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1568:15)
+    at C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\require-hook.js:55:36
+    at wrapResolveFilename (node:internal/modules/cjs/loader:1122:27)
+    at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1146:10)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1173:12)
+    at Module._load (node:internal/modules/cjs/loader:1345:5)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:260:19)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1689:12)
+    at mod.require (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\require-hook.js:65:28)
+    at require (node:internal/modules/helpers:191:16)
+    at __webpack_require__.f.require (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\server\webpack-runtime.js:198:28)
+    at C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\server\webpack-runtime.js:111:40
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\server\webpack-runtime.js:110:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\server\webpack-runtime.js:162:22)
+    at C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\server\app\_not-found\page.js:1:4135
+    at Object.<anonymous> (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\server\app\_not-found\page.js:1:4181)
+    at Module._compile (node:internal/modules/cjs/loader:1944:14)
+    at Object..js (node:internal/modules/cjs/loader:2084:10)
+    at Module.load (node:internal/modules/cjs/loader:1666:32)
+    at Module._load (node:internal/modules/cjs/loader:1447:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:260:19)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1689:12)
+    at mod.require (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\require-hook.js:65:28)
+    at require (node:internal/modules/helpers:191:16)
+    at requirePage (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\require.js:109:84)
+    at C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\load-components.js:103:84
+    at async loadComponentsImpl (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\load-components.js:103:26)
+    at async DevServer.findPageComponentsImpl (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\next-server.js:714:36)
+    at async DevServer.findPageComponents (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\dev\next-dev-server.js:577:20)
+    at async DevServer.renderErrorToResponseImpl (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\base-server.js:2090:30)
+    at async pipe.req.req (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\base-server.js:2056:30)
+    at async DevServer.pipeImpl (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\base-server.js:922:25)
+    at async C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\dev\next-dev-server.js:339:20
+    at async Span.traceAsyncFn (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\trace\trace.js:154:20)
+    at async DevServer.handleRequest (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\dev\next-dev-server.js:336:24)
+    at async invokeRender (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\lib\router-server.js:179:21)
+    at async handleRequest (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\lib\router-server.js:374:24)
+    at async requestHandlerImpl (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\lib\router-server.js:383:13)
+    at async Server.requestListener (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\lib\start-server.js:141:13) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\.next\\server\\webpack-runtime.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\.next\\server\\app\\_not-found\\page.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\node_modules\\next\\dist\\server\\require.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\node_modules\\next\\dist\\server\\load-components.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\node_modules\\next\\dist\\build\\utils.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\node_modules\\next\\dist\\server\\dev\\hot-middleware.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\node_modules\\next\\dist\\server\\dev\\hot-reloader-webpack.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\node_modules\\next\\dist\\server\\lib\\router-utils\\setup-dev-bundler.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\node_modules\\next\\dist\\server\\lib\\router-server.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\node_modules\\next\\dist\\server\\lib\\start-server.js'
+  ]
+}
+ ⨯ Error: Cannot find module './474.js'
+Require stack:
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\server\webpack-runtime.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\server\app\_not-found\page.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\require.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\load-components.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\build\utils.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\dev\hot-middleware.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\dev\hot-reloader-webpack.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\lib\start-server.js
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1568:15)
+    at C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\require-hook.js:55:36
+    at wrapResolveFilename (node:internal/modules/cjs/loader:1122:27)
+    at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1146:10)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1173:12)
+    at Module._load (node:internal/modules/cjs/loader:1345:5)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:260:19)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1689:12)
+    at mod.require (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\require-hook.js:65:28)
+    at require (node:internal/modules/helpers:191:16)
+    at __webpack_require__.f.require (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\server\webpack-runtime.js:198:28)
+    at C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\server\webpack-runtime.js:111:40
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\server\webpack-runtime.js:110:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\server\webpack-runtime.js:162:22)
+    at C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\server\app\_not-found\page.js:1:4135
+    at Object.<anonymous> (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\server\app\_not-found\page.js:1:4181)
+    at Module._compile (node:internal/modules/cjs/loader:1944:14)
+    at Object..js (node:internal/modules/cjs/loader:2084:10)
+    at Module.load (node:internal/modules/cjs/loader:1666:32)
+    at Module._load (node:internal/modules/cjs/loader:1447:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:260:19)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1689:12)
+    at mod.require (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\require-hook.js:65:28)
+    at require (node:internal/modules/helpers:191:16)
+    at requirePage (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\require.js:109:84)
+    at C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\load-components.js:103:84
+    at async loadComponentsImpl (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\load-components.js:103:26)
+    at async DevServer.findPageComponentsImpl (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\next-server.js:714:36)
+    at async DevServer.findPageComponents (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\dev\next-dev-server.js:577:20)
+    at async DevServer.renderErrorToResponseImpl (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\base-server.js:2090:30)
+    at async pipe.req.req (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\base-server.js:2056:30)
+    at async DevServer.pipeImpl (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\base-server.js:922:25)
+    at async C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\dev\next-dev-server.js:339:20
+    at async Span.traceAsyncFn (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\trace\trace.js:154:20)
+    at async DevServer.handleRequest (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\dev\next-dev-server.js:336:24)
+    at async invokeRender (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\lib\router-server.js:179:21)
+    at async handleRequest (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\lib\router-server.js:374:24)
+    at async requestHandlerImpl (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\lib\router-server.js:383:13)
+    at async Server.requestListener (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\lib\start-server.js:141:13) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\.next\\server\\webpack-runtime.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\.next\\server\\app\\_not-found\\page.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\node_modules\\next\\dist\\server\\require.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\node_modules\\next\\dist\\server\\load-components.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\node_modules\\next\\dist\\build\\utils.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\node_modules\\next\\dist\\server\\dev\\hot-middleware.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\node_modules\\next\\dist\\server\\dev\\hot-reloader-webpack.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\node_modules\\next\\dist\\server\\lib\\router-utils\\setup-dev-bundler.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\node_modules\\next\\dist\\server\\lib\\router-server.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\node_modules\\next\\dist\\server\\lib\\start-server.js'
+  ]
+}
+ ⨯ Error: Cannot find module './474.js'
+Require stack:
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\server\webpack-runtime.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\server\app\_not-found\page.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\require.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\load-components.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\build\utils.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\dev\hot-middleware.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\dev\hot-reloader-webpack.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\lib\start-server.js
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1568:15)
+    at C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\require-hook.js:55:36
+    at wrapResolveFilename (node:internal/modules/cjs/loader:1122:27)
+    at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1146:10)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1173:12)
+    at Module._load (node:internal/modules/cjs/loader:1345:5)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:260:19)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1689:12)
+    at mod.require (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\require-hook.js:65:28)
+    at require (node:internal/modules/helpers:191:16)
+    at __webpack_require__.f.require (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\server\webpack-runtime.js:198:28)
+    at C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\server\webpack-runtime.js:111:40
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\server\webpack-runtime.js:110:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\server\webpack-runtime.js:162:22)
+    at C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\server\app\_not-found\page.js:1:4135
+    at Object.<anonymous> (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\server\app\_not-found\page.js:1:4181)
+    at Module._compile (node:internal/modules/cjs/loader:1944:14)
+    at Object..js (node:internal/modules/cjs/loader:2084:10)
+    at Module.load (node:internal/modules/cjs/loader:1666:32)
+    at Module._load (node:internal/modules/cjs/loader:1447:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:260:19)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1689:12)
+    at mod.require (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\require-hook.js:65:28)
+    at require (node:internal/modules/helpers:191:16)
+    at requirePage (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\require.js:109:84)
+    at C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\load-components.js:103:84
+    at async loadComponentsImpl (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\load-components.js:103:26)
+    at async DevServer.findPageComponentsImpl (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\next-server.js:714:36)
+    at async DevServer.findPageComponents (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\dev\next-dev-server.js:577:20)
+    at async DevServer.renderErrorToResponseImpl (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\base-server.js:2090:30)
+    at async pipe.req.req (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\base-server.js:2056:30)
+    at async DevServer.pipeImpl (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\base-server.js:922:25)
+    at async C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\dev\next-dev-server.js:339:20
+    at async Span.traceAsyncFn (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\trace\trace.js:154:20)
+    at async DevServer.handleRequest (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\dev\next-dev-server.js:336:24)
+    at async invokeRender (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\lib\router-server.js:179:21)
+    at async handleRequest (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\lib\router-server.js:374:24)
+    at async requestHandlerImpl (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\lib\router-server.js:383:13)
+    at async Server.requestListener (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\lib\start-server.js:141:13) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\.next\\server\\webpack-runtime.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\.next\\server\\app\\_not-found\\page.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\node_modules\\next\\dist\\server\\require.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\node_modules\\next\\dist\\server\\load-components.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\node_modules\\next\\dist\\build\\utils.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\node_modules\\next\\dist\\server\\dev\\hot-middleware.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\node_modules\\next\\dist\\server\\dev\\hot-reloader-webpack.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\node_modules\\next\\dist\\server\\lib\\router-utils\\setup-dev-bundler.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\node_modules\\next\\dist\\server\\lib\\router-server.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\node_modules\\next\\dist\\server\\lib\\start-server.js'
+  ]
+}
+ ⨯ Error: Cannot find module './474.js'
+Require stack:
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\server\webpack-runtime.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\server\app\_not-found\page.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\require.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\load-components.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\build\utils.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\dev\hot-middleware.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\dev\hot-reloader-webpack.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\lib\router-utils\setup-dev-bundler.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\lib\router-server.js
+- C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\lib\start-server.js
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1568:15)
+    at C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\require-hook.js:55:36
+    at wrapResolveFilename (node:internal/modules/cjs/loader:1122:27)
+    at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1146:10)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1173:12)
+    at Module._load (node:internal/modules/cjs/loader:1345:5)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:260:19)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1689:12)
+    at mod.require (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\require-hook.js:65:28)
+    at require (node:internal/modules/helpers:191:16)
+    at __webpack_require__.f.require (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\server\webpack-runtime.js:198:28)
+    at C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\server\webpack-runtime.js:111:40
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\server\webpack-runtime.js:110:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\server\webpack-runtime.js:162:22)
+    at C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\server\app\_not-found\page.js:1:4135
+    at Object.<anonymous> (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\server\app\_not-found\page.js:1:4181)
+    at Module._compile (node:internal/modules/cjs/loader:1944:14)
+    at Object..js (node:internal/modules/cjs/loader:2084:10)
+    at Module.load (node:internal/modules/cjs/loader:1666:32)
+    at Module._load (node:internal/modules/cjs/loader:1447:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:260:19)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1689:12)
+    at mod.require (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\require-hook.js:65:28)
+    at require (node:internal/modules/helpers:191:16)
+    at requirePage (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\require.js:109:84)
+    at C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\load-components.js:103:84
+    at async loadComponentsImpl (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\load-components.js:103:26)
+    at async DevServer.findPageComponentsImpl (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\next-server.js:714:36)
+    at async DevServer.findPageComponents (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\dev\next-dev-server.js:577:20)
+    at async DevServer.renderErrorToResponseImpl (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\base-server.js:2090:30)
+    at async pipe.req.req (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\base-server.js:2056:30)
+    at async DevServer.pipeImpl (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\base-server.js:922:25)
+    at async C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\dev\next-dev-server.js:339:20
+    at async Span.traceAsyncFn (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\trace\trace.js:154:20)
+    at async DevServer.handleRequest (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\dev\next-dev-server.js:336:24)
+    at async invokeRender (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\lib\router-server.js:179:21)
+    at async handleRequest (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\lib\router-server.js:374:24)
+    at async requestHandlerImpl (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\lib\router-server.js:383:13)
+    at async Server.requestListener (C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\node_modules\next\dist\server\lib\start-server.js:141:13) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\.next\\server\\webpack-runtime.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\.next\\server\\app\\_not-found\\page.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\node_modules\\next\\dist\\server\\require.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\node_modules\\next\\dist\\server\\load-components.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\node_modules\\next\\dist\\build\\utils.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\node_modules\\next\\dist\\server\\dev\\hot-middleware.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\node_modules\\next\\dist\\server\\dev\\hot-reloader-webpack.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\node_modules\\next\\dist\\server\\lib\\router-utils\\setup-dev-bundler.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\node_modules\\next\\dist\\server\\lib\\router-server.js',
+    'C:\\Users\\Windows 10\\Downloads\\ColGnssWeb - copia\\frontend\\node_modules\\next\\dist\\server\\lib\\start-server.js'
+  ]
+}
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 2.6s (2611 modules)
+ GET /_next/static/css/app/layout.css?v=1782886077653 500 in 11473ms
+ GET /_next/static/chunks/main-app.js?v=1782886077653 500 in 11448ms
+ GET /_next/static/chunks/app/dashboard/layout.js 500 in 11230ms
+ GET /_next/static/chunks/app-pages-internals.js 500 in 11447ms
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: ENOENT: no such file or directory, rename 'C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\cache\webpack\client-development-fallback\0.pack.gz_' -> 'C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\cache\webpack\client-development-fallback\0.pack.gz'
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: ENOENT: no such file or directory, rename 'C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\cache\webpack\client-development-fallback\0.pack.gz_' -> 'C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\cache\webpack\client-development-fallback\0.pack.gz'
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: ENOENT: no such file or directory, rename 'C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\cache\webpack\client-development-fallback\0.pack.gz_' -> 'C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\cache\webpack\client-development-fallback\0.pack.gz'
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: ENOENT: no such file or directory, rename 'C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\cache\webpack\client-development-fallback\0.pack.gz_' -> 'C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\cache\webpack\client-development-fallback\0.pack.gz'
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: ENOENT: no such file or directory, rename 'C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\cache\webpack\client-development-fallback\0.pack.gz_' -> 'C:\Users\Windows 10\Downloads\ColGnssWeb - copia\frontend\.next\cache\webpack\client-development-fallback\0.pack.gz'
+ GET /dashboard 200 in 420ms
+ GET /_next/static/css/app/layout.css?v=1782886196139 404 in 63ms
+ GET /_next/static/chunks/app-pages-internals.js 404 in 219ms
+ GET /_next/static/chunks/main-app.js?v=1782886196139 404 in 204ms
+ GET /_next/static/chunks/app/dashboard/layout.js 404 in 115ms
+ GET /dashboard 200 in 80ms
+ GET /_next/static/css/app/layout.css?v=1782886230868 404 in 65ms
+ GET /_next/static/chunks/main-app.js?v=1782886230868 404 in 158ms
+ GET /_next/static/chunks/app-pages-internals.js 404 in 162ms
+ GET /_next/static/chunks/app/dashboard/layout.js 404 in 58ms
+ GET / 200 in 125ms
+ GET /_next/static/css/app/layout.css?v=1782886342595 404 in 76ms
+ GET /_next/static/chunks/main-app.js?v=1782886342595 404 in 116ms
+ GET /_next/static/chunks/app-pages-internals.js 404 in 101ms
+ GET /_next/static/chunks/app/page.js 404 in 66ms
+[?25h

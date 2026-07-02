@@ -1,0 +1,99 @@
+<div class="stations-container">
+  <div class="stations-header">
+    <h1 class="page-title">Ranking de Estaciones</h1>
+    <span class="page-subtitle">Estaciones GNSS ordenadas por actividad</span>
+  </div>
+
+  @if (loading()) {
+    <div class="skeleton-layout">
+      <div class="skeleton-chart-large"></div>
+      <div class="skeleton-table"></div>
+    </div>
+  } @else {
+    <mat-card class="chart-card">
+      <mat-card-header>
+        <mat-card-title>Top 10 Estaciones por Procesamientos</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="chart-container">
+          <canvas baseChart [data]="barChartData()" [options]="chartOptions" type="bar"></canvas>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="table-card">
+      <mat-card-header>
+        <mat-card-title>Todas las Estaciones</mat-card-title>
+        <span class="station-count">{{ stations().length }} estaciones</span>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="table-container">
+          <table mat-table [dataSource]="dataSource" class="stations-table">
+            <ng-container matColumnDef="rank">
+              <th mat-header-cell *matHeaderCellDef>#</th>
+              <td mat-cell *matCellDef="let s; let i = index" class="rank-cell">
+                <span class="rank-badge" [class.top-1]="i === 0" [class.top-2]="i === 1" [class.top-3]="i === 2">
+                  {{ s.rank }}
+                </span>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="code">
+              <th mat-header-cell *matHeaderCellDef>Código</th>
+              <td mat-cell *matCellDef="let s">
+                <a class="station-code" (click)="openStationDetail(s)">{{ s.code }}</a>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef>Nombre</th>
+              <td mat-cell *matCellDef="let s">{{ s.name }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="processingCount">
+              <th mat-header-cell *matHeaderCellDef>Procesamientos</th>
+              <td mat-cell *matCellDef="let s">
+                <span class="value-highlight">{{ s.processingCount }}</span>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="avgTime">
+              <th mat-header-cell *matHeaderCellDef>T. Promedio</th>
+              <td mat-cell *matCellDef="let s">{{ formatTime(s.avgTime) }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="campaigns">
+              <th mat-header-cell *matHeaderCellDef>Campañas</th>
+              <td mat-cell *matCellDef="let s">{{ s.campaigns }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="files">
+              <th mat-header-cell *matHeaderCellDef>Archivos</th>
+              <td mat-cell *matCellDef="let s">{{ formatNumber(s.files) }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="observations">
+              <th mat-header-cell *matHeaderCellDef>Observaciones</th>
+              <td mat-cell *matCellDef="let s">{{ formatNumber(s.observations) }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="satellites">
+              <th mat-header-cell *matHeaderCellDef>Satélites</th>
+              <td mat-cell *matCellDef="let s">
+                <mat-chip>{{ s.satellites }}</mat-chip>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="pppCount">
+              <th mat-header-cell *matHeaderCellDef>PPP</th>
+              <td mat-cell *matCellDef="let s">{{ s.pppCount }}</td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="station-row" (click)="openStationDetail(row)"></tr>
+          </table>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  }
+</div>

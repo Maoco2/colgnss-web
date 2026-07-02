@@ -1,0 +1,190 @@
+<div class="profile-container">
+  @if (loading()) {
+    <div class="skeleton-profile">
+      <div class="skeleton-card large">
+        <div class="skeleton-avatar"></div>
+        <div class="skeleton-lines">
+          <div class="skeleton-line w-40"></div>
+          <div class="skeleton-line w-60"></div>
+          <div class="skeleton-line w-30"></div>
+        </div>
+      </div>
+      <div class="skeleton-card">
+        <div class="skeleton-line w-50"></div>
+        <div class="skeleton-line w-80"></div>
+        <div class="skeleton-line w-60"></div>
+      </div>
+    </div>
+  } @else {
+    @if (user(); as u) {
+      <div class="profile-grid">
+        <div class="profile-main">
+          <mat-card class="profile-card">
+            <div class="profile-header-bg"></div>
+            <div class="profile-info">
+              <div class="profile-avatar" [style.background]="getAvatarColor(u.fullName)">
+                {{ getInitials(u.fullName) }}
+              </div>
+              <div class="profile-details">
+                <h1 class="profile-name">{{ u.fullName }} {{ u.surname }}</h1>
+                <p class="profile-email">{{ u.email }}</p>
+                <div class="profile-meta">
+                  <mat-chip>{{ u.role | titlecase }}</mat-chip>
+                  @if (u.isActive) {
+                    <mat-chip color="primary" highlighted>Activo</mat-chip>
+                  } @else {
+                    <mat-chip color="warn" highlighted>Suspendido</mat-chip>
+                  }
+                </div>
+              </div>
+              <button mat-stroked-button color="primary" class="edit-profile-btn">
+                <mat-icon>edit</mat-icon> Editar Perfil
+              </button>
+            </div>
+          </mat-card>
+
+          <div class="stats-grid">
+            <mat-card class="stat-card">
+              <mat-icon class="stat-icon sessions">language</mat-icon>
+              <span class="stat-value">{{ stats()?.sessions ?? u.sessionCount ?? 0 }}</span>
+              <span class="stat-label">Sesiones</span>
+            </mat-card>
+            <mat-card class="stat-card">
+              <mat-icon class="stat-icon visits">visibility</mat-icon>
+              <span class="stat-value">{{ stats()?.visits ?? u.visitCount ?? 0 }}</span>
+              <span class="stat-label">Visitas</span>
+            </mat-card>
+            <mat-card class="stat-card">
+              <mat-icon class="stat-icon files">insert_drive_file</mat-icon>
+              <span class="stat-value">{{ stats()?.filesProcessed ?? 0 }}</span>
+              <span class="stat-label">Archivos</span>
+            </mat-card>
+            <mat-card class="stat-card">
+              <mat-icon class="stat-icon processing">play_circle</mat-icon>
+              <span class="stat-value">{{ stats()?.processings ?? 0 }}</span>
+              <span class="stat-label">Procesamientos</span>
+            </mat-card>
+            <mat-card class="stat-card">
+              <mat-icon class="stat-icon ppp">satellite_alt</mat-icon>
+              <span class="stat-value">{{ stats()?.ppp ?? 0 }}</span>
+              <span class="stat-label">PPP</span>
+            </mat-card>
+            <mat-card class="stat-card">
+              <mat-icon class="stat-icon downloads">download</mat-icon>
+              <span class="stat-value">{{ stats()?.downloads ?? 0 }}</span>
+              <span class="stat-label">Descargas</span>
+            </mat-card>
+          </div>
+
+          <div class="time-stats-row">
+            <mat-card class="time-card">
+              <div class="time-card-content">
+                <mat-icon>schedule</mat-icon>
+                <div>
+                  <span class="time-value">{{ formatDuration(stats()?.totalTime ?? u.totalProcessingTime ?? 0) }}</span>
+                  <span class="time-label">Tiempo Total</span>
+                </div>
+              </div>
+            </mat-card>
+            <mat-card class="time-card">
+              <div class="time-card-content">
+                <mat-icon>timer</mat-icon>
+                <div>
+                  <span class="time-value">{{ formatDuration(stats()?.avgTime ?? 0) }}</span>
+                  <span class="time-label">Tiempo Promedio</span>
+                </div>
+              </div>
+            </mat-card>
+          </div>
+
+          <mat-card class="chart-card">
+            <mat-card-header>
+              <mat-card-title>Actividad por Mes</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <div class="chart-container">
+                <canvas baseChart [data]="activityChartData()" [options]="chartOptions" type="line"></canvas>
+              </div>
+            </mat-card-content>
+          </mat-card>
+
+          <mat-card class="activity-timeline-card">
+            <mat-card-header>
+              <mat-card-title>Actividad Reciente</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <div class="timeline">
+                @for (item of activity(); track item.id || $index) {
+                  <div class="timeline-item">
+                    <div class="timeline-dot" [style.background]="item.color || '#3b82f6'"></div>
+                    <div class="timeline-content">
+                      <span class="timeline-action">{{ item.action || item.type }}</span>
+                      <span class="timeline-detail">{{ item.detail || item.description || '' }}</span>
+                      <span class="timeline-date">{{ item.createdAt | date:'medium' }}</span>
+                    </div>
+                  </div>
+                }
+                @if (activity().length === 0) {
+                  <p class="text-muted">Sin actividad reciente</p>
+                }
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+
+        <div class="profile-sidebar">
+          <mat-card class="info-card">
+            <mat-card-header>
+              <mat-card-title>
+                <mat-icon>info</mat-icon>
+                Información Técnica
+              </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <div class="info-row">
+                <span class="info-label">IP Último Acceso</span>
+                <span class="info-value">{{ u.lastIp || '—' }}</span>
+              </div>
+              <mat-divider></mat-divider>
+              <div class="info-row">
+                <span class="info-label">Navegador</span>
+                <span class="info-value">{{ getBrowser(u.lastUserAgent) }}</span>
+              </div>
+              <mat-divider></mat-divider>
+              <div class="info-row">
+                <span class="info-label">Sistema Operativo</span>
+                <span class="info-value">{{ getOS(u.lastUserAgent) }}</span>
+              </div>
+              <mat-divider></mat-divider>
+              <div class="info-row">
+                <span class="info-label">Dispositivo</span>
+                <span class="info-value">{{ getDevice(u.lastUserAgent) }}</span>
+              </div>
+              <mat-divider></mat-divider>
+              <div class="info-row">
+                <span class="info-label">Idioma</span>
+                <span class="info-value">Español</span>
+              </div>
+              <mat-divider></mat-divider>
+              <div class="info-row">
+                <span class="info-label">Zona Horaria</span>
+                <span class="info-value">America/Bogota</span>
+              </div>
+            </mat-card-content>
+          </mat-card>
+
+          <mat-card class="module-chart-sidebar">
+            <mat-card-header>
+              <mat-card-title>Módulos Usados</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <div class="chart-container-sm">
+                <canvas baseChart [data]="moduleChartData()" [options]="doughnutOptions" type="doughnut"></canvas>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    }
+  }
+</div>

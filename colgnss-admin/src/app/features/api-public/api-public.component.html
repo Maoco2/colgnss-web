@@ -1,0 +1,133 @@
+<div class="api-container">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">API Pública</h1>
+      <span class="page-subtitle">Gestión de API Keys y monitoreo de uso</span>
+    </div>
+    <div class="header-actions">
+      <button mat-raised-button color="primary" (click)="openCreateDialog()">
+        <mat-icon>vpn_key</mat-icon> Nueva API Key
+      </button>
+    </div>
+  </div>
+
+  @if (loading()) {
+    <div class="loading-state">Cargando API Keys...</div>
+  }
+
+  @if (!loading()) {
+    <mat-card class="table-card">
+      <mat-card-header><mat-card-title>API Keys</mat-card-title></mat-card-header>
+      <mat-card-content>
+        <div class="table-wrapper">
+          <table mat-table [dataSource]="apiKeys()" class="full-width">
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef>Nombre</th>
+              <td mat-cell *matCellDef="let r">{{ r.name }}</td>
+            </ng-container>
+            <ng-container matColumnDef="key">
+              <th mat-header-cell *matHeaderCellDef>Key</th>
+              <td mat-cell *matCellDef="let r"><code class="key-mask">{{ maskKey(r.key) }}</code></td>
+            </ng-container>
+            <ng-container matColumnDef="clientId">
+              <th mat-header-cell *matHeaderCellDef>Client ID</th>
+              <td mat-cell *matCellDef="let r">{{ r.userId?.slice(0, 8) || '—' }}</td>
+            </ng-container>
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef>Estado</th>
+              <td mat-cell *matCellDef="let r">
+                <mat-chip [color]="r.isActive ? 'primary' : 'warn'" highlighted>{{ r.isActive ? 'activa' : 'revocada' }}</mat-chip>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="rateLimit">
+              <th mat-header-cell *matHeaderCellDef>Rate Limit</th>
+              <td mat-cell *matCellDef="let r">{{ r.rateLimit || '—' }}/min</td>
+            </ng-container>
+            <ng-container matColumnDef="lastUsed">
+              <th mat-header-cell *matHeaderCellDef>Último Uso</th>
+              <td mat-cell *matCellDef="let r">{{ r.lastUsedAt ? (r.lastUsedAt | date:'dd/MM/yyyy') : '—' }}</td>
+            </ng-container>
+            <ng-container matColumnDef="expires">
+              <th mat-header-cell *matHeaderCellDef>Expira</th>
+              <td mat-cell *matCellDef="let r">{{ r.expiresAt ? (r.expiresAt | date:'dd/MM/yyyy') : 'No expira' }}</td>
+            </ng-container>
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef>Acciones</th>
+              <td mat-cell *matCellDef="let r">
+                <button mat-icon-button (click)="loadUsageLogs(r.id)" matTooltip="Ver uso"><mat-icon>bar_chart</mat-icon></button>
+                <button mat-icon-button color="warn" (click)="revokeKey(r)" [disabled]="!r.isActive" matTooltip="Revocar"><mat-icon>block</mat-icon></button>
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="keyColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: keyColumns;"></tr>
+            <tr *matNoDataRow><td colspan="8" class="empty-state">Sin API Keys registradas</td></tr>
+          </table>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    @if (selectedKey()) {
+      <div class="usage-section">
+        <div class="charts-row">
+          <mat-card class="chart-card">
+            <mat-card-header><mat-card-title>Peticiones por Día</mat-card-title></mat-card-header>
+            <mat-card-content>
+              <div class="chart-container">
+                <canvas baseChart [data]="requestsChartData()" [options]="chartOptions" type="line"></canvas>
+              </div>
+            </mat-card-content>
+          </mat-card>
+          <mat-card class="chart-card">
+            <mat-card-header><mat-card-title>Top Endpoints</mat-card-title></mat-card-header>
+            <mat-card-content>
+              <div class="chart-container">
+                <canvas baseChart [data]="topEndpointsData()" [options]="chartOptions" type="bar"></canvas>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+
+        <mat-card class="table-card">
+          <mat-card-header><mat-card-title>Registros de Uso</mat-card-title></mat-card-header>
+          <mat-card-content>
+            <div class="table-wrapper">
+              <table mat-table [dataSource]="usageLogs()" class="full-width">
+                <ng-container matColumnDef="endpoint">
+                  <th mat-header-cell *matHeaderCellDef>Endpoint</th>
+                  <td mat-cell *matCellDef="let r"><code>{{ r.endpoint }}</code></td>
+                </ng-container>
+                <ng-container matColumnDef="method">
+                  <th mat-header-cell *matHeaderCellDef>Método</th>
+                  <td mat-cell *matCellDef="let r">
+                    <mat-chip [color]="getMethodColor(r.method)" highlighted>{{ r.method }}</mat-chip>
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="status">
+                  <th mat-header-cell *matHeaderCellDef>Status</th>
+                  <td mat-cell *matCellDef="let r">
+                    <span class="status-code" [style.color]="r.statusCode < 400 ? '#22c55e' : '#ef4444'">{{ r.statusCode }}</span>
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="ip">
+                  <th mat-header-cell *matHeaderCellDef>IP</th>
+                  <td mat-cell *matCellDef="let r">{{ r.ip }}</td>
+                </ng-container>
+                <ng-container matColumnDef="responseTime">
+                  <th mat-header-cell *matHeaderCellDef>Tpo. Resp.</th>
+                  <td mat-cell *matCellDef="let r">{{ r.responseTime }}ms</td>
+                </ng-container>
+                <ng-container matColumnDef="timestamp">
+                  <th mat-header-cell *matHeaderCellDef>Timestamp</th>
+                  <td mat-cell *matCellDef="let r">{{ r.timestamp | date:'dd/MM HH:mm:ss' }}</td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="logColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: logColumns;"></tr>
+                <tr *matNoDataRow><td colspan="6" class="empty-state">Sin registros de uso</td></tr>
+              </table>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    }
+  }
+</div>

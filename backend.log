@@ -1,0 +1,190 @@
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +29ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mPassportModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMulterModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigHostModule dependencies initialized[39m[38;5;3m +2ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mDiscoveryModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mScheduleModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mThrottlerModule dependencies initialized[39m[38;5;3m +11ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mJwtModule dependencies initialized[39m[38;5;3m +4ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmCoreModule dependencies initialized[39m[38;5;3m +157ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +3ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAuthModule dependencies initialized[39m[38;5;3m +7ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mUsersModule dependencies initialized[39m[38;5;3m +3ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mPremiumModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mStationsModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mExportModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mNewsModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAnalyticsModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mHistoryModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mCoordinateConversionModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAdminModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mCalculationsModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mRinexAnalysisModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAuthController {/api/v1/auth}:[39m[38;5;3m +51ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/register, POST} route[39m[38;5;3m +3ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/login, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/auth/verify, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mUsersController {/api/v1/users}:[39m[38;5;3m +1ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/users/profile, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/users/profile, PUT} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/users, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/users/:id, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mStationsController {/api/v1/stations}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/stations, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/stations/nearest, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/stations/statistics, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/stations/departments, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/stations/:id, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/stations, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/stations/:id, PUT} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/stations/:id, DELETE} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mCalculationsController {/api/v1/calculations}:[39m[38;5;3m +1ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/calculations/tracking-time, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/calculations, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/calculations/:id, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/calculations/:id, DELETE} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/calculations, DELETE} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mHistoryController {/api/v1/history}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/history, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mExportController {/api/v1/export}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/export/pdf/:calculationId, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAdminController {/api/v1/admin}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/admin/dashboard, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/admin/users, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mNewsController {/api/v1/news}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/news, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/news/:id, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/news, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/news/:id, PUT} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/news/:id, DELETE} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mPremiumController {/api/v1/premium}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/premium/status, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/premium/activate, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/premium/cancel, DELETE} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/premium/features, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAnalyticsController {/api/v1/analytics}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/analytics/stats, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mCoordinateConversionController {/api/v1/coordinate}:[39m[38;5;3m +1ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/coordinate/reference-systems, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/coordinate/coordinate-types, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/coordinate/gauss-zones, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/coordinate/departments, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/coordinate/municipalities, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/coordinate/origins, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/coordinate/convert, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/coordinate/batch-convert, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/coordinate/history, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mRinexAnalysisController {/api/v1/rinex}:[39m[38;5;3m +1ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/rinex/upload, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/rinex/session/:sessionId/select-file, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/rinex/analyze/:sessionId, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/rinex/progress/:sessionId, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/rinex/analyze/:sessionId, DELETE} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/rinex/analysis/:id, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/rinex/history, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/rinex/pdf/:id, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/rinex/temp/:sessionId, DELETE} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/v1/rinex/history/:id, DELETE} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[IgacSqliteService] [39m[32mIgac.s3db loaded (1521 KB)[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[NestApplication] [39m[32mNest application successfully started[39m[38;5;3m +13ms[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[Bootstrap] [39m[32mApplication running on port 3001[39m
+[32m[Nest] 9028  - [39m30/06/2026, 10:12:12 p. m. [32m    LOG[39m [38;5;3m[Bootstrap] [39m[32mAPI docs available at http://localhost:3001/api/docs[39m
+V2 idx=0 → 2003-07-04 05:13:4
+V2 idx=4703 → 2003-06-10 02:08:23
+V2 idx=6715 → 2003-06-05 08:09:31
+V2 idx=11298 → 2003-05-23 05:06:8
+V2 idx=11502 → 2003-06-06 09:05:6
+V2 idx=14510 → 2003-03-03 00:01:6
+V2 idx=15391 → 2003-05-08 00:01:6
+V2 idx=17247 → 2003-05-04 08:01:6
+V2 idx=18024 → 2003-05-06 07:09:10
+V2 idx=25368 → 2003-06-08 10:01:20
+V2 idx=33205 → 2003-05-03 06:07:9
+V2 idx=35921 → 2003-07-06 07:09:11
+V2 idx=35996 → 2003-05-09 11:04:7
+V2 idx=41348 → 2003-08-11 02:03:4
+V2 idx=41708 → 2003-09-05 07:19:0
+V2 idx=47982 → 2003-07-20 01:04:5
+V2 idx=48514 → 2003-11-02 03:05:20
+V2 idx=50770 → 2003-07-18 00:03:4
+========================================
+TOTAL DE ÉPOCAS: 18
+PRIMERA: 2003-07-04T05:13:04.000Z
+ÚLTIMA : 2003-07-18T00:03:04.000Z
+========================================
+========================================
+validEpochs.length: 5
+firstDate: 2003-06-05T08:09:31.000Z
+lastDate : 2003-07-18T00:03:04.000Z
+durationMs: 3686013000
+========================================
+V2 idx=0 → 2003-07-04 05:13:4
+V2 idx=4703 → 2003-06-10 02:08:23
+V2 idx=6715 → 2003-06-05 08:09:31
+V2 idx=11298 → 2003-05-23 05:06:8
+V2 idx=11502 → 2003-06-06 09:05:6
+V2 idx=14510 → 2003-03-03 00:01:6
+V2 idx=15391 → 2003-05-08 00:01:6
+V2 idx=17247 → 2003-05-04 08:01:6
+V2 idx=18024 → 2003-05-06 07:09:10
+V2 idx=25368 → 2003-06-08 10:01:20
+V2 idx=33205 → 2003-05-03 06:07:9
+V2 idx=35921 → 2003-07-06 07:09:11
+V2 idx=35996 → 2003-05-09 11:04:7
+V2 idx=41348 → 2003-08-11 02:03:4
+V2 idx=41708 → 2003-09-05 07:19:0
+V2 idx=47982 → 2003-07-20 01:04:5
+V2 idx=48514 → 2003-11-02 03:05:20
+V2 idx=50770 → 2003-07-18 00:03:4
+========================================
+TOTAL DE ÉPOCAS: 18
+PRIMERA: 2003-07-04T05:13:04.000Z
+ÚLTIMA : 2003-07-18T00:03:04.000Z
+========================================
+========================================
+validEpochs.length: 5
+firstDate: 2003-06-05T08:09:31.000Z
+lastDate : 2003-07-18T00:03:04.000Z
+durationMs: 3686013000
+========================================
+V2 idx=0 → 2003-07-04 05:13:4
+V2 idx=4703 → 2003-06-10 02:08:23
+V2 idx=6715 → 2003-06-05 08:09:31
+V2 idx=11298 → 2003-05-23 05:06:8
+V2 idx=11502 → 2003-06-06 09:05:6
+V2 idx=14510 → 2003-03-03 00:01:6
+V2 idx=15391 → 2003-05-08 00:01:6
+V2 idx=17247 → 2003-05-04 08:01:6
+V2 idx=18024 → 2003-05-06 07:09:10
+V2 idx=25368 → 2003-06-08 10:01:20
+V2 idx=33205 → 2003-05-03 06:07:9
+V2 idx=35921 → 2003-07-06 07:09:11
+V2 idx=35996 → 2003-05-09 11:04:7
+V2 idx=41348 → 2003-08-11 02:03:4
+V2 idx=41708 → 2003-09-05 07:19:0
+V2 idx=47982 → 2003-07-20 01:04:5
+V2 idx=48514 → 2003-11-02 03:05:20
+V2 idx=50770 → 2003-07-18 00:03:4
+========================================
+TOTAL DE ÉPOCAS: 18
+PRIMERA: 2003-07-04T05:13:04.000Z
+ÚLTIMA : 2003-07-18T00:03:04.000Z
+========================================
+========================================
+validEpochs.length: 5
+firstDate: 2003-06-05T08:09:31.000Z
+lastDate : 2003-07-18T00:03:04.000Z
+durationMs: 3686013000
+========================================

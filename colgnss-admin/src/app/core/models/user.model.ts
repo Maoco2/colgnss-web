@@ -1,0 +1,28 @@
+export interface User {
+  id: string;
+  email: string;
+  fullName: string;
+  surname?: string;
+  phone?: string;
+  profession?: string;
+  gender?: string;
+  role: string;
+  roleId?: string;
+  company?: string;
+  university?: string;
+  countryId?: string;
+  departmentId?: string;
+  cityId?: string;
+  isActive: boolean;
+  isVerified: boolean;
+  avatarUrl?: string;
+  sessionCount: number;
+  visitCount: number;
+  totalProcessingTime: number;
+  storageUsed: number;
+  lastIp?: string;
+  lastUserAgent?: string;
+  lastLoginAt?: string;
+  createdAt: string;
+  updatedAt: string;
+}

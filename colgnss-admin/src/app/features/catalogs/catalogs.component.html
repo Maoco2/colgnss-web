@@ -1,0 +1,295 @@
+<div class="catalogs-container">
+  <div class="catalogs-header">
+    <h1 class="page-title">Catálogos</h1>
+    <span class="page-subtitle">Receptores, antenas, firmwares y versiones</span>
+  </div>
+
+  @if (loading()) {
+    <div class="skeleton-tabs">
+      <div class="skeleton-tab-bar">
+        @for (_ of [1,2,3,4,5,6]; track _) {
+          <div class="skeleton-tab"></div>
+        }
+      </div>
+      <div class="skeleton-content"></div>
+    </div>
+  } @else {
+    <mat-tab-group (selectedTabChange)="onTabChange($event.index)" [selectedIndex]="selectedTabIndex()" class="catalogs-tabs">
+      <mat-tab label="Receptores">
+        <ng-template matTabContent>
+          <div class="tab-content">
+            <div class="tab-toolbar">
+              <mat-form-field appearance="outline" subscriptSizing="dynamic">
+                <mat-icon matPrefix>search</mat-icon>
+                <input matInput placeholder="Buscar receptores..." (keyup)="applyReceiverFilter($event)">
+              </mat-form-field>
+              <span class="tab-count">{{ receivers().length }} receptores</span>
+            </div>
+            <div class="table-container">
+              <table mat-table [dataSource]="receiverSource" class="catalog-table">
+                <ng-container matColumnDef="name">
+                  <th mat-header-cell *matHeaderCellDef>Nombre</th>
+                  <td mat-cell *matCellDef="let r">{{ r.name }}</td>
+                </ng-container>
+                <ng-container matColumnDef="manufacturer">
+                  <th mat-header-cell *matHeaderCellDef>Fabricante</th>
+                  <td mat-cell *matCellDef="let r">{{ r.manufacturer }}</td>
+                </ng-container>
+                <ng-container matColumnDef="model">
+                  <th mat-header-cell *matHeaderCellDef>Modelo</th>
+                  <td mat-cell *matCellDef="let r">{{ r.model }}</td>
+                </ng-container>
+                <ng-container matColumnDef="type">
+                  <th mat-header-cell *matHeaderCellDef>Tipo</th>
+                  <td mat-cell *matCellDef="let r">
+                    <mat-chip>{{ r.type }}</mat-chip>
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="userCount">
+                  <th mat-header-cell *matHeaderCellDef>Usuarios</th>
+                  <td mat-cell *matCellDef="let r">{{ r.userCount }}</td>
+                </ng-container>
+                <ng-container matColumnDef="processingCount">
+                  <th mat-header-cell *matHeaderCellDef>Procesamientos</th>
+                  <td mat-cell *matCellDef="let r">{{ r.processingCount }}</td>
+                </ng-container>
+                <ng-container matColumnDef="successRate">
+                  <th mat-header-cell *matHeaderCellDef>Éxito</th>
+                  <td mat-cell *matCellDef="let r">
+                    <span class="rate-badge" [class.high]="r.successRate >= 95" [class.medium]="r.successRate >= 85">
+                      {{ r.successRate }}%
+                    </span>
+                  </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="receiverColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: receiverColumns;"></tr>
+                <tr *matNoDataRow>
+                  <td class="empty-cell" [attr.colspan]="receiverColumns.length">Sin resultados</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </ng-template>
+      </mat-tab>
+
+      <mat-tab label="Antenas">
+        <ng-template matTabContent>
+          <div class="tab-content">
+            <div class="tab-toolbar">
+              <mat-form-field appearance="outline" subscriptSizing="dynamic">
+                <mat-icon matPrefix>search</mat-icon>
+                <input matInput placeholder="Buscar antenas..." (keyup)="applyAntennaFilter($event)">
+              </mat-form-field>
+              <span class="tab-count">{{ antennas().length }} antenas</span>
+            </div>
+            <div class="table-container">
+              <table mat-table [dataSource]="antennaSource" class="catalog-table">
+                <ng-container matColumnDef="name">
+                  <th mat-header-cell *matHeaderCellDef>Nombre</th>
+                  <td mat-cell *matCellDef="let a">{{ a.name }}</td>
+                </ng-container>
+                <ng-container matColumnDef="manufacturer">
+                  <th mat-header-cell *matHeaderCellDef>Fabricante</th>
+                  <td mat-cell *matCellDef="let a">{{ a.manufacturer }}</td>
+                </ng-container>
+                <ng-container matColumnDef="model">
+                  <th mat-header-cell *matHeaderCellDef>Modelo</th>
+                  <td mat-cell *matCellDef="let a">{{ a.model }}</td>
+                </ng-container>
+                <ng-container matColumnDef="type">
+                  <th mat-header-cell *matHeaderCellDef>Tipo</th>
+                  <td mat-cell *matCellDef="let a">
+                    <mat-chip>{{ a.type }}</mat-chip>
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="gain">
+                  <th mat-header-cell *matHeaderCellDef>Ganancia</th>
+                  <td mat-cell *matCellDef="let a">{{ a.gain }} dB</td>
+                </ng-container>
+                <ng-container matColumnDef="userCount">
+                  <th mat-header-cell *matHeaderCellDef>Usuarios</th>
+                  <td mat-cell *matCellDef="let a">{{ a.userCount }}</td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="antennaColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: antennaColumns;"></tr>
+                <tr *matNoDataRow>
+                  <td class="empty-cell" [attr.colspan]="antennaColumns.length">Sin resultados</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </ng-template>
+      </mat-tab>
+
+      <mat-tab label="Firmwares">
+        <ng-template matTabContent>
+          <div class="tab-content">
+            <div class="firmware-grid">
+              @for (fw of firmwares(); track fw.id) {
+                <mat-card class="firmware-card">
+                  <div class="fw-header">
+                    <mat-icon>memory</mat-icon>
+                    <div>
+                      <span class="fw-name">{{ fw.name }}</span>
+                      <span class="fw-version">v{{ fw.version }}</span>
+                    </div>
+                  </div>
+                  <mat-divider></mat-divider>
+                  <div class="fw-details">
+                    <div class="fw-detail">
+                      <span class="fw-label">Fabricante</span>
+                      <span class="fw-value">{{ fw.manufacturer }}</span>
+                    </div>
+                    <div class="fw-detail">
+                      <span class="fw-label">Dispositivos</span>
+                      <span class="fw-value">{{ fw.deviceCount }}</span>
+                    </div>
+                    <div class="fw-detail">
+                      <span class="fw-label">Lanzamiento</span>
+                      <span class="fw-value">{{ fw.releaseDate | date }}</span>
+                    </div>
+                    <div class="fw-detail">
+                      <span class="fw-label">Adopción</span>
+                      <span class="fw-value">{{ fw.adoptionRate }}%</span>
+                    </div>
+                  </div>
+                  <mat-progress-bar mode="determinate" [value]="fw.adoptionRate" color="primary"></mat-progress-bar>
+                </mat-card>
+              }
+            </div>
+          </div>
+        </ng-template>
+      </mat-tab>
+
+      <mat-tab label="Versiones RINEX">
+        <ng-template matTabContent>
+          <div class="tab-content">
+            <div class="rinex-grid">
+              @for (v of rinexVersions(); track v.version) {
+                <mat-card class="rinex-card">
+                  <div class="rinex-header">
+                    <span class="rinex-version">RINEX {{ v.version }}</span>
+                    <span class="rinex-adoption">{{ v.adoptionRate }}%</span>
+                  </div>
+                  <mat-divider></mat-divider>
+                  <div class="rinex-stats">
+                    <div class="rinex-stat">
+                      <span class="rinex-value">{{ v.files }}</span>
+                      <span class="rinex-label">Archivos</span>
+                    </div>
+                    <div class="rinex-stat">
+                      <span class="rinex-value">{{ v.observations | number }}</span>
+                      <span class="rinex-label">Observaciones</span>
+                    </div>
+                    <div class="rinex-stat">
+                      <span class="rinex-value">{{ v.stations }}</span>
+                      <span class="rinex-label">Estaciones</span>
+                    </div>
+                  </div>
+                  <mat-progress-bar mode="determinate" [value]="v.adoptionRate" color="accent"></mat-progress-bar>
+                </mat-card>
+              }
+            </div>
+          </div>
+        </ng-template>
+      </mat-tab>
+
+      <mat-tab label="Versiones CRX">
+        <ng-template matTabContent>
+          <div class="tab-content">
+            <div class="rinex-grid">
+              @for (v of crxVersions(); track v.version) {
+                <mat-card class="rinex-card">
+                  <div class="rinex-header">
+                    <span class="rinex-version">CRX {{ v.version }}</span>
+                    <span class="rinex-adoption">{{ v.adoptionRate }}%</span>
+                  </div>
+                  <mat-divider></mat-divider>
+                  <div class="rinex-stats">
+                    <div class="rinex-stat">
+                      <span class="rinex-value">{{ v.files }}</span>
+                      <span class="rinex-label">Archivos</span>
+                    </div>
+                    <div class="rinex-stat">
+                      <span class="rinex-value">{{ v.observations | number }}</span>
+                      <span class="rinex-label">Observaciones</span>
+                    </div>
+                    <div class="rinex-stat">
+                      <span class="rinex-value">{{ v.stations }}</span>
+                      <span class="rinex-label">Estaciones</span>
+                    </div>
+                  </div>
+                  <mat-progress-bar mode="determinate" [value]="v.adoptionRate" color="accent"></mat-progress-bar>
+                </mat-card>
+              }
+            </div>
+          </div>
+        </ng-template>
+      </mat-tab>
+
+      <mat-tab label="Fabricantes">
+        <ng-template matTabContent>
+          <div class="tab-content">
+            <div class="manufacturer-charts">
+              <mat-card class="chart-card">
+                <mat-card-header>
+                  <mat-card-title>Participación de Mercado</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                  <div class="chart-container">
+                    <canvas baseChart [data]="manufacturerChartData()" [options]="chartOptions" type="bar"></canvas>
+                  </div>
+                </mat-card-content>
+              </mat-card>
+              <mat-card class="chart-card">
+                <mat-card-header>
+                  <mat-card-title>Receptores por Fabricante</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                  <div class="chart-container">
+                    <canvas baseChart [data]="receiverChartData()" [options]="chartOptions" type="bar"></canvas>
+                  </div>
+                </mat-card-content>
+              </mat-card>
+            </div>
+            <div class="table-container">
+              <table mat-table [dataSource]="manufacturerSource" class="catalog-table">
+                <ng-container matColumnDef="rank">
+                  <th mat-header-cell *matHeaderCellDef>#</th>
+                  <td mat-cell *matCellDef="let m">{{ m.rank }}</td>
+                </ng-container>
+                <ng-container matColumnDef="manufacturer">
+                  <th mat-header-cell *matHeaderCellDef>Fabricante</th>
+                  <td mat-cell *matCellDef="let m" class="mfr-name">{{ m.manufacturer }}</td>
+                </ng-container>
+                <ng-container matColumnDef="receiverCount">
+                  <th mat-header-cell *matHeaderCellDef>Receptores</th>
+                  <td mat-cell *matCellDef="let m">{{ m.receiverCount }}</td>
+                </ng-container>
+                <ng-container matColumnDef="antennaCount">
+                  <th mat-header-cell *matHeaderCellDef>Antenas</th>
+                  <td mat-cell *matCellDef="let m">{{ m.antennaCount }}</td>
+                </ng-container>
+                <ng-container matColumnDef="userCount">
+                  <th mat-header-cell *matHeaderCellDef>Usuarios</th>
+                  <td mat-cell *matCellDef="let m">{{ m.userCount }}</td>
+                </ng-container>
+                <ng-container matColumnDef="marketShare">
+                  <th mat-header-cell *matHeaderCellDef>Market Share</th>
+                  <td mat-cell *matCellDef="let m">
+                    <div class="share-bar">
+                      <div class="share-fill" [style.width.%]="m.marketShare"></div>
+                      <span class="share-value">{{ m.marketShare }}%</span>
+                    </div>
+                  </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="manufacturerColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: manufacturerColumns;"></tr>
+              </table>
+            </div>
+          </div>
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
+  }
+</div>

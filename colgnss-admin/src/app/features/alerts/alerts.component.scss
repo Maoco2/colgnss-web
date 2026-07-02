@@ -1,0 +1,12 @@
+.alerts-container { padding: 24px; }
+.page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+.page-title { font-size: 22px; font-weight: 700; color: #1a1a2e; margin: 0; }
+.page-subtitle { font-size: 13px; color: #94a3b8; }
+.header-actions { display: flex; gap: 8px; }
+.loading-state { text-align: center; padding: 48px; color: #94a3b8; }
+.table-card { border-radius: 12px; }
+.table-wrapper { overflow-x: auto; padding-top: 16px; }
+.full-width { width: 100%; }
+.cell-primary { font-weight: 500; }
+.empty-state { text-align: center; padding: 32px; color: #94a3b8; }
+mat-card { background: #fff; border: 1px solid #e2e8f0; }

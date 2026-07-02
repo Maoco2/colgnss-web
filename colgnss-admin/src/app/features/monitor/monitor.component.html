@@ -1,0 +1,149 @@
+<div class="monitor-container">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Monitor del Sistema</h1>
+      <span class="page-subtitle">Métricas en tiempo real del servidor</span>
+    </div>
+    <div class="header-actions">
+      <button mat-raised-button color="primary" (click)="refresh()" [disabled]="loading()">
+        <mat-icon>refresh</mat-icon> Actualizar
+      </button>
+    </div>
+  </div>
+
+  @if (loading()) {
+    <div class="skeleton-grid">
+      @for (_ of [1,2,3,4]; track _) {
+        <mat-card class="skeleton-card"><div class="skeleton-icon"></div><div class="skeleton-lines"><div class="skeleton-line short"></div><div class="skeleton-line long"></div></div></mat-card>
+      }
+    </div>
+  }
+
+  @if (!loading()) {
+    <div class="gauge-grid">
+      <mat-card class="gauge-card">
+        <div class="gauge-header">
+          <mat-icon style="color:#3b82f6">memory</mat-icon>
+          <span>CPU</span>
+        </div>
+        <div class="gauge-body">
+          <div class="gauge-value" [style.color]="getCpuColor(statusSummary()?.cpu ?? 0)">{{ statusSummary()?.cpu ?? 0 }}%</div>
+          <mat-progress-bar mode="determinate" [value]="statusSummary()?.cpu ?? 0" [color]="(statusSummary()?.cpu ?? 0) > 80 ? 'warn' : 'primary'"></mat-progress-bar>
+        </div>
+      </mat-card>
+      <mat-card class="gauge-card">
+        <div class="gauge-header">
+          <mat-icon style="color:#22c55e">storage</mat-icon>
+          <span>RAM</span>
+        </div>
+        <div class="gauge-body">
+          <div class="gauge-value" style="color:#22c55e">{{ statusSummary()?.ram ?? 0 }}%</div>
+          <mat-progress-bar mode="determinate" [value]="statusSummary()?.ram ?? 0" color="accent"></mat-progress-bar>
+          <div class="gauge-sub">Usado: {{ statusSummary()?.ram ?? 0 }}% de {{ statusSummary()?.ramTotal ?? 0 }} GB</div>
+        </div>
+      </mat-card>
+      <mat-card class="gauge-card">
+        <div class="gauge-header">
+          <mat-icon style="color:#f97316">sd_storage</mat-icon>
+          <span>DISCO</span>
+        </div>
+        <div class="gauge-body">
+          <div class="gauge-value" style="color:#f97316">{{ statusSummary()?.disk ?? 0 }}%</div>
+          <mat-progress-bar mode="determinate" [value]="statusSummary()?.disk ?? 0" color="warn"></mat-progress-bar>
+          <div class="gauge-sub">Usado: {{ statusSummary()?.disk ?? 0 }}% de {{ statusSummary()?.diskTotal ?? 0 }} GB</div>
+        </div>
+      </mat-card>
+      <mat-card class="gauge-card">
+        <div class="gauge-header">
+          <mat-icon style="color:#a855f7">inventory_2</mat-icon>
+          <span>ALMACENAMIENTO</span>
+        </div>
+        <div class="gauge-body">
+          <div class="gauge-value" style="color:#a855f7">{{ statusSummary()?.storage ?? 0 }}%</div>
+          <mat-progress-bar mode="determinate" [value]="statusSummary()?.storage ?? 0" color="primary"></mat-progress-bar>
+          <div class="gauge-sub">Total: {{ statusSummary()?.diskTotal ?? 0 }} GB</div>
+        </div>
+      </mat-card>
+    </div>
+
+    <div class="charts-row">
+      <mat-card class="chart-card">
+        <mat-card-header><mat-card-title>CPU y RAM (Últimas 24h)</mat-card-title></mat-card-header>
+        <mat-card-content>
+          <div class="chart-container">
+            <canvas baseChart [data]="cpuChartData()" [options]="chartOptions" type="line"></canvas>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      <mat-card class="chart-card">
+        <mat-card-header><mat-card-title>Tiempo de Respuesta API</mat-card-title></mat-card-header>
+        <mat-card-content>
+          <div class="chart-container">
+            <canvas baseChart [data]="barChartData()" [options]="barOptions" type="bar"></canvas>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <mat-card class="table-card">
+      <mat-card-header><mat-card-title>Métricas en Tiempo Real</mat-card-title></mat-card-header>
+      <mat-card-content>
+        <div class="table-wrapper">
+          <table mat-table [dataSource]="history()" class="full-width">
+            <ng-container matColumnDef="timestamp">
+              <th mat-header-cell *matHeaderCellDef>Timestamp</th>
+              <td mat-cell *matCellDef="let r">{{ r.timestamp | date:'dd/MM HH:mm:ss' }}</td>
+            </ng-container>
+            <ng-container matColumnDef="cpu">
+              <th mat-header-cell *matHeaderCellDef>CPU</th>
+              <td mat-cell *matCellDef="let r">
+                <span class="metric-chip" [style.background]="(r.cpuUsage ?? 0) > 80 ? '#fef2f2' : '#f0fdf4'" [style.color]="(r.cpuUsage ?? 0) > 80 ? '#ef4444' : '#22c55e'">{{ r.cpuUsage ?? 0 }}%</span>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="ram">
+              <th mat-header-cell *matHeaderCellDef>RAM</th>
+              <td mat-cell *matCellDef="let r">{{ r.memoryUsage ?? 0 }}%</td>
+            </ng-container>
+            <ng-container matColumnDef="disk">
+              <th mat-header-cell *matHeaderCellDef>Disco</th>
+              <td mat-cell *matCellDef="let r">{{ r.diskUsage ?? 0 }}%</td>
+            </ng-container>
+            <ng-container matColumnDef="responseTime">
+              <th mat-header-cell *matHeaderCellDef>Tpo. Resp.</th>
+              <td mat-cell *matCellDef="let r">{{ r.responseTime ?? 0 }}ms</td>
+            </ng-container>
+            <ng-container matColumnDef="activeConnections">
+              <th mat-header-cell *matHeaderCellDef>Con. Activas</th>
+              <td mat-cell *matCellDef="let r">{{ r.activeConnections ?? 0 }}</td>
+            </ng-container>
+            <ng-container matColumnDef="errors">
+              <th mat-header-cell *matHeaderCellDef>Errores</th>
+              <td mat-cell *matCellDef="let r">
+                <span class="metric-chip" [style.background]="(r.errorRate ?? 0) > 0 ? '#fef2f2' : '#f0fdf4'" [style.color]="(r.errorRate ?? 0) > 0 ? '#ef4444' : '#22c55e'">{{ r.errorRate ?? 0 }}</span>
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="thresholds-card">
+      <mat-card-header><mat-card-title>Umbrales de Alerta</mat-card-title></mat-card-header>
+      <mat-card-content>
+        <div class="thresholds-grid">
+          @for (t of alertThresholds(); track t.metric) {
+            <div class="threshold-item" [style.border-left-color]="t.color">
+              <div class="threshold-top">
+                <span class="threshold-metric">{{ t.metric }}</span>
+                <span class="threshold-severity" [style.color]="t.color">{{ t.severity }}</span>
+              </div>
+              <div class="threshold-rule">{{ t.operator }} {{ t.threshold }}{{ t.metric === 'Tiempo Respuesta' ? 'ms' : '%' }}</div>
+            </div>
+          }
+        </div>
+      </mat-card-content>
+    </mat-card>
+  }
+</div>

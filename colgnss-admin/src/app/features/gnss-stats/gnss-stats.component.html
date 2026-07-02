@@ -1,0 +1,152 @@
+<div class="gnss-container">
+  <div class="gnss-header">
+    <h1 class="page-title">Estadísticas GNSS</h1>
+    <span class="page-subtitle">Rendimiento y disponibilidad de constelaciones</span>
+  </div>
+
+  @if (loading()) {
+    <div class="skeleton-grid">
+      @for (_ of [1,2,3,4,5,6,7]; track _) {
+        <mat-card class="skeleton-card">
+          <div class="skeleton-icon"></div>
+          <div class="skeleton-lines">
+            <div class="skeleton-line w-50"></div>
+            <div class="skeleton-line w-80"></div>
+            <div class="skeleton-line w-60"></div>
+          </div>
+        </mat-card>
+      }
+    </div>
+  } @else {
+    <div class="constellation-grid">
+      @for (c of constellations(); track c.name) {
+        <mat-card class="constellation-card" [style.--card-color]="c.color">
+          <div class="constellation-header">
+            <div class="constellation-icon" [style.background]="c.color + '18'">
+              <mat-icon [style.color]="c.color">{{ c.icon }}</mat-icon>
+            </div>
+            <span class="constellation-name">{{ c.name }}</span>
+          </div>
+          <div class="constellation-stats">
+            <div class="cstat">
+              <span class="cstat-value">{{ formatNumber(c.files) }}</span>
+              <span class="cstat-label">Archivos</span>
+            </div>
+            <div class="cstat">
+              <span class="cstat-value">{{ formatNumber(c.observations) }}</span>
+              <span class="cstat-label">Observaciones</span>
+            </div>
+            <div class="cstat">
+              <span class="cstat-value">{{ formatNumber(c.epochs) }}</span>
+              <span class="cstat-label">Épocas</span>
+            </div>
+          </div>
+          <div class="constellation-details">
+            <div class="cdetail">
+              <span class="cdetail-label">Sat. Promedio</span>
+              <span class="cdetail-value">{{ c.avgSatellites }}</span>
+            </div>
+            <div class="cdetail">
+              <span class="cdetail-label">Sat. Máximo</span>
+              <span class="cdetail-value">{{ c.maxSatellites }}</span>
+            </div>
+            <div class="cdetail">
+              <span class="cdetail-label">Disponibilidad</span>
+              <span class="cdetail-value" [style.color]="c.availability >= 95 ? '#22c55e' : c.availability >= 90 ? '#f97316' : '#ef4444'">
+                {{ c.availability }}%
+              </span>
+            </div>
+          </div>
+          <div class="constellation-usage">
+            <span class="cdetail-label">Frecuencia de uso</span>
+            <mat-progress-bar mode="determinate" [value]="c.usageFrequency" color="primary"></mat-progress-bar>
+            <span class="usage-value">{{ c.usageFrequency }}%</span>
+          </div>
+        </mat-card>
+      }
+    </div>
+
+    <div class="charts-row">
+      <mat-card class="chart-card">
+        <mat-card-header>
+          <mat-card-title>Comparativa de Archivos por Constelación</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="chart-container">
+            <canvas baseChart [data]="barChartData()" [options]="barOptions" type="bar"></canvas>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      <mat-card class="chart-card">
+        <mat-card-header>
+          <mat-card-title>Métricas por Constelación</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="chart-container">
+            <canvas baseChart [data]="radarChartData()" [options]="radarOptions" type="radar"></canvas>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <mat-card class="table-card">
+      <mat-card-header>
+        <mat-card-title>Datos Detallados por Constelación</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="table-container">
+          <table mat-table [dataSource]="dataSource" class="gnss-table">
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef>Constelación</th>
+              <td mat-cell *matCellDef="let c">
+                <div class="const-name">
+                  <div class="const-dot" [style.background]="c.color"></div>
+                  {{ c.name }}
+                </div>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="files">
+              <th mat-header-cell *matHeaderCellDef>Archivos</th>
+              <td mat-cell *matCellDef="let c">{{ formatNumber(c.files) }}</td>
+            </ng-container>
+            <ng-container matColumnDef="observations">
+              <th mat-header-cell *matHeaderCellDef>Observaciones</th>
+              <td mat-cell *matCellDef="let c">{{ formatNumber(c.observations) }}</td>
+            </ng-container>
+            <ng-container matColumnDef="epochs">
+              <th mat-header-cell *matHeaderCellDef>Épocas</th>
+              <td mat-cell *matCellDef="let c">{{ formatNumber(c.epochs) }}</td>
+            </ng-container>
+            <ng-container matColumnDef="avgSatellites">
+              <th mat-header-cell *matHeaderCellDef>Sat. Prom</th>
+              <td mat-cell *matCellDef="let c">{{ c.avgSatellites }}</td>
+            </ng-container>
+            <ng-container matColumnDef="maxSatellites">
+              <th mat-header-cell *matHeaderCellDef>Sat. Max</th>
+              <td mat-cell *matCellDef="let c">{{ c.maxSatellites }}</td>
+            </ng-container>
+            <ng-container matColumnDef="availability">
+              <th mat-header-cell *matHeaderCellDef>Disponibilidad</th>
+              <td mat-cell *matCellDef="let c">
+                <span class="avail-badge" [class.high]="c.availability >= 95" [class.medium]="c.availability >= 90 && c.availability < 95" [class.low]="c.availability < 90">
+                  {{ c.availability }}%
+                </span>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="usage">
+              <th mat-header-cell *matHeaderCellDef>Uso</th>
+              <td mat-cell *matCellDef="let c">
+                <div class="usage-bar">
+                  <div class="usage-fill" [style.width.%]="c.usageFrequency" [style.background]="c.color"></div>
+                </div>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  }
+</div>

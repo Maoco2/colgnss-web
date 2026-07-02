@@ -1,0 +1,180 @@
+<div class="ai-container">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Inteligencia Artificial</h1>
+      <span class="page-subtitle">Análisis predictivo y detección de anomalías</span>
+    </div>
+    <div class="header-actions">
+      <button mat-stroked-button (click)="loadData()" [disabled]="loading()">
+        <mat-icon>refresh</mat-icon> Actualizar
+      </button>
+    </div>
+  </div>
+
+  @if (loading()) {
+    <div class="loading-state">Cargando módulo de IA...</div>
+  }
+
+  @if (!loading()) {
+    <mat-card class="table-card">
+      <mat-tab-group>
+        <mat-tab label="Modelos">
+          <div class="table-wrapper">
+            <table mat-table [dataSource]="models()" class="full-width">
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef>Nombre</th>
+                <td mat-cell *matCellDef="let r">{{ r.name }}</td>
+              </ng-container>
+              <ng-container matColumnDef="type">
+                <th mat-header-cell *matHeaderCellDef>Tipo</th>
+                <td mat-cell *matCellDef="let r">{{ r.type }}</td>
+              </ng-container>
+              <ng-container matColumnDef="version">
+                <th mat-header-cell *matHeaderCellDef>Versión</th>
+                <td mat-cell *matCellDef="let r">{{ r.version }}</td>
+              </ng-container>
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef>Estado</th>
+                <td mat-cell *matCellDef="let r">
+                  <mat-chip [color]="getStatusColor(r.status)" highlighted>{{ r.status }}</mat-chip>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="accuracy">
+                <th mat-header-cell *matHeaderCellDef>Precisión</th>
+                <td mat-cell *matCellDef="let r">{{ (r.accuracy * 100) | number:'1.1-1' }}%</td>
+              </ng-container>
+              <ng-container matColumnDef="lastTrained">
+                <th mat-header-cell *matHeaderCellDef>Último Entreno</th>
+                <td mat-cell *matCellDef="let r">{{ r.lastTrainedAt ? (r.lastTrainedAt | date:'dd/MM/yyyy') : '—' }}</td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="modelColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: modelColumns;"></tr>
+              <tr *matNoDataRow><td colspan="6" class="empty-state">Sin modelos disponibles</td></tr>
+            </table>
+          </div>
+        </mat-tab>
+        <mat-tab label="Predicciones">
+          <div class="table-wrapper">
+            <table mat-table [dataSource]="predictions()" class="full-width">
+              <ng-container matColumnDef="type">
+                <th mat-header-cell *matHeaderCellDef>Tipo</th>
+                <td mat-cell *matCellDef="let r">{{ r.modelName || r.modelId }}</td>
+              </ng-container>
+              <ng-container matColumnDef="inputSummary">
+                <th mat-header-cell *matHeaderCellDef>Input</th>
+                <td mat-cell *matCellDef="let r" [matTooltip]="truncate(r.input, 200)">{{ truncate(r.input) }}</td>
+              </ng-container>
+              <ng-container matColumnDef="outputSummary">
+                <th mat-header-cell *matHeaderCellDef>Output</th>
+                <td mat-cell *matCellDef="let r" [matTooltip]="truncate(r.output, 200)">{{ truncate(r.output) }}</td>
+              </ng-container>
+              <ng-container matColumnDef="confidence">
+                <th mat-header-cell *matHeaderCellDef>Confianza</th>
+                <td mat-cell *matCellDef="let r">{{ (r.confidence * 100) | number:'1.1-1' }}%</td>
+              </ng-container>
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef>Estado</th>
+                <td mat-cell *matCellDef="let r">
+                  <mat-chip>{{ r.processingTime ? 'completado' : 'pendiente' }}</mat-chip>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="time">
+                <th mat-header-cell *matHeaderCellDef>Tiempo</th>
+                <td mat-cell *matCellDef="let r">{{ r.createdAt | date:'dd/MM HH:mm' }}</td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="predictionColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: predictionColumns;"></tr>
+              <tr *matNoDataRow><td colspan="6" class="empty-state">Sin predicciones</td></tr>
+            </table>
+          </div>
+        </mat-tab>
+        <mat-tab label="Calidad">
+          <div class="table-wrapper">
+            <table mat-table [dataSource]="qualityScores()" class="full-width">
+              <ng-container matColumnDef="file">
+                <th mat-header-cell *matHeaderCellDef>Archivo</th>
+                <td mat-cell *matCellDef="let r">{{ r.source || r.id }}</td>
+              </ng-container>
+              <ng-container matColumnDef="score">
+                <th mat-header-cell *matHeaderCellDef>Puntaje</th>
+                <td mat-cell *matCellDef="let r">
+                  <span class="score-value" [style.color]="r.overall > 0.8 ? '#22c55e' : r.overall > 0.6 ? '#f97316' : '#ef4444'">
+                    {{ (r.overall * 100) | number:'1.1-1' }}%
+                  </span>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="category">
+                <th mat-header-cell *matHeaderCellDef>Categoría</th>
+                <td mat-cell *matCellDef="let r">{{ r.accuracy ? 'accuracy' : 'general' }}</td>
+              </ng-container>
+              <ng-container matColumnDef="observations">
+                <th mat-header-cell *matHeaderCellDef>Observaciones</th>
+                <td mat-cell *matCellDef="let r">{{ r.completeness ? 'Completo' : 'Incompleto' }}</td>
+              </ng-container>
+              <ng-container matColumnDef="issues">
+                <th mat-header-cell *matHeaderCellDef>Issues</th>
+                <td mat-cell *matCellDef="let r">{{ getObjectKeysCount(r.details) }}</td>
+              </ng-container>
+              <ng-container matColumnDef="recommendations">
+                <th mat-header-cell *matHeaderCellDef>Recomendaciones</th>
+                <td mat-cell *matCellDef="let r">—</td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="qualityColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: qualityColumns;"></tr>
+              <tr *matNoDataRow><td colspan="6" class="empty-state">Sin datos de calidad</td></tr>
+            </table>
+          </div>
+        </mat-tab>
+        <mat-tab label="Anomalías">
+          <div class="table-wrapper">
+            <table mat-table [dataSource]="anomalies()" class="full-width">
+              <ng-container matColumnDef="type">
+                <th mat-header-cell *matHeaderCellDef>Tipo</th>
+                <td mat-cell *matCellDef="let r">{{ r.type }}</td>
+              </ng-container>
+              <ng-container matColumnDef="entity">
+                <th mat-header-cell *matHeaderCellDef>Entidad</th>
+                <td mat-cell *matCellDef="let r">{{ r.source || r.metric }}</td>
+              </ng-container>
+              <ng-container matColumnDef="value">
+                <th mat-header-cell *matHeaderCellDef>Valor</th>
+                <td mat-cell *matCellDef="let r">{{ r.value | number:'1.2-2' }}</td>
+              </ng-container>
+              <ng-container matColumnDef="expected">
+                <th mat-header-cell *matHeaderCellDef>Esperado</th>
+                <td mat-cell *matCellDef="let r">{{ r.expectedValue | number:'1.2-2' }}</td>
+              </ng-container>
+              <ng-container matColumnDef="deviation">
+                <th mat-header-cell *matHeaderCellDef>Desviación</th>
+                <td mat-cell *matCellDef="let r">{{ (r.deviation * 100) | number:'1.1-1' }}%</td>
+              </ng-container>
+              <ng-container matColumnDef="severity">
+                <th mat-header-cell *matHeaderCellDef>Severidad</th>
+                <td mat-cell *matCellDef="let r">
+                  <mat-chip [color]="getSeverityClass(r.severity)" [style.background]="getSeverityColor(r.severity) + '20'" [style.color]="getSeverityColor(r.severity)">
+                    {{ r.severity }}
+                  </mat-chip>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef>Fecha</th>
+                <td mat-cell *matCellDef="let r">{{ r.detectedAt | date:'dd/MM/yyyy' }}</td>
+              </ng-container>
+              <ng-container matColumnDef="resolved">
+                <th mat-header-cell *matHeaderCellDef>Resuelto</th>
+                <td mat-cell *matCellDef="let r">
+                  <mat-icon [style.color]="r.status === 'resolved' ? '#22c55e' : '#f97316'">
+                    {{ r.status === 'resolved' ? 'check_circle' : 'radio_button_unchecked' }}
+                  </mat-icon>
+                </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="anomalyColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: anomalyColumns;"></tr>
+              <tr *matNoDataRow><td colspan="8" class="empty-state">Sin anomalías detectadas</td></tr>
+            </table>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card>
+  }
+</div>
