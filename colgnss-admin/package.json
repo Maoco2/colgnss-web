@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "ColGnss Admin Dashboard SPA",
   "private": true,
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve --port 4200",
