@@ -36,6 +36,7 @@ import { EnterpriseModule } from './modules/enterprise/enterprise.module';
             username: configService.get<string>('DB_USERNAME', 'colgnss_user'),
             password: configService.get<string>('DB_PASSWORD', 'colgnss_pass'),
             database: configService.get<string>('DB_DATABASE', 'colgnss_db'),
+            ssl: { rejectUnauthorized: false },
             entities: [__dirname + '/**/*.entity{.ts,.js}'],
             migrations: [__dirname + '/database/migrations/*{.ts,.js}'],
             synchronize: true,
