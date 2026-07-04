@@ -1,6 +1,6 @@
 {
   "installCommand": "npm install --legacy-peer-deps --ignore-scripts",
-  "buildCommand": "node node_modules/@angular/cli/bin/ng.js build",
+  "buildCommand": "node node_modules/@angular/cli/bin/ng.js build --configuration production",
   "outputDirectory": "dist/colgnss-admin/browser",
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
