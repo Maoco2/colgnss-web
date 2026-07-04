@@ -1,6 +1,6 @@
 {
   "installCommand": "npm install --legacy-peer-deps --ignore-scripts",
-  "buildCommand": "npm run build",
+  "buildCommand": "node node_modules/@angular/cli/bin/ng.js build",
   "outputDirectory": "dist/colgnss-admin",
   "nodeVersion": "22.x",
   "rewrites": [
