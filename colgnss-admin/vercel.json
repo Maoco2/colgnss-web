@@ -1,7 +1,8 @@
 {
-  "installCommand": "npm install --legacy-peer-deps",
+  "installCommand": "npm install --legacy-peer-deps --ignore-scripts",
   "buildCommand": "npm run build",
   "outputDirectory": "dist/colgnss-admin",
+  "nodeVersion": "22.x",
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
   ]
