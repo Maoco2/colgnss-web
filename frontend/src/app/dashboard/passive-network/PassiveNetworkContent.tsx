@@ -10,6 +10,17 @@ import 'react-leaflet-cluster/dist/assets/MarkerCluster.css';
 import 'react-leaflet-cluster/dist/assets/MarkerCluster.Default.css';
 import api from '@/lib/api';
 
+const fmt = (v: any) => { const n = Number(v); return isNaN(n) ? null : n.toLocaleString('es-CO'); };
+
+function Row({ label, value }: { label: string; value: any }) {
+  if (value == null || value === '' || value === '-') return null;
+  return (
+    <Typography variant="caption" display="block" sx={{ lineHeight: 1.6 }}>
+      <b>{label}:</b> {fmt(value) ?? value}
+    </Typography>
+  );
+}
+
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png',
@@ -106,14 +117,19 @@ export default function PassiveNetworkContent() {
           </MarkerClusterGroup>
           {selected && (
             <Popup position={[selected.latitude, selected.longitude]} eventHandlers={{ remove: () => setSelected(null) }}>
-              <Box sx={{ maxWidth: 250, p: 0.5 }}>
+              <Box sx={{ maxWidth: 260, p: 0.5 }}>
                 <Typography variant="subtitle2" fontWeight={700}>{selected.code}</Typography>
-                <Typography variant="caption" display="block">{selected.name}</Typography>
-                <Typography variant="caption" display="block">{selected.department} - {selected.municipality}</Typography>
-                <Typography variant="caption" display="block">Monumentación: {selected.monumentationType || 'N/A'}</Typography>
-                <Typography variant="caption" display="block">Material: {selected.materialType || 'N/A'}</Typography>
-                <Typography variant="caption" display="block">Altura: {selected.height ? `${selected.height} m` : 'N/A'}</Typography>
-                {selected.observations && <Typography variant="caption" display="block" sx={{ mt: 0.5, fontStyle: 'italic' }}>{selected.observations}</Typography>}
+                <Typography variant="caption" display="block" sx={{ mb: 0.5 }}>{selected.municipality} - {selected.department}</Typography>
+                <Box sx={{ borderTop: 1, borderColor: 'divider', pt: 0.5 }}>
+                  <Row label="CoordX" value={selected.coordX} />
+                  <Row label="CoordY" value={selected.coordY} />
+                  <Row label="CoordZ" value={selected.coordZ} />
+                  <Row label="Altura" value={selected.height ? `${selected.height} m` : null} />
+                  <Row label="Ondulación" value={selected.ondula ? `${selected.ondula} m` : null} />
+                  <Row label="Estado" value={selected.estPunto} />
+                  <Row label="Material" value={selected.materialType} />
+                  <Row label="Orden" value={selected.orden} />
+                </Box>
                 <Chip label={selected.status || 'active'} size="small" color="primary" sx={{ mt: 0.5 }} />
               </Box>
             </Popup>

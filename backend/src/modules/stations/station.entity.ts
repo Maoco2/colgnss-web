@@ -37,6 +37,24 @@ export class Station {
   @Column({ type: 'simple-json', nullable: true })
   geom: object;
 
+  @Column({ name: 'coord_x', type: 'double', nullable: true })
+  coordX: number;
+
+  @Column({ name: 'coord_y', type: 'double', nullable: true })
+  coordY: number;
+
+  @Column({ name: 'coord_z', type: 'double', nullable: true })
+  coordZ: number;
+
+  @Column({ nullable: true, type: 'double' })
+  ondula: number;
+
+  @Column({ name: 'est_punto', nullable: true })
+  estPunto: string;
+
+  @Column({ nullable: true, type: 'smallint' })
+  orden: number;
+
   @Column({ name: 'receiver_type', nullable: true })
   receiverType: string;
 

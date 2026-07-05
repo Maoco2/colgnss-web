@@ -82,7 +82,7 @@ export class StationsService implements OnModuleInit {
       const SQL = await initSqlJs();
       const buf = fs.readFileSync(gpkgPath);
       const db = new SQL.Database(buf);
-      const result = db.exec('SELECT Nomenc, Lat, Long, AltElips, NomDpto, NomMpio, Tipo_Mat, Obs FROM VertGeod ORDER BY OBJECTID');
+      const result = db.exec('SELECT Nomenc, Lat, Long, CoordX, CoordY, CoordZ, Ondula, AltElips, NomDpto, NomMpio, EstPunto, Tipo_Mat, Orden FROM VertGeod ORDER BY OBJECTID');
       db.close();
 
       if (!result.length || !result[0].values.length) {
@@ -101,19 +101,24 @@ export class StationsService implements OnModuleInit {
 
     for (let i = 0; i < rows.length; i += BATCH_SIZE) {
       const batch = rows.slice(i, i + BATCH_SIZE).map((r: any[]) => ({
-        code: String(r[0] || 'UNKNOWN'),
-        name: `${String(r[5] || 'Unknown')} - ${String(r[0] || '')}`,
-        type: StationType.PASSIVE,
-        department: String(r[4] || 'Unknown'),
-        municipality: String(r[5] || 'Unknown'),
-        latitude: r[1],
-        longitude: r[2],
-        height: r[3] || undefined,
-        materialType: String(r[6] || '').trim() || undefined,
-        observations: String(r[7] || '').trim() || undefined,
-        geom: { type: 'Point', coordinates: [r[2], r[1]] },
-        status: 'active',
-      }));
+          code: String(r[0] || 'UNKNOWN'),
+          name: `${String(r[9] || 'Unknown')} - ${String(r[0] || '')}`,
+          type: StationType.PASSIVE,
+          department: String(r[8] || 'Unknown'),
+          municipality: String(r[9] || 'Unknown'),
+          latitude: r[1],
+          longitude: r[2],
+          coordX: r[3] || undefined,
+          coordY: r[4] || undefined,
+          coordZ: r[5] || undefined,
+          ondula: r[6] || undefined,
+          height: r[7] || undefined,
+          estPunto: String(r[10] || '').trim() || undefined,
+          materialType: String(r[11] || '').trim() || undefined,
+          orden: r[12] || undefined,
+          geom: { type: 'Point', coordinates: [r[2], r[1]] },
+          status: 'active',
+        }));
 
       try {
         await this.stationRepository.insert(batch);
