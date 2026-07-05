@@ -1,9 +1,12 @@
 ﻿node_modules/
 .next/
 dist/
+.angular/
 .env
 *.sqlite
 *.sqlite3
+*.err
+*.log
 uploads/
 coverage/
 .angular/

@@ -28,7 +28,7 @@ export class News {
   @Column({ name: 'is_published', default: false })
   isPublished: boolean;
 
-  @Column({ name: 'published_at', nullable: true, type: 'timestamp' })
+  @Column({ name: 'published_at', nullable: true, type: 'datetime' })
   publishedAt: Date | null;
 
   @CreateDateColumn({ name: 'created_at' })

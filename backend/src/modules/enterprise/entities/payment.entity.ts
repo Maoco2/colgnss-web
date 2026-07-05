@@ -31,7 +31,7 @@ export class Payment {
   @Column({ type: 'varchar', nullable: true, length: 255 })
   description: string | null;
 
-  @Column({ name: 'paid_at', type: 'timestamp', nullable: true })
+  @Column({ name: 'paid_at', type: 'datetime', nullable: true })
   paidAt: Date | null;
 
   @ManyToOne(() => Subscription)

@@ -91,19 +91,19 @@ export class User {
   @Column({ name: 'last_user_agent', type: 'text', nullable: true })
   lastUserAgent: string | null;
 
-  @Column({ name: 'enterprise_last_login_at', type: 'timestamp', nullable: true })
+  @Column({ name: 'enterprise_last_login_at', type: 'datetime', nullable: true })
   lastLoginAt: Date | null;
 
   @Column({ name: 'stripe_customer_id', type: 'varchar', nullable: true })
   stripeCustomerId: string | null;
 
-  @Column({ name: 'premium_expires_at', nullable: true, type: 'timestamp' })
+  @Column({ name: 'premium_expires_at', nullable: true, type: 'datetime' })
   premiumExpiresAt: Date | null;
 
   @Column({ name: 'is_active', default: true })
   isActive: boolean;
 
-  @Column({ name: 'last_login_at', nullable: true, type: 'timestamp' })
+  @Column({ name: 'last_login_at', nullable: true, type: 'datetime' })
   lastLogin: Date | null;
 
   @OneToMany(() => Calculation, calculation => calculation.user)

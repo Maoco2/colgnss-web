@@ -6,6 +6,7 @@ import { JwtAuthGuard } from '../../../common/guards/jwt-auth.guard';
 import { RolesGuard } from '../../../common/guards/roles.guard';
 import { Roles } from '../../../common/decorators/roles.decorator';
 import { User, UserRole } from '../../users/user.entity';
+import { Calculation } from '../../calculations/calculation.entity';
 import { ApiResponse } from '../../../common/dto/api-response.dto';
 import { UserFilterDto } from '../dto/user-filter.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
@@ -25,6 +26,8 @@ export class UsersAdminController {
     private sessionRepository: Repository<Session>,
     @InjectRepository(UserVisit)
     private userVisitRepository: Repository<UserVisit>,
+    @InjectRepository(Calculation)
+    private calculationRepository: Repository<Calculation>,
   ) {}
 
   @Get()
@@ -47,6 +50,34 @@ export class UsersAdminController {
       take: limit,
       relations: ['country', 'department', 'city'],
     });
+
+    const userIds = data.map(u => u.id);
+
+    if (userIds.length > 0) {
+      const calcCounts = await this.calculationRepository
+        .createQueryBuilder('c')
+        .select('c.user_id', 'userId')
+        .addSelect('COUNT(*)', 'count')
+        .where('c.user_id IN (:...userIds)', { userIds })
+        .groupBy('c.user_id')
+        .getRawMany();
+      const calcCountMap = new Map(calcCounts.map(c => [c.userId, Number(c.count)]));
+
+      const lastLogins = await this.sessionRepository
+        .createQueryBuilder('s')
+        .select('s.user_id', 'userId')
+        .addSelect('MAX(s.login_at)', 'lastLogin')
+        .where('s.user_id IN (:...userIds)', { userIds })
+        .groupBy('s.user_id')
+        .getRawMany();
+      const lastLoginMap = new Map(lastLogins.map(l => [l.userId, l.lastLogin]));
+
+      for (const user of data) {
+        (user as any).calculationCount = calcCountMap.get(user.id) ?? 0;
+        (user as any).lastLoginDate = lastLoginMap.get(user.id) ?? user.lastLoginAt ?? user.lastLogin ?? null;
+      }
+    }
+
     return ApiResponse.paginated(data, total, page, limit);
   }
 

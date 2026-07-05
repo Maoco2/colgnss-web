@@ -26,10 +26,10 @@ export class AnomalyDetection {
   @Column({ type: 'varchar', length: 10 })
   severity: string;
 
-  @Column({ name: 'detected_at', type: 'timestamp' })
+  @Column({ name: 'detected_at', type: 'datetime' })
   detectedAt: Date;
 
-  @Column({ name: 'resolved_at', type: 'timestamp', nullable: true })
+  @Column({ name: 'resolved_at', type: 'datetime', nullable: true })
   resolvedAt: Date | null;
 
   @Column({ type: 'simple-json', nullable: true })

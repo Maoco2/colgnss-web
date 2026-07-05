@@ -26,10 +26,10 @@ export class ApiKey {
   @Column({ name: 'allowed_ips', type: 'simple-json', nullable: true })
   allowedIps: string[] | null;
 
-  @Column({ name: 'expires_at', type: 'timestamp', nullable: true })
+  @Column({ name: 'expires_at', type: 'datetime', nullable: true })
   expiresAt: Date | null;
 
-  @Column({ name: 'last_used_at', type: 'timestamp', nullable: true })
+  @Column({ name: 'last_used_at', type: 'datetime', nullable: true })
   lastUsedAt: Date | null;
 
   @CreateDateColumn({ name: 'created_at' })

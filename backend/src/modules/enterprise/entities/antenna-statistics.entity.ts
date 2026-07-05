@@ -26,7 +26,7 @@ export class AntennaStatistics {
   @Column({ name: 'total_observations', type: 'int' })
   totalObservations: number;
 
-  @Column({ name: 'last_used', type: 'timestamp', nullable: true })
+  @Column({ name: 'last_used', type: 'datetime', nullable: true })
   lastUsed: Date | null;
 
   @CreateDateColumn({ name: 'created_at' })

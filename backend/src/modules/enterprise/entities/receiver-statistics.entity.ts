@@ -29,7 +29,7 @@ export class ReceiverStatistics {
   @Column({ name: 'total_satellites', type: 'int' })
   totalSatellites: number;
 
-  @Column({ name: 'last_used', type: 'timestamp', nullable: true })
+  @Column({ name: 'last_used', type: 'datetime', nullable: true })
   lastUsed: Date | null;
 
   @CreateDateColumn({ name: 'created_at' })

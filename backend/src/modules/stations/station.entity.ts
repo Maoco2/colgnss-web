@@ -88,7 +88,7 @@ export class Station {
   @Column({ name: 'divipola_code', nullable: true })
   divipolaCode: string;
 
-  @Column({ name: 'installation_date', nullable: true, type: 'timestamp' })
+  @Column({ name: 'installation_date', nullable: true, type: 'datetime' })
   installationDate: Date;
 
   @CreateDateColumn({ name: 'created_at' })

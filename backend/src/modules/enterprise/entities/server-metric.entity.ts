@@ -5,7 +5,7 @@ export class ServerMetric {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ type: 'timestamp' })
+  @Column({ type: 'datetime' })
   timestamp: Date;
 
   @Column({ name: 'cpu_usage', type: 'float' })

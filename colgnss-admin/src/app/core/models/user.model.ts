@@ -23,6 +23,8 @@ export interface User {
   lastIp?: string;
   lastUserAgent?: string;
   lastLoginAt?: string;
+  lastLoginDate?: string;
+  calculationCount?: number;
   createdAt: string;
   updatedAt: string;
 }

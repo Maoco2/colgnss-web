@@ -41,7 +41,7 @@ export class UsersListComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  displayedColumns: string[] = ['avatar', 'fullName', 'email', 'role', 'isActive', 'lastLoginAt', 'actions'];
+  displayedColumns: string[] = ['avatar', 'fullName', 'email', 'role', 'isActive', 'calculations', 'lastLoginAt', 'actions'];
   dataSource = new MatTableDataSource<User>([]);
   searchQuery = signal('');
   selectedRole = signal<string>('');

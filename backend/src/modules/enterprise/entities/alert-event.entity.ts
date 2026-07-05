@@ -24,10 +24,10 @@ export class AlertEvent {
   @Column({ type: 'text' })
   message: string;
 
-  @Column({ name: 'sent_at', type: 'timestamp' })
+  @Column({ name: 'sent_at', type: 'datetime' })
   sentAt: Date;
 
-  @Column({ name: 'acknowledged_at', type: 'timestamp', nullable: true })
+  @Column({ name: 'acknowledged_at', type: 'datetime', nullable: true })
   acknowledgedAt: Date | null;
 
   @Column({ name: 'acknowledged_by', type: 'uuid', nullable: true })

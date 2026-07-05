@@ -41,6 +41,7 @@
             <div class="skeleton-cell email"></div>
             <div class="skeleton-cell role"></div>
             <div class="skeleton-cell status"></div>
+            <div class="skeleton-cell calcs"></div>
             <div class="skeleton-cell date"></div>
             <div class="skeleton-cell actions"></div>
           </div>
@@ -87,10 +88,17 @@
             </td>
           </ng-container>
 
+          <ng-container matColumnDef="calculations">
+            <th mat-header-cell *matHeaderCellDef>Cálculos</th>
+            <td mat-cell *matCellDef="let user">
+              <span class="calcs-badge">{{ user.calculationCount ?? '—' }}</span>
+            </td>
+          </ng-container>
+
           <ng-container matColumnDef="lastLoginAt">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Último Ingreso</th>
             <td mat-cell *matCellDef="let user">
-              {{ user.lastLoginAt ? (user.lastLoginAt | date:'short') : '—' }}
+              {{ user.lastLoginDate ? (user.lastLoginDate | date:'short') : '—' }}
             </td>
           </ng-container>
 

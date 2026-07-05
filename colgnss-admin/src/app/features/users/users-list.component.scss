@@ -87,6 +87,7 @@
 .skeleton-cell.email { flex: 3; }
 .skeleton-cell.role { flex: 1; }
 .skeleton-cell.status { flex: 1; }
+.skeleton-cell.calcs { flex: 0.8; }
 .skeleton-cell.date { flex: 1.5; }
 .skeleton-cell.actions { width: 40px; }
 
@@ -150,6 +151,19 @@
 
 .user-name:hover {
   text-decoration: underline;
+}
+
+/* Calculations badge */
+.calcs-badge {
+  display: inline-block;
+  min-width: 28px;
+  text-align: center;
+  padding: 2px 8px;
+  border-radius: 12px;
+  background: rgba(99, 102, 241, 0.1);
+  color: #6366f1;
+  font-size: 12px;
+  font-weight: 600;
 }
 
 /* Status chips */
