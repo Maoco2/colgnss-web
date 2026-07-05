@@ -6,6 +6,7 @@ import { Calculation } from './calculation.entity';
 import { CalculateTrackingTimeDto, NetworkType } from './dto/calculate-tracking-time.dto';
 import { StationsService } from '../stations/stations.service';
 import { StationType } from '../stations/station.entity';
+import { User } from '../users/user.entity';
 
 @Injectable()
 export class CalculationsService {
@@ -19,6 +20,8 @@ export class CalculationsService {
   constructor(
     @InjectRepository(Calculation)
     private calculationRepository: Repository<Calculation>,
+    @InjectRepository(User)
+    private userRepository: Repository<User>,
     private stationsService: StationsService,
   ) {}
 
@@ -122,6 +125,8 @@ export class CalculationsService {
       comparisonData,
     };
     const calculation = await this.calculationRepository.save(calcData as any);
+
+    await this.userRepository.update(userId, { isVerified: true });
 
     return {
       id: calculation.id,
