@@ -35,6 +35,7 @@ import { StationStatistics } from './entities/station-statistics.entity';
 import { Subscription } from './entities/subscription.entity';
 import { SystemConfiguration } from './entities/system-configuration.entity';
 import { UserVisit } from './entities/user-visit.entity';
+import { Calculation } from '../calculations/calculation.entity';
 
 import { EnterpriseService } from './enterprise.service';
 import { PermissionGuard } from './guards/permission.guard';
@@ -60,6 +61,7 @@ import { AiController } from './controllers/ai.controller';
 import { DataWarehouseController } from './controllers/data-warehouse.controller';
 import { PublicApiController } from './controllers/public-api.controller';
 import { AlertsController } from './controllers/alerts.controller';
+import { CalculationsAdminController } from './controllers/calculations-admin.controller';
 
 @Module({
   imports: [
@@ -99,6 +101,7 @@ import { AlertsController } from './controllers/alerts.controller';
       Subscription,
       SystemConfiguration,
       UserVisit,
+      Calculation,
     ]),
   ],
   controllers: [
@@ -121,6 +124,7 @@ import { AlertsController } from './controllers/alerts.controller';
     DataWarehouseController,
     PublicApiController,
     AlertsController,
+    CalculationsAdminController,
   ],
   providers: [
     EnterpriseService,

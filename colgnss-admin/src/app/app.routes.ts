@@ -15,6 +15,7 @@ export const routes: Routes = [
       { path: 'users', loadComponent: () => import('./features/users/users.component').then(m => m.UsersComponent) },
       { path: 'users/:id', loadComponent: () => import('./features/profile/profile.component').then(m => m.ProfileComponent) },
       { path: 'processing', loadComponent: () => import('./features/processing/processing.component').then(m => m.ProcessingComponent) },
+      { path: 'calculations', loadComponent: () => import('./features/calculations/calculations.component').then(m => m.CalculationsComponent) },
       { path: 'gnss-stats', loadComponent: () => import('./features/gnss-stats/gnss-stats.component').then(m => m.GnssStatsComponent) },
       { path: 'catalogs', loadComponent: () => import('./features/catalogs/catalogs.component').then(m => m.CatalogsComponent) },
       { path: 'stations', loadComponent: () => import('./features/stations/stations.component').then(m => m.StationsComponent) },

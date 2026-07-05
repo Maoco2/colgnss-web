@@ -68,7 +68,10 @@ export class UsersListComponent implements OnInit {
       limit: 50,
     };
     if (this.selectedRole()) params['role'] = this.selectedRole();
-    if (this.selectedStatus()) params['status'] = this.selectedStatus();
+    const status = this.selectedStatus();
+    if (status === 'active') params['isActive'] = true;
+    else if (status === 'suspended') params['isActive'] = false;
+    else if (status === 'pending') params['isVerified'] = false;
 
     this.usersService.getUsers(params).subscribe({
       next: (response) => {

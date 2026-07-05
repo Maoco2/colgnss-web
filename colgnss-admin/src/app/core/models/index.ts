@@ -16,5 +16,6 @@ export { DataWarehouseEntry, DataWarehouseSummary } from './data-warehouse.model
 export { ApiKey, ApiUsageLog } from './api-key.model';
 export { AlertConfig, AlertEvent } from './alert.model';
 export { Session, UserVisit } from './session.model';
+export { Calculation, CalculationStats } from './calculation.model';
 export { ReportRequest } from './report.model';
 export { PageMeta, PaginatedResponse } from './pagination.model';
