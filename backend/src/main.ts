@@ -13,7 +13,7 @@ async function bootstrap() {
   app.use(helmet({ contentSecurityPolicy: false }));
 
   app.enableCors({
-    origin: (process.env.CORS_ORIGINS || 'http://localhost:3000,http://localhost:3002,http://localhost:4200').split(','),
+    origin: (process.env.CORS_ORIGINS || 'http://localhost:3000,http://localhost:3002,http://localhost:4200,https://colgnss-web-w42d-lemon.vercel.app').split(','),
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     credentials: true,
   });
