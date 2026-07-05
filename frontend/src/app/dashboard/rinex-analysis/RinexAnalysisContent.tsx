@@ -696,13 +696,13 @@ export default function RinexAnalysisContent() {
       case 0:
         return (
           <Box sx={{ textAlign: 'center', py: 4 }}>
-            <input type="file" ref={fileInputRef} onChange={handleFileSelect} accept=".obs,.rnx,.yo,.yoo,.crx,.crx.gz,.zip,.gz" hidden />
+            <input type="file" ref={fileInputRef} onChange={handleFileSelect} accept=".obs,.rnx,.yo,.yoo,.crx,.crx.gz,.zip,.gz,.dat" hidden />
             <Paper variant="outlined" sx={{ p: 6, borderStyle: 'dashed', cursor: 'pointer', maxWidth: 550, mx: 'auto' }}
               onClick={() => fileInputRef.current?.click()}>
               <CloudUpload sx={{ fontSize: 64, color: 'primary.main', mb: 2 }} />
               <Typography variant="h6" gutterBottom>Cargar Archivo RINEX</Typography>
               <Typography variant="body2" color="text.secondary" mb={2}>
-                Formatos: .obs, .rnx, .yyO, .crx (Compact RINEX), .zip, .gz
+                Formatos: .obs, .rnx, .yyO, .crx (Compact RINEX), .dat, .zip, .gz
               </Typography>
               {selectedFile && (
                 <Chip label={`${selectedFile.name} (${formatBytes(selectedFile.size)})`} color="primary" onDelete={() => { setSelectedFile(null); if (fileInputRef.current) fileInputRef.current.value = ''; }} />

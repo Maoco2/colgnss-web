@@ -83,7 +83,7 @@ export class RinexDecompressorService {
 
   private isObservableFile(name: string): boolean {
     const lower = name.toLowerCase();
-    if (lower.endsWith('.obs') || lower.endsWith('.rnx') || lower.endsWith('.crx')) return true;
+    if (lower.endsWith('.obs') || lower.endsWith('.rnx') || lower.endsWith('.crx') || lower.endsWith('.dat')) return true;
     if (/\.\d{2}[a-z]$/i.test(lower) || /\.\d{2}[a-z]\.gz$/i.test(lower)) return true;
     return false;
   }

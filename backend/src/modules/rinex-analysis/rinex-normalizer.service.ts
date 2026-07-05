@@ -83,6 +83,7 @@ export class RinexNormalizerService {
     if (lower.endsWith('.rnx')) return filename.replace(/\.rnx$/i, '.obs');
     if (lower.endsWith('.crx')) return filename.replace(/\.crx$/i, '.obs');
     if (lower.endsWith('.d')) return filename.replace(/\.d$/i, '.obs');
+    if (lower.endsWith('.dat')) return filename.replace(/\.dat$/i, '.obs');
     const match = filename.match(/\.(\d{2}[a-z])$/i);
     if (match) return filename.replace(/\.\d{2}[a-z]$/i, '.obs');
     return `${filename}.obs`;
