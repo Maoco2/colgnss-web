@@ -37,16 +37,16 @@ export class Station {
   @Column({ type: 'simple-json', nullable: true })
   geom: object;
 
-  @Column({ name: 'coord_x', type: 'double', nullable: true })
+  @Column({ name: 'coord_x', type: 'float', nullable: true })
   coordX: number;
 
-  @Column({ name: 'coord_y', type: 'double', nullable: true })
+  @Column({ name: 'coord_y', type: 'float', nullable: true })
   coordY: number;
 
-  @Column({ name: 'coord_z', type: 'double', nullable: true })
+  @Column({ name: 'coord_z', type: 'float', nullable: true })
   coordZ: number;
 
-  @Column({ nullable: true, type: 'double' })
+  @Column({ nullable: true, type: 'float' })
   ondula: number;
 
   @Column({ name: 'est_punto', nullable: true })
