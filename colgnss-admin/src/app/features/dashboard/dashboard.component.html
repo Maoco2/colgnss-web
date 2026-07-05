@@ -61,26 +61,6 @@
       }
     </div>
 
-    @if (calculationStats(); as cs) {
-      <div class="stats-row">
-        <mat-card class="stat-mini-card">
-          <mat-icon>calculate</mat-icon>
-          <span class="stat-value">{{ cs.total }}</span>
-          <span class="stat-label">C&aacute;lculos Totales</span>
-        </mat-card>
-        <mat-card class="stat-mini-card accent">
-          <mat-icon>today</mat-icon>
-          <span class="stat-value">{{ cs.today }}</span>
-          <span class="stat-label">C&aacute;lculos Hoy</span>
-        </mat-card>
-        <mat-card class="stat-mini-card info">
-          <mat-icon>timer</mat-icon>
-          <span class="stat-value">{{ cs.avgTime }} min</span>
-          <span class="stat-label">Tiempo Promedio</span>
-        </mat-card>
-      </div>
-    }
-
     <div class="charts-row-2">
       <mat-card class="chart-card">
         <mat-card-header>

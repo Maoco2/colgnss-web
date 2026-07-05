@@ -12,8 +12,7 @@ import { BaseChartDirective } from 'ng2-charts';
 import { RouterLink } from '@angular/router';
 import { DashboardService } from '@core/services/dashboard.service';
 import { AnalyticsService } from '@core/services/analytics.service';
-import { CalculationsService } from '@core/services/calculations.service';
-import { DashboardCard, KPI, UserStats, ServerMetrics, ActivityItem, ChartDataItem, CalculationStats } from '@core/models';
+import { DashboardCard, KPI, UserStats, ServerMetrics, ActivityItem, ChartDataItem } from '@core/models';
 import { ChartConfiguration, ChartData } from 'chart.js';
 
 @Component({
@@ -30,7 +29,6 @@ import { ChartConfiguration, ChartData } from 'chart.js';
 export class DashboardComponent implements OnInit {
   private dashboardService = inject(DashboardService);
   private analyticsService = inject(AnalyticsService);
-  private calculationsService = inject(CalculationsService);
 
   loading = signal(true);
   selectedPeriod = signal('today');
@@ -38,7 +36,6 @@ export class DashboardComponent implements OnInit {
   userStats = signal<UserStats | null>(null);
   serverMetrics = signal<ServerMetrics | null>(null);
   kpis = signal<KPI[]>([]);
-  calculationStats = signal<CalculationStats | null>(null);
   recentActivity = signal<ActivityItem[]>([]);
   error = signal<string | null>(null);
 
@@ -125,10 +122,6 @@ export class DashboardComponent implements OnInit {
     });
     this.analyticsService.getUsersRegistered().subscribe({
       next: (data) => this.buildUserChart(data),
-      error: () => {},
-    });
-    this.calculationsService.getCalculationStats().subscribe({
-      next: (data) => this.calculationStats.set(data),
       error: () => {},
     });
     this.loadRecentActivity();
