@@ -67,8 +67,9 @@ export class CalculationsService {
     }
 
     const isDualFreq = dto.isDualFrequency !== false;
+    const farthestDist = station2 ? Math.max(distance1, distance2) : distance1;
     const trackingTime = this.calculateTrackingTime(
-      distance1,
+      farthestDist,
       isDualFreq
     );
 
@@ -206,10 +207,11 @@ export class CalculationsService {
     [StationType.ACTIVE, StationType.PASSIVE].forEach(type => {
       const typeStations = type === StationType.ACTIVE ? active : passive;
       if (typeStations.length > 0) {
-        const dist = this.calculateDistance(lat, lng, typeStations[0].latitude, typeStations[0].longitude);
+        const farthest = typeStations.length > 1 ? typeStations[1] : typeStations[0];
+        const dist = this.calculateDistance(lat, lng, farthest.latitude, farthest.longitude);
         results.push({
           networkType: type,
-          station: typeStations[0].name,
+          station: farthest.name,
           distance: Math.round(dist * 100) / 100,
           trackingTime: this.calculateTrackingTime(dist, isDualFreq),
           isRecommended: false,
@@ -224,11 +226,12 @@ export class CalculationsService {
     })).sort((a, b) => a.distance - b.distance);
 
     if (allWithDist.length >= 2) {
+      const farthestDist = allWithDist[1].distance;
       results.push({
         networkType: 'mixed',
         station: `${allWithDist[0].name} + ${allWithDist[1].name}`,
-        distance: Math.round(allWithDist[0].distance * 100) / 100,
-        trackingTime: this.calculateTrackingTime(allWithDist[0].distance, isDualFreq),
+        distance: Math.round(farthestDist * 100) / 100,
+        trackingTime: this.calculateTrackingTime(farthestDist, isDualFreq),
         isRecommended: true,
       });
     }
