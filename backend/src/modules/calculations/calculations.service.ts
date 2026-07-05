@@ -38,11 +38,18 @@ export class CalculationsService {
         dto.latitude, dto.longitude, StationType.PASSIVE, 2
       );
       nearestStations = [...activeStations, ...passiveStations];
+    } else if (dto.networkType === NetworkType.MIXED) {
+      // Mixed: 1 nearest active + 1 nearest passive
+      const [activeStation] = await this.stationsService.findNearest(
+        dto.latitude, dto.longitude, StationType.ACTIVE, 1
+      );
+      const [passiveStation] = await this.stationsService.findNearest(
+        dto.latitude, dto.longitude, StationType.PASSIVE, 1
+      );
+      nearestStations = [activeStation, passiveStation].filter(Boolean);
     } else {
       nearestStations = await this.stationsService.findNearest(
-        dto.latitude, dto.longitude, 
-        dto.networkType === NetworkType.MIXED ? undefined : dto.networkType,
-        2
+        dto.latitude, dto.longitude, dto.networkType, 2
       );
     }
 
