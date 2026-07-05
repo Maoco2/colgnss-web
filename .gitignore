@@ -15,3 +15,4 @@ frontend/.next/
 frontend/dist/
 frontend/.env
 frontend/.vercel
+frontend/public/sw.js

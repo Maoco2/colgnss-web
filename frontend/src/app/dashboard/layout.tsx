@@ -14,6 +14,7 @@ import {
 } from '@mui/icons-material';
 import { useThemeMode } from '@/contexts/ThemeContext';
 import { useAuth } from '@/contexts/AuthContext';
+import AdUnit from '@/components/AdUnit';
 
 const DRAWER_WIDTH = 280;
 
@@ -77,6 +78,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           );
         })}
       </List>
+
+      <Box sx={{ px: 2, py: 1 }}>
+        <AdUnit slot="SLOT_SIDEBAR" format="rectangle" style={{ minHeight: 250 }} />
+      </Box>
 
       {user?.isAdmin && (
         <Box sx={{ px: 2, pb: 1 }}>

@@ -16,6 +16,7 @@ import {
 import { useThemeMode } from '@/contexts/ThemeContext';
 import { useAuth } from '@/contexts/AuthContext';
 import api from '@/lib/api';
+import AdUnit from '@/components/AdUnit';
 
 export default function LandingPage() {
   const router = useRouter();
@@ -209,6 +210,12 @@ export default function LandingPage() {
         </Container>
       </Box>
 
+      <Box sx={{ py: 4, bgcolor: mode === 'dark' ? '#0a0a0a' : '#f8f9fa' }}>
+        <Container maxWidth="md">
+          <AdUnit slot="SLOT_HERO_FEATURES" format="horizontal" style={{ minHeight: 90 }} />
+        </Container>
+      </Box>
+
       <Box sx={{ py: 10, bgcolor: mode === 'dark' ? '#0a0a0a' : '#f8f9fa' }}>
         <Container maxWidth="lg">
           <Typography variant="h3" align="center" fontWeight={700} sx={{ mb: 2 }}>
@@ -237,6 +244,12 @@ export default function LandingPage() {
               </Grid>
             ))}
           </Grid>
+        </Container>
+      </Box>
+
+      <Box sx={{ py: 4, bgcolor: mode === 'dark' ? '#0a0a0a' : '#fff' }}>
+        <Container maxWidth="md">
+          <AdUnit slot="SLOT_FEATURES_CALC" format="auto" style={{ minHeight: 90 }} />
         </Container>
       </Box>
 
@@ -274,6 +287,12 @@ export default function LandingPage() {
               </Box>
             </Grid>
           </Grid>
+        </Container>
+      </Box>
+
+      <Box sx={{ py: 4, bgcolor: mode === 'dark' ? '#0a0a0a' : '#f8f9fa' }}>
+        <Container maxWidth="md">
+          <AdUnit slot="SLOT_BEFORE_FOOTER" format="horizontal" style={{ minHeight: 90 }} />
         </Container>
       </Box>
 
