@@ -26,7 +26,7 @@ export class AiModel {
   @Column({ type: 'simple-json', nullable: true })
   metrics: object | null;
 
-  @Column({ name: 'trained_at', type: 'datetime', nullable: true })
+  @Column({ name: 'trained_at', type: 'timestamp', nullable: true })
   trainedAt: Date | null;
 
   @CreateDateColumn({ name: 'created_at' })

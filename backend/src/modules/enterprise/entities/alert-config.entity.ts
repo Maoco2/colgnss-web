@@ -29,7 +29,7 @@ export class AlertConfig {
   @Column({ type: 'int', default: 3600 })
   cooldown: number;
 
-  @Column({ name: 'last_triggered_at', type: 'datetime', nullable: true })
+  @Column({ name: 'last_triggered_at', type: 'timestamp', nullable: true })
   lastTriggeredAt: Date | null;
 
   @CreateDateColumn({ name: 'created_at' })
