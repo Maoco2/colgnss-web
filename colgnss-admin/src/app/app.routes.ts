@@ -14,7 +14,6 @@ export const routes: Routes = [
       { path: 'analytics', loadComponent: () => import('./features/analytics/analytics.component').then(m => m.AnalyticsComponent) },
       { path: 'users', loadComponent: () => import('./features/users/users.component').then(m => m.UsersComponent) },
       { path: 'users/:id', loadComponent: () => import('./features/profile/profile.component').then(m => m.ProfileComponent) },
-      { path: 'processing', loadComponent: () => import('./features/processing/processing.component').then(m => m.ProcessingComponent) },
       { path: 'calculations', loadComponent: () => import('./features/calculations/calculations.component').then(m => m.CalculationsComponent) },
       { path: 'gnss-stats', loadComponent: () => import('./features/gnss-stats/gnss-stats.component').then(m => m.GnssStatsComponent) },
       { path: 'catalogs', loadComponent: () => import('./features/catalogs/catalogs.component').then(m => m.CatalogsComponent) },

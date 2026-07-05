@@ -10,7 +10,6 @@ import { RolesGuard } from '../../../common/guards/roles.guard';
 import { Roles } from '../../../common/decorators/roles.decorator';
 import { User, UserRole } from '../../users/user.entity';
 import { ApiResponse } from '../../../common/dto/api-response.dto';
-import { ProcessingHistory } from '../entities/processing-history.entity';
 import { ActivityLog } from '../entities/activity-log.entity';
 
 @ApiTags('Enterprise - Reports')
@@ -22,8 +21,6 @@ export class ReportsController {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
-    @InjectRepository(ProcessingHistory)
-    private processingRepository: Repository<ProcessingHistory>,
     @InjectRepository(ActivityLog)
     private activityLogRepository: Repository<ActivityLog>,
   ) {}
@@ -96,45 +93,6 @@ export class ReportsController {
     return ApiResponse.ok(users);
   }
 
-  @Get('processings')
-  @ApiOperation({ summary: 'Export processing report' })
-  @ApiQuery({ name: 'format', required: false, enum: ['csv', 'excel', 'pdf'] })
-  async getProcessingsReport(@Query('format') format: string, @Res() res: Response): Promise<any> {
-    const data = await this.processingRepository.find({ order: { createdAt: 'DESC' }, relations: ['user', 'station'] });
-    if (format === 'csv') {
-      const header = 'ID,Usuario,Archivo,Tipo,Estado,Duración,Creado\n';
-      const rows = data.map(p =>
-        `${p.id},${p.user?.email || 'N/A'},${p.fileName},${p.fileType},${p.status},${p.duration},${p.createdAt}`
-      ).join('\n');
-      res.setHeader('Content-Type', 'text/csv; charset=utf-8');
-      res.setHeader('Content-Disposition', 'attachment; filename=processings-report.csv');
-      return res.send('\uFEFF' + header + rows);
-    }
-    if (format === 'excel') {
-      const workbook = new ExcelJS.Workbook();
-      const sheet = workbook.addWorksheet('Procesamientos');
-      sheet.columns = [
-        { header: 'ID', key: 'id', width: 36 },
-        { header: 'Usuario', key: 'user', width: 25 },
-        { header: 'Archivo', key: 'fileName', width: 25 },
-        { header: 'Tipo', key: 'fileType', width: 15 },
-        { header: 'Estado', key: 'status', width: 15 },
-        { header: 'Duración (s)', key: 'duration', width: 12 },
-        { header: 'Creado', key: 'createdAt', width: 25 },
-      ];
-      data.forEach(p => sheet.addRow({
-        id: p.id, user: p.user?.email || 'N/A', fileName: p.fileName,
-        fileType: p.fileType, status: p.status, duration: p.duration, createdAt: p.createdAt,
-      }));
-      sheet.getRow(1).font = { bold: true };
-      res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-      res.setHeader('Content-Disposition', 'attachment; filename=processings-report.xlsx');
-      await workbook.xlsx.write(res);
-      return res.end();
-    }
-    return ApiResponse.ok(data);
-  }
-
   @Get('audit')
   @ApiOperation({ summary: 'Export audit report' })
   @ApiQuery({ name: 'format', required: false, enum: ['csv', 'excel', 'pdf'] })
@@ -174,4 +132,3 @@ export class ReportsController {
     return ApiResponse.ok(data);
   }
 }
-

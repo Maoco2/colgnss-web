@@ -9,7 +9,6 @@ import { UserRole } from '../../users/user.entity';
 import { ApiResponse } from '../../../common/dto/api-response.dto';
 import { ReceiverStatistics } from '../entities/receiver-statistics.entity';
 import { AntennaStatistics } from '../entities/antenna-statistics.entity';
-import { ProcessingHistory } from '../entities/processing-history.entity';
 
 @ApiTags('Enterprise - Catalogs')
 @ApiBearerAuth()
@@ -22,8 +21,6 @@ export class CatalogsController {
     private receiverStatsRepository: Repository<ReceiverStatistics>,
     @InjectRepository(AntennaStatistics)
     private antennaStatsRepository: Repository<AntennaStatistics>,
-    @InjectRepository(ProcessingHistory)
-    private processingRepository: Repository<ProcessingHistory>,
   ) {}
 
   @Get('receivers')
@@ -57,42 +54,18 @@ export class CatalogsController {
   @Get('firmwares')
   @ApiOperation({ summary: 'Firmware distribution' })
   async getFirmwares(): Promise<ApiResponse<any>> {
-    const data = await this.processingRepository
-      .createQueryBuilder('p')
-      .select('p.receiver', 'firmware')
-      .addSelect('COUNT(*)', 'count')
-      .groupBy('p.receiver')
-      .orderBy('count', 'DESC')
-      .limit(20)
-      .getRawMany();
-    return ApiResponse.ok(data);
+    return ApiResponse.ok([]);
   }
 
   @Get('rinex-versions')
   @ApiOperation({ summary: 'RINEX version distribution' })
   async getRinexVersions(): Promise<ApiResponse<any>> {
-    const data = await this.processingRepository
-      .createQueryBuilder('p')
-      .select('p.fileVersion', 'version')
-      .addSelect('COUNT(*)', 'count')
-      .groupBy('p.fileVersion')
-      .orderBy('count', 'DESC')
-      .getRawMany();
-    return ApiResponse.ok(data);
+    return ApiResponse.ok([]);
   }
 
   @Get('crx-versions')
   @ApiOperation({ summary: 'CRX version distribution' })
   async getCrxVersions(): Promise<ApiResponse<any>> {
-    const data = await this.processingRepository
-      .createQueryBuilder('p')
-      .select('p.fileVersion', 'version')
-      .addSelect('COUNT(*)', 'count')
-      .where("p.fileType = 'crx'")
-      .groupBy('p.fileVersion')
-      .orderBy('count', 'DESC')
-      .getRawMany();
-    return ApiResponse.ok(data);
+    return ApiResponse.ok([]);
   }
 }
-

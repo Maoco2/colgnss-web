@@ -16,6 +16,6 @@ export class ProfileService {
   }
 
   getProfileActivity(id: string): Observable<any> {
-    return this.api.getById<any>('enterprise/profile', id).pipe(map(r => ({ lastSessions: r.data.lastSessions, lastProcessings: r.data.lastProcessings })));
+    return this.api.getById<any>('enterprise/profile', id).pipe(map(r => ({ lastSessions: r.data.lastSessions, lastCalculations: r.data.lastCalculations })));
   }
 }

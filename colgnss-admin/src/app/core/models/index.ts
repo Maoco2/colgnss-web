@@ -1,7 +1,7 @@
 export { User } from './user.model';
-export { DashboardCard, KPI, UserStats, ProcessingStats, ServerMetrics, ChartDataItem, ActivityItem } from './dashboard.model';
+export { DashboardCard, KPI, UserStats, ServerMetrics, ChartDataItem, ActivityItem } from './dashboard.model';
 export { AnalyticsDataPoint, AnalyticsSeries, TopItem, ConstellationData, ProcessingByModule, AnalyticsFilters } from './analytics.model';
-export { ProcessingHistory, ProcessingStat, ProcessingFilters } from './processing.model';
+
 export { Advertisement, AdClick, AdStats } from './advertisement.model';
 export { Subscription, Payment, SubscriptionStats } from './subscription.model';
 export { Notification } from './notification.model';

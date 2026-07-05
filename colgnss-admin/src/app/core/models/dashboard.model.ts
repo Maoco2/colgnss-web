@@ -31,18 +31,6 @@ export interface UserStats {
   byCountry: Record<string, number>;
 }
 
-export interface ProcessingStats {
-  total: number;
-  completed: number;
-  failed: number;
-  pending: number;
-  running: number;
-  averageTime: number;
-  totalTime: number;
-  byModule: Record<string, number>;
-  byStatus: Record<string, number>;
-}
-
 export interface ServerMetrics {
   cpu: number;
   memory: number;

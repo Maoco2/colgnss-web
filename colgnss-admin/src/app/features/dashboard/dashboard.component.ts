@@ -13,7 +13,7 @@ import { RouterLink } from '@angular/router';
 import { DashboardService } from '@core/services/dashboard.service';
 import { AnalyticsService } from '@core/services/analytics.service';
 import { CalculationsService } from '@core/services/calculations.service';
-import { DashboardCard, KPI, UserStats, ProcessingStats, ServerMetrics, ActivityItem, ChartDataItem, CalculationStats } from '@core/models';
+import { DashboardCard, KPI, UserStats, ServerMetrics, ActivityItem, ChartDataItem, CalculationStats } from '@core/models';
 import { ChartConfiguration, ChartData } from 'chart.js';
 
 @Component({
@@ -36,7 +36,6 @@ export class DashboardComponent implements OnInit {
   selectedPeriod = signal('today');
   cards = signal<DashboardCard[]>([]);
   userStats = signal<UserStats | null>(null);
-  processingStats = signal<ProcessingStats | null>(null);
   serverMetrics = signal<ServerMetrics | null>(null);
   kpis = signal<KPI[]>([]);
   calculationStats = signal<CalculationStats | null>(null);
@@ -57,10 +56,9 @@ export class DashboardComponent implements OnInit {
     const defaultCards = [
       { icon: 'people', color: '#3b82f6', label: 'Total Usuarios', value: '—' },
       { icon: 'trending_up', color: '#22c55e', label: 'Usuarios Activos Hoy', value: '—' },
-      { icon: 'assessment', color: '#f97316', label: 'Procesamientos Hoy', value: '—' },
-      { icon: 'folder', color: '#a855f7', label: 'Archivos RINEX', value: '—' },
+      { icon: 'calculate', color: '#f97316', label: 'Cálculos Totales', value: '—' },
       { icon: 'timer', color: '#14b8a6', label: 'Tiempo Promedio', value: '—' },
-      { icon: 'attach_money', color: '#eab308', label: 'Ingresos', value: '—' },
+      { icon: 'attach_money', color: '#eab308', label: 'Descargas', value: '—' },
       { icon: 'memory', color: '#ef4444', label: 'CPU', value: '—' },
       { icon: 'storage', color: '#3b82f6', label: 'RAM', value: '—' },
     ];
@@ -76,8 +74,8 @@ export class DashboardComponent implements OnInit {
   });
 
   userChartData = signal<ChartData<'line'>>({ labels: [], datasets: [] });
-  processingChartData = signal<ChartData<'bar'>>({ labels: [], datasets: [] });
-  moduleChartData = signal<ChartData<'doughnut'>>({ labels: [], datasets: [] });
+  calculationChartData = signal<ChartData<'bar'>>({ labels: [], datasets: [] });
+  networkChartData = signal<ChartData<'doughnut'>>({ labels: [], datasets: [] });
 
   chartOptions: ChartConfiguration['options'] = {
     responsive: true,
@@ -110,8 +108,11 @@ export class DashboardComponent implements OnInit {
       next: (data) => this.userStats.set(data),
       error: () => {},
     });
-    this.dashboardService.getProcessingStats().subscribe({
-      next: (data) => this.processingStats.set(data),
+    this.dashboardService.getCalculationStats().subscribe({
+      next: (data) => {
+        this.buildCalculationChart(data.timeline || []);
+        this.buildNetworkChart(data.byNetwork || []);
+      },
       error: () => {},
     });
     this.dashboardService.getServerMetrics().subscribe({
@@ -124,14 +125,6 @@ export class DashboardComponent implements OnInit {
     });
     this.analyticsService.getUsersRegistered().subscribe({
       next: (data) => this.buildUserChart(data),
-      error: () => {},
-    });
-    this.analyticsService.getProcessings({ period: this.selectedPeriod() }).subscribe({
-      next: (data) => this.buildProcessingChart(data),
-      error: () => {},
-    });
-    this.analyticsService.getProcessingsByModule().subscribe({
-      next: (data) => this.buildModuleChart(data),
       error: () => {},
     });
     this.calculationsService.getCalculationStats().subscribe({
@@ -150,7 +143,7 @@ export class DashboardComponent implements OnInit {
   }
 
   private buildUserChart(data: any[]): void {
-    const labels = data.map((d) => d.label || d.date);
+    const labels = data.map((d) => d.label || d.month || d.date);
     const values = data.map((d) => d.value || d.count || 0);
     this.userChartData.set({
       labels,
@@ -167,13 +160,13 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  private buildProcessingChart(data: any[]): void {
-    const labels = data.map((d) => d.label || d.date);
-    const values = data.map((d) => d.value || d.count || 0);
-    this.processingChartData.set({
+  private buildCalculationChart(data: any[]): void {
+    const labels = data.map((d) => d.period || d.date);
+    const values = data.map((d) => d.count || 0);
+    this.calculationChartData.set({
       labels,
       datasets: [{
-        label: 'Procesamientos',
+        label: 'Cálculos',
         data: values,
         backgroundColor: 'rgba(249,115,22,0.7)',
         borderColor: '#f97316',
@@ -183,11 +176,11 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  private buildModuleChart(data: any[]): void {
-    const labels = data.map((d) => d.module || d.label);
+  private buildNetworkChart(data: any[]): void {
+    const labels = data.map((d) => d.networkType || d.label);
     const values = data.map((d) => d.count || d.value || 0);
     const colors = ['#3b82f6', '#22c55e', '#f97316', '#a855f7', '#ef4444', '#14b8a6', '#eab308'];
-    this.moduleChartData.set({
+    this.networkChartData.set({
       labels,
       datasets: [{
         data: values,

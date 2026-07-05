@@ -268,7 +268,6 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
       items: [
         { label: 'Usuarios', icon: 'people', route: '/users' },
         { label: 'Perfiles', icon: 'badge', route: '/users' },
-        { label: 'Procesamientos', icon: 'play_circle', route: '/processing' },
         { label: 'C&aacute;lculos', icon: 'calculate', route: '/calculations' },
       ],
     },

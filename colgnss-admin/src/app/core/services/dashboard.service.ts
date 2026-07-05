@@ -2,11 +2,11 @@ import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiService } from './api.service';
-import { DashboardCard, KPI, UserStats, ProcessingStats, ServerMetrics, ActivityItem } from '@core/models';
+import { DashboardCard, KPI, UserStats, ServerMetrics, ActivityItem } from '@core/models';
 
 interface DashboardRaw {
   users: { total: number; active: number; verified: number; premium: number; today: number };
-  processings: { total: number; successful: number; failed: number; today: number };
+  calculations: { total: number; today: number };
   server: { cpuUsage: number; ramUsage: number; diskUsage: number; apiResponseTime: number; activeConnections: number; totalRequests: number; errorCount: number; dbConnections: number; dbSize: number };
   downloads: number;
   sessions: number;
@@ -22,7 +22,7 @@ export class DashboardService {
       map(r => r.data),
       map(d => [
         { id: '1', title: 'Usuarios Totales', value: d.users.total, icon: 'people', color: '#3b82f6', trend: d.users.today, trendLabel: 'hoy' },
-        { id: '2', title: 'Procesamientos', value: d.processings.total, icon: 'assessment', color: '#f97316', trend: d.processings.successful, trendLabel: 'exitosos' },
+        { id: '2', title: 'Cálculos', value: d.calculations.total, icon: 'calculate', color: '#f97316', trend: d.calculations.today, trendLabel: 'hoy' },
         { id: '3', title: 'CPU', value: Math.round(d.server.cpuUsage), unit: '%', icon: 'memory', color: '#ef4444' },
         { id: '4', title: 'RAM', value: Math.round(d.server.ramUsage), unit: '%', icon: 'storage', color: '#3b82f6' },
         { id: '5', title: 'Descargas', value: d.downloads, icon: 'download', color: '#22c55e' },
@@ -49,19 +49,14 @@ export class DashboardService {
     );
   }
 
-  getProcessingStats(): Observable<ProcessingStats> {
+  getCalculationStats(): Observable<any> {
     return this.api.get<any>('enterprise/dashboard/processing').pipe(
       map(r => r.data),
       map(d => ({
         total: d.total,
-        completed: d.successful,
-        failed: d.failed,
-        pending: 0,
-        running: 0,
-        averageTime: d.avgTime,
-        totalTime: d.avgTime * d.total,
-        byModule: d.byModule ? Object.fromEntries(d.byModule.map((x: any) => [x.module, x.count])) : {},
-        byStatus: { successful: d.successful, failed: d.failed },
+        avgTime: d.avgTime,
+        byNetwork: d.byNetwork || [],
+        timeline: d.timeline || [],
       }))
     );
   }
@@ -87,12 +82,11 @@ export class DashboardService {
       map(d => [
         { id: '1', label: 'Total Usuarios', value: d.totalUsers, previousValue: 0, change: 0, changeType: 'neutral', period: 'total' },
         { id: '2', label: 'Usuarios Activos Hoy', value: d.newUsersToday, previousValue: 0, change: 0, changeType: 'neutral', period: 'hoy' },
-        { id: '3', label: 'Procesamientos', value: d.totalProcessings, previousValue: 0, change: 0, changeType: 'neutral', period: 'total' },
-        { id: '4', label: 'Tasa de Éxito', value: Math.round(d.successRate), unit: '%', previousValue: 0, change: 0, changeType: 'neutral', period: 'total' },
-        { id: '5', label: 'Tiempo Promedio', value: Math.round(d.avgProcessingTime), unit: 'ms', previousValue: 0, change: 0, changeType: 'neutral', period: 'total' },
-        { id: '6', label: 'Descargas', value: d.totalDownloads, previousValue: 0, change: 0, changeType: 'neutral', period: 'total' },
-        { id: '7', label: 'CPU', value: Math.round(d.cpuUsage), unit: '%', previousValue: 0, change: 0, changeType: 'neutral', period: 'ahora' },
-        { id: '8', label: 'RAM', value: Math.round(d.ramUsage), unit: '%', previousValue: 0, change: 0, changeType: 'neutral', period: 'ahora' },
+        { id: '3', label: 'Cálculos', value: d.totalCalculations, previousValue: 0, change: 0, changeType: 'neutral', period: 'total' },
+        { id: '4', label: 'Tiempo Promedio', value: Math.round(d.avgTrackingTime), unit: 'min', previousValue: 0, change: 0, changeType: 'neutral', period: 'total' },
+        { id: '5', label: 'Descargas', value: d.totalDownloads, previousValue: 0, change: 0, changeType: 'neutral', period: 'total' },
+        { id: '6', label: 'CPU', value: Math.round(d.cpuUsage), unit: '%', previousValue: 0, change: 0, changeType: 'neutral', period: 'ahora' },
+        { id: '7', label: 'RAM', value: Math.round(d.ramUsage), unit: '%', previousValue: 0, change: 0, changeType: 'neutral', period: 'ahora' },
       ])
     );
   }

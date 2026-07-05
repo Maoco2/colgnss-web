@@ -7,9 +7,9 @@ import { RolesGuard } from '../../../common/guards/roles.guard';
 import { Roles } from '../../../common/decorators/roles.decorator';
 import { User, UserRole } from '../../users/user.entity';
 import { ApiResponse } from '../../../common/dto/api-response.dto';
+import { Calculation } from '../../calculations/calculation.entity';
 import { Session } from '../entities/session.entity';
 import { UserVisit } from '../entities/user-visit.entity';
-import { ProcessingHistory } from '../entities/processing-history.entity';
 import { Download } from '../entities/download.entity';
 
 @ApiTags('Enterprise - Profile')
@@ -25,8 +25,8 @@ export class ProfileController {
     private sessionRepository: Repository<Session>,
     @InjectRepository(UserVisit)
     private userVisitRepository: Repository<UserVisit>,
-    @InjectRepository(ProcessingHistory)
-    private processingRepository: Repository<ProcessingHistory>,
+    @InjectRepository(Calculation)
+    private calculationRepository: Repository<Calculation>,
     @InjectRepository(Download)
     private downloadRepository: Repository<Download>,
   ) {}
@@ -40,10 +40,10 @@ export class ProfileController {
     });
     if (!user) return ApiResponse.error('User not found', 'NOT_FOUND');
 
-    const [sessions, visits, processings, downloads] = await Promise.all([
+    const [sessions, visits, calculations, downloads] = await Promise.all([
       this.sessionRepository.count({ where: { userId: id } }),
       this.userVisitRepository.count({ where: { userId: id } }),
-      this.processingRepository.count({ where: { userId: id } }),
+      this.calculationRepository.count({ where: { userId: id } }),
       this.downloadRepository.count({ where: { userId: id } }),
     ]);
 
@@ -52,7 +52,7 @@ export class ProfileController {
       order: { loginAt: 'DESC' },
       take: 10,
     });
-    const lastProcessings = await this.processingRepository.find({
+    const lastCalculations = await this.calculationRepository.find({
       where: { userId: id },
       order: { createdAt: 'DESC' },
       take: 10,
@@ -60,10 +60,9 @@ export class ProfileController {
 
     return ApiResponse.ok({
       user,
-      stats: { sessions, visits, processings, downloads },
+      stats: { sessions, visits, calculations, downloads },
       lastSessions,
-      lastProcessings,
+      lastCalculations,
     });
   }
 }
-

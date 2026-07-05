@@ -18,24 +18,12 @@ export class AnalyticsService {
     return this.api.get<any[]>('enterprise/analytics/users-active-hourly').pipe(map(r => r.data));
   }
 
-  getProcessings(params?: Record<string, string | number | boolean | undefined>): Observable<any[]> {
-    return this.api.get<any[]>('enterprise/analytics/processings', params).pipe(map(r => r.data));
+  getCalculations(params?: Record<string, string | number | boolean | undefined>): Observable<any[]> {
+    return this.api.get<any[]>('enterprise/analytics/calculations', params).pipe(map(r => r.data));
   }
 
-  getProcessingsByModule(): Observable<any[]> {
-    return this.api.get<any[]>('enterprise/analytics/processings-by-module').pipe(map(r => r.data));
-  }
-
-  getProcessingsByRinex(): Observable<any[]> {
-    return this.api.get<any[]>('enterprise/analytics/processings-by-rinex').pipe(map(r => r.data));
-  }
-
-  getProcessingsByConstellation(): Observable<any[]> {
-    return this.api.get<any[]>('enterprise/analytics/processings-by-constellation').pipe(map(r => r.data));
-  }
-
-  getProcessingsByCountry(): Observable<any[]> {
-    return this.api.get<any[]>('enterprise/analytics/processings-by-country').pipe(map(r => r.data));
+  getCalculationsByNetwork(): Observable<any[]> {
+    return this.api.get<any[]>('enterprise/analytics/calculations-by-network').pipe(map(r => r.data));
   }
 
   getTopConstellations(): Observable<any[]> {
@@ -62,16 +50,12 @@ export class AnalyticsService {
     return this.api.get<any[]>('enterprise/analytics/top-countries').pipe(map(r => r.data));
   }
 
-  getAvgProcessingTime(): Observable<any[]> {
-    return this.api.get<any[]>('enterprise/analytics/avg-processing-time').pipe(map(r => r.data));
+  getAvgCalculationTime(): Observable<any[]> {
+    return this.api.get<any[]>('enterprise/analytics/avg-calculation-time').pipe(map(r => r.data));
   }
 
-  getErrorsDaily(): Observable<any[]> {
-    return this.api.get<any[]>('enterprise/analytics/errors-daily').pipe(map(r => r.data));
-  }
-
-  getFilesProcessed(): Observable<any[]> {
-    return this.api.get<any[]>('enterprise/analytics/files-processed').pipe(map(r => r.data));
+  getCalculationsMade(): Observable<any[]> {
+    return this.api.get<any[]>('enterprise/analytics/calculations-made').pipe(map(r => r.data));
   }
 
   getFilesDownloaded(): Observable<any[]> {

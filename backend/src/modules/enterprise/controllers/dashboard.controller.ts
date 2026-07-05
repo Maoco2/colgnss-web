@@ -31,10 +31,10 @@ export class DashboardController {
   }
 
   @Get('processing')
-  @ApiOperation({ summary: 'Get processing statistics' })
+  @ApiOperation({ summary: 'Get calculation statistics (formerly processing)' })
   @ApiQuery({ name: 'period', required: false, enum: ['daily', 'monthly', 'yearly'] })
-  async getProcessingStats(@Query('period') period?: string): Promise<ApiResponse<any>> {
-    const data = await this.enterpriseService.getProcessingStats((period as any) || 'monthly');
+  async getCalculationStats(@Query('period') period?: string): Promise<ApiResponse<any>> {
+    const data = await this.enterpriseService.getCalculationStats((period as any) || 'monthly');
     return ApiResponse.ok(data);
   }
 

@@ -20,7 +20,7 @@
 
   @if (loading()) {
     <div class="skeleton-grid">
-      @for (_ of [1,2,3,4,5,6,7,8]; track _) {
+      @for (_ of [1,2,3,4,5,6,7]; track _) {
         <mat-card class="skeleton-card">
           <div class="skeleton-icon"></div>
           <div class="skeleton-lines">
@@ -98,12 +98,12 @@
       </mat-card>
       <mat-card class="chart-card">
         <mat-card-header>
-          <mat-card-title>Procesamientos</mat-card-title>
+          <mat-card-title>C&aacute;lculos</mat-card-title>
         </mat-card-header>
         <mat-card-content>
           <div class="chart-container">
             <canvas baseChart
-              [data]="processingChartData()"
+              [data]="calculationChartData()"
               [options]="chartOptions"
               type="bar">
             </canvas>
@@ -158,12 +158,12 @@
       </mat-card>
       <mat-card class="module-chart-card">
         <mat-card-header>
-          <mat-card-title>Distribución por Módulo</mat-card-title>
+          <mat-card-title>Distribuci&oacute;n por Red</mat-card-title>
         </mat-card-header>
         <mat-card-content>
           <div class="chart-container">
             <canvas baseChart
-              [data]="moduleChartData()"
+              [data]="networkChartData()"
               [options]="doughnutOptions"
               type="doughnut">
             </canvas>
@@ -177,7 +177,7 @@
         <mat-card-header>
           <mat-card-title>
             <mat-icon>dns</mat-icon>
-            Métricas del Servidor
+            M&eacute;tricas del Servidor
           </mat-card-title>
         </mat-card-header>
         <mat-card-content>

@@ -21,8 +21,7 @@ import { Download } from './entities/download.entity';
 import { Notification } from './entities/notification.entity';
 import { Payment } from './entities/payment.entity';
 import { Permission } from './entities/permission.entity';
-import { ProcessingHistory } from './entities/processing-history.entity';
-import { ProcessingStatistics } from './entities/processing-statistics.entity';
+
 import { QualityScore } from './entities/quality-score.entity';
 import { ReceiverStatistics } from './entities/receiver-statistics.entity';
 import { RinexStatistics } from './entities/rinex-statistics.entity';
@@ -45,7 +44,7 @@ import { MetricsInterceptor } from './interceptors/metrics.interceptor';
 import { DashboardController } from './controllers/dashboard.controller';
 import { UsersAdminController } from './controllers/users-admin.controller';
 import { ProfileController } from './controllers/profile.controller';
-import { ProcessingController } from './controllers/processing.controller';
+
 import { AnalyticsController } from './controllers/analytics.controller';
 import { GnssStatsController } from './controllers/gnss-stats.controller';
 import { CatalogsController } from './controllers/catalogs.controller';
@@ -87,8 +86,6 @@ import { CalculationsAdminController } from './controllers/calculations-admin.co
       Notification,
       Payment,
       Permission,
-      ProcessingHistory,
-      ProcessingStatistics,
       QualityScore,
       ReceiverStatistics,
       RinexStatistics,
@@ -108,7 +105,6 @@ import { CalculationsAdminController } from './controllers/calculations-admin.co
     DashboardController,
     UsersAdminController,
     ProfileController,
-    ProcessingController,
     AnalyticsController,
     GnssStatsController,
     CatalogsController,

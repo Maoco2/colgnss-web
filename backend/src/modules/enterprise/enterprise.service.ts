@@ -2,21 +2,20 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, Between } from 'typeorm';
 import { User, UserRole } from '../users/user.entity';
-import { ProcessingHistory } from './entities/processing-history.entity';
+import { Calculation } from '../calculations/calculation.entity';
 import { ServerMetric } from './entities/server-metric.entity';
 import { Session } from './entities/session.entity';
 import { UserVisit } from './entities/user-visit.entity';
 import { Download } from './entities/download.entity';
 import { ActivityLog } from './entities/activity-log.entity';
-import { ProcessingStatistics } from './entities/processing-statistics.entity';
 
 @Injectable()
 export class EnterpriseService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
-    @InjectRepository(ProcessingHistory)
-    private processingRepository: Repository<ProcessingHistory>,
+    @InjectRepository(Calculation)
+    private calculationRepository: Repository<Calculation>,
     @InjectRepository(ServerMetric)
     private serverMetricRepository: Repository<ServerMetric>,
     @InjectRepository(Session)
@@ -27,22 +26,18 @@ export class EnterpriseService {
     private downloadRepository: Repository<Download>,
     @InjectRepository(ActivityLog)
     private activityLogRepository: Repository<ActivityLog>,
-    @InjectRepository(ProcessingStatistics)
-    private processingStatsRepository: Repository<ProcessingStatistics>,
   ) {}
 
   async getDashboardStats(): Promise<any> {
-    const [totalUsers, activeUsers, verifiedUsers, premiumUsers, totalProcessings,
-      successfulProcessings, failedProcessings, todayProcessings, todayUsers,
+    const [totalUsers, activeUsers, verifiedUsers, premiumUsers, totalCalculations,
+      todayCalculations, todayUsers,
       totalDownloads, totalSessions, totalVisits, latestMetric] = await Promise.all([
       this.userRepository.count(),
       this.userRepository.count({ where: { isActive: true } }),
       this.userRepository.count({ where: { isVerified: true } }),
       this.userRepository.count({ where: { role: UserRole.PREMIUM } }),
-      this.processingRepository.count(),
-      this.processingRepository.count({ where: { status: 'completed' } }),
-      this.processingRepository.count({ where: { status: 'error' } }),
-      this.processingRepository.count({ where: { createdAt: Between(this.todayStart(), new Date()) } }),
+      this.calculationRepository.count(),
+      this.calculationRepository.count({ where: { createdAt: Between(this.todayStart(), new Date()) } }),
       this.userRepository.count({ where: { createdAt: Between(this.todayStart(), new Date()) } }),
       this.downloadRepository.count(),
       this.sessionRepository.count(),
@@ -52,7 +47,7 @@ export class EnterpriseService {
 
     return {
       users: { total: totalUsers, active: activeUsers, verified: verifiedUsers, premium: premiumUsers, today: todayUsers },
-      processings: { total: totalProcessings, successful: successfulProcessings, failed: failedProcessings, today: todayProcessings },
+      calculations: { total: totalCalculations, today: todayCalculations },
       server: latestMetric ? {
         cpuUsage: latestMetric.cpuUsage,
         ramUsage: latestMetric.ramUsage,
@@ -92,27 +87,25 @@ export class EnterpriseService {
     return { total: totalUsers, active: activeUsers, byRole, byCountry, timeline: stats };
   }
 
-  async getProcessingStats(period: 'daily' | 'monthly' | 'yearly' = 'monthly'): Promise<any> {
+  async getCalculationStats(period: 'daily' | 'monthly' | 'yearly' = 'monthly'): Promise<any> {
     const now = new Date();
     const startDate = this.getPeriodStart(now, period);
 
-    const processings = await this.processingRepository
-      .createQueryBuilder('p')
-      .where('p.created_at >= :start', { start: startDate })
-      .andWhere('p.created_at <= :end', { end: now })
-      .orderBy('p.created_at', 'ASC')
+    const calculations = await this.calculationRepository
+      .createQueryBuilder('c')
+      .where('c.created_at >= :start', { start: startDate })
+      .andWhere('c.created_at <= :end', { end: now })
+      .orderBy('c.created_at', 'ASC')
       .getMany();
 
-    const stats = this.aggregateByPeriod(processings, period, 'createdAt');
-    const [total, successful, failed, avgTimeResult, byModule] = await Promise.all([
-      this.processingRepository.count(),
-      this.processingRepository.count({ where: { status: 'completed' } }),
-      this.processingRepository.count({ where: { status: 'error' } }),
-      this.processingRepository.createQueryBuilder('p').select('AVG(p.duration)', 'avg').getRawOne(),
-      this.processingRepository.createQueryBuilder('p').select('p.fileType', 'module').addSelect('COUNT(*)', 'count').groupBy('p.fileType').getRawMany(),
+    const stats = this.aggregateByPeriod(calculations, period, 'createdAt');
+    const [total, avgTimeResult, byNetwork] = await Promise.all([
+      this.calculationRepository.count(),
+      this.calculationRepository.createQueryBuilder('c').select('AVG(c.tracking_time)', 'avg').getRawOne(),
+      this.calculationRepository.createQueryBuilder('c').select('c.network_type', 'networkType').addSelect('COUNT(*)', 'count').groupBy('c.network_type').getRawMany(),
     ]);
 
-    return { total, successful, failed, avgTime: avgTimeResult?.avg || 0, byModule, timeline: stats };
+    return { total, avgTime: avgTimeResult?.avg || 0, byNetwork, timeline: stats };
   }
 
   async getServerMetrics(): Promise<any> {
@@ -130,30 +123,23 @@ export class EnterpriseService {
 
   async getKpis(): Promise<any> {
     const todayStart = this.todayStart();
-    const [totalUsers, newUsersToday, activeUsers, premiumUsers, totalProcessings,
-      processingsToday, successProcessings, totalDownloads, uniqueUsersProcessingRes,
-      latestMetric, avgProcessingTimeRes] = await Promise.all([
+    const [totalUsers, newUsersToday, activeUsers, premiumUsers, totalCalculations,
+      calculationsToday, totalDownloads, latestMetric, avgTimeRes] = await Promise.all([
       this.userRepository.count(),
       this.userRepository.count({ where: { createdAt: Between(todayStart, new Date()) } }),
       this.userRepository.count({ where: { isActive: true } }),
       this.userRepository.count({ where: { role: UserRole.PREMIUM } }),
-      this.processingRepository.count(),
-      this.processingRepository.count({ where: { createdAt: Between(todayStart, new Date()) } }),
-      this.processingRepository.count({ where: { status: 'completed' } }),
+      this.calculationRepository.count(),
+      this.calculationRepository.count({ where: { createdAt: Between(todayStart, new Date()) } }),
       this.downloadRepository.count(),
-      this.processingRepository.createQueryBuilder('p').select('COUNT(DISTINCT p.userId)', 'count').getRawOne(),
       this.serverMetricRepository.createQueryBuilder('m').orderBy('m.created_at', 'DESC').getOne(),
-      this.processingRepository.createQueryBuilder('p').select('AVG(p.duration)', 'avg').where('p.status = :status', { status: 'completed' }).getRawOne(),
+      this.calculationRepository.createQueryBuilder('c').select('AVG(c.tracking_time)', 'avg').getRawOne(),
     ]);
-
-    const successRate = totalProcessings > 0 ? successProcessings / totalProcessings * 100 : 0;
-    const uniqueUsersProcessing = uniqueUsersProcessingRes?.count || 0;
 
     return {
       totalUsers, newUsersToday, activeUsers, premiumUsers,
-      totalProcessings, processingsToday, successRate: Math.round(successRate * 100) / 100,
-      avgProcessingTime: avgProcessingTimeRes?.avg || 0,
-      totalDownloads, uniqueUsersProcessing,
+      totalCalculations, calculationsToday, avgTrackingTime: avgTimeRes?.avg || 0,
+      totalDownloads,
       cpuUsage: latestMetric?.cpuUsage || 0,
       ramUsage: latestMetric?.ramUsage || 0,
       diskUsage: latestMetric?.diskUsage || 0,
@@ -209,7 +195,7 @@ export class EnterpriseService {
     const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
     const dayNum = d.getUTCDay() || 7;
     d.setUTCDate(d.getUTCDate() + 4 - dayNum);
-    const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+    const yearStart = new Date(Date.UTC(d.getFullYear(), 0, 1));
     return Math.ceil((((d.getTime() - yearStart.getTime()) / 86400000) + 1) / 7);
   }
 }

@@ -1,13 +1,13 @@
 import { Controller, Get, Query, UseGuards } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiBearerAuth, ApiQuery } from '@nestjs/swagger';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, Between } from 'typeorm';
+import { Repository } from 'typeorm';
 import { JwtAuthGuard } from '../../../common/guards/jwt-auth.guard';
 import { RolesGuard } from '../../../common/guards/roles.guard';
 import { Roles } from '../../../common/decorators/roles.decorator';
 import { User, UserRole } from '../../users/user.entity';
 import { ApiResponse } from '../../../common/dto/api-response.dto';
-import { ProcessingHistory } from '../entities/processing-history.entity';
+import { Calculation } from '../../calculations/calculation.entity';
 import { Session } from '../entities/session.entity';
 import { UserVisit } from '../entities/user-visit.entity';
 import { Download } from '../entities/download.entity';
@@ -25,8 +25,8 @@ export class AnalyticsController {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
-    @InjectRepository(ProcessingHistory)
-    private processingRepository: Repository<ProcessingHistory>,
+    @InjectRepository(Calculation)
+    private calculationRepository: Repository<Calculation>,
     @InjectRepository(Session)
     private sessionRepository: Repository<Session>,
     @InjectRepository(UserVisit)
@@ -83,14 +83,14 @@ export class AnalyticsController {
     return ApiResponse.ok(data);
   }
 
-  @Get('processings')
-  @ApiOperation({ summary: 'Processing counts by period' })
+  @Get('calculations')
+  @ApiOperation({ summary: 'Calculation counts by period' })
   @ApiQuery({ name: 'period', required: false, enum: ['daily', 'monthly', 'yearly'] })
-  async getProcessings(@Query('period') period?: string): Promise<ApiResponse<any>> {
+  async getCalculations(@Query('period') period?: string): Promise<ApiResponse<any>> {
     const format = period === 'yearly' ? '%Y' : period === 'monthly' ? '%Y-%m' : '%Y-%m-%d';
-    const data = await this.processingRepository
-      .createQueryBuilder('p')
-      .select(`strftime('${format}', p.created_at)`, 'period')
+    const data = await this.calculationRepository
+      .createQueryBuilder('c')
+      .select(`strftime('${format}', c.created_at)`, 'period')
       .addSelect('COUNT(*)', 'count')
       .groupBy('period')
       .orderBy('period', 'ASC')
@@ -98,78 +98,25 @@ export class AnalyticsController {
     return ApiResponse.ok(data);
   }
 
-  @Get('processings-by-module')
-  @ApiOperation({ summary: 'Processings grouped by module' })
-  async getProcessingsByModule(): Promise<ApiResponse<any>> {
-    const data = await this.processingRepository
-      .createQueryBuilder('p')
-      .select('p.fileType', 'module')
+  @Get('calculations-by-network')
+  @ApiOperation({ summary: 'Calculations grouped by network type' })
+  async getCalculationsByNetwork(): Promise<ApiResponse<any>> {
+    const data = await this.calculationRepository
+      .createQueryBuilder('c')
+      .select('c.network_type', 'networkType')
       .addSelect('COUNT(*)', 'count')
-      .groupBy('p.fileType')
+      .groupBy('c.network_type')
       .getRawMany();
     return ApiResponse.ok(data);
   }
 
-  @Get('processings-by-rinex')
-  @ApiOperation({ summary: 'Processings by RINEX version' })
-  async getProcessingsByRinex(): Promise<ApiResponse<any>> {
-    const data = await this.processingRepository
-      .createQueryBuilder('p')
-      .select('p.fileVersion', 'version')
-      .addSelect('COUNT(*)', 'count')
-      .groupBy('p.fileVersion')
-      .getRawMany();
-    return ApiResponse.ok(data);
-  }
-
-  @Get('processings-by-constellation')
-  @ApiOperation({ summary: 'Processings by constellation' })
-  async getProcessingsByConstellation(): Promise<ApiResponse<any>> {
-    const data = await this.processingRepository
-      .createQueryBuilder('p')
-      .select('p.constellations', 'constellation')
-      .addSelect('COUNT(*)', 'count')
-      .groupBy('p.constellations')
-      .getRawMany();
-    return ApiResponse.ok(data);
-  }
-
-  @Get('processings-by-country')
-  @ApiOperation({ summary: 'Processings by country' })
-  async getProcessingsByCountry(): Promise<ApiResponse<any>> {
-    const data = await this.processingRepository
-      .createQueryBuilder('p')
-      .select('p.country', 'country')
-      .addSelect('COUNT(*)', 'count')
-      .groupBy('p.country')
-      .getRawMany();
-    return ApiResponse.ok(data);
-  }
-
-  @Get('errors-daily')
-  @ApiOperation({ summary: 'Daily error counts' })
-  async getErrorsDaily(): Promise<ApiResponse<any>> {
-    const now = new Date();
-    const thirtyDaysAgo = new Date(now.getTime() - 30 * 86400000);
-    const data = await this.processingRepository
-      .createQueryBuilder('p')
-      .select("strftime('%Y-%m-%d', p.created_at)", 'date')
-      .addSelect('COUNT(*)', 'count')
-      .where('p.status = :status', { status: 'error' })
-      .andWhere('p.createdAt >= :start', { start: thirtyDaysAgo })
-      .groupBy('date')
-      .orderBy('date', 'ASC')
-      .getRawMany();
-    return ApiResponse.ok(data);
-  }
-
-  @Get('avg-processing-time')
-  @ApiOperation({ summary: 'Average processing time over time' })
-  async getAvgProcessingTime(): Promise<ApiResponse<any>> {
-    const data = await this.processingRepository
-      .createQueryBuilder('p')
-      .select("strftime('%Y-%m-%d', p.created_at)", 'date')
-      .addSelect('AVG(p.duration)', 'avgTime')
+  @Get('avg-calculation-time')
+  @ApiOperation({ summary: 'Average tracking time over time' })
+  async getAvgCalculationTime(): Promise<ApiResponse<any>> {
+    const data = await this.calculationRepository
+      .createQueryBuilder('c')
+      .select("strftime('%Y-%m-%d', c.created_at)", 'date')
+      .addSelect('AVG(c.tracking_time)', 'avgTime')
       .groupBy('date')
       .orderBy('date', 'ASC')
       .limit(30)
@@ -177,12 +124,12 @@ export class AnalyticsController {
     return ApiResponse.ok(data);
   }
 
-  @Get('files-processed')
-  @ApiOperation({ summary: 'Files processed over time' })
-  async getFilesProcessed(): Promise<ApiResponse<any>> {
-    const data = await this.processingRepository
-      .createQueryBuilder('p')
-      .select("strftime('%Y-%m-%d', p.created_at)", 'date')
+  @Get('calculations-made')
+  @ApiOperation({ summary: 'Calculations made over time' })
+  async getCalculationsMade(): Promise<ApiResponse<any>> {
+    const data = await this.calculationRepository
+      .createQueryBuilder('c')
+      .select("strftime('%Y-%m-%d', c.created_at)", 'date')
       .addSelect('COUNT(*)', 'count')
       .groupBy('date')
       .orderBy('date', 'ASC')
@@ -206,17 +153,22 @@ export class AnalyticsController {
   }
 
   @Get('top-users')
-  @ApiOperation({ summary: 'Top users by processing count' })
+  @ApiOperation({ summary: 'Top users by calculation count' })
   async getTopUsers(): Promise<ApiResponse<any>> {
-    const data = await this.processingRepository
-      .createQueryBuilder('p')
-      .select('p.userId', 'userId')
+    const data = await this.calculationRepository
+      .createQueryBuilder('c')
+      .select('c.user_id', 'userId')
       .addSelect('COUNT(*)', 'count')
-      .groupBy('p.userId')
+      .groupBy('c.user_id')
       .orderBy('count', 'DESC')
       .limit(10)
       .getRawMany();
-    return ApiResponse.ok(data);
+
+    const enriched = await Promise.all(data.map(async (item) => {
+      const user = await this.userRepository.findOne({ where: { id: item.userId } });
+      return { ...item, userName: user?.fullName || user?.email || 'Unknown' };
+    }));
+    return ApiResponse.ok(enriched);
   }
 
   @Get('top-stations')
@@ -250,20 +202,6 @@ export class AnalyticsController {
     return ApiResponse.ok(data);
   }
 
-  @Get('top-countries')
-  @ApiOperation({ summary: 'Top countries by processing' })
-  async getTopCountries(): Promise<ApiResponse<any>> {
-    const data = await this.processingRepository
-      .createQueryBuilder('p')
-      .select('p.country', 'country')
-      .addSelect('COUNT(*)', 'count')
-      .groupBy('p.country')
-      .orderBy('count', 'DESC')
-      .limit(10)
-      .getRawMany();
-    return ApiResponse.ok(data);
-  }
-
   @Get('top-constellations')
   @ApiOperation({ summary: 'Top constellations by usage' })
   async getTopConstellations(): Promise<ApiResponse<any>> {
@@ -273,5 +211,16 @@ export class AnalyticsController {
     });
     return ApiResponse.ok(data);
   }
-}
 
+  @Get('top-countries')
+  @ApiOperation({ summary: 'Top countries by calculation' })
+  async getTopCountries(): Promise<ApiResponse<any>> {
+    return ApiResponse.ok([]);
+  }
+
+  @Get('errors-daily')
+  @ApiOperation({ summary: 'Daily error counts' })
+  async getErrorsDaily(): Promise<ApiResponse<any>> {
+    return ApiResponse.ok([]);
+  }
+}

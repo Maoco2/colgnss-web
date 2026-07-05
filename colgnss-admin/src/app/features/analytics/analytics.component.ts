@@ -95,14 +95,11 @@ export class AnalyticsComponent implements OnInit {
       { id: 'usersByMonth', title: 'Usuarios Registrados por Mes', description: 'Evolución mensual de registros de usuarios', type: 'line', data: { labels: [], datasets: [] }, options: this.baseLineOptions, loading: true },
       { id: 'activeDaily', title: 'Usuarios Activos Diarios', description: 'Usuarios activos por día en el período', type: 'bar', data: { labels: [], datasets: [] }, options: this.baseBarOptions, loading: true },
       { id: 'activeByHour', title: 'Usuarios Activos por Hora', description: 'Distribución de actividad en 24 horas', type: 'bar', data: { labels: [], datasets: [] }, options: this.baseBarOptions, loading: true },
-      { id: 'processingsDaily', title: 'Procesamientos Diarios', description: 'Cantidad de procesamientos por día', type: 'line', data: { labels: [], datasets: [] }, options: this.baseLineOptions, loading: true },
-      { id: 'processingsMonthly', title: 'Procesamientos Mensuales', description: 'Procesamientos agregados por mes', type: 'bar', data: { labels: [], datasets: [] }, options: this.baseBarOptions, loading: true },
-      { id: 'processingsByModule', title: 'Procesamientos por Módulo', description: 'Distribución de procesamientos por tipo de módulo', type: 'doughnut', data: { labels: [], datasets: [] }, options: this.doughnutOptions, loading: true },
-      { id: 'processingsByRinex', title: 'Procesamientos por Versión RINEX', description: 'Versiones de RINEX más utilizadas', type: 'bar', data: { labels: [], datasets: [] }, options: { ...this.baseBarOptions, indexAxis: 'y' }, loading: true },
-      { id: 'constellationRadar', title: 'Procesamientos por Constelación', description: 'Comparativa de uso de constelaciones GNSS', type: 'radar', data: { labels: [], datasets: [] }, options: this.radarOptions, loading: true },
-      { id: 'errorsDaily', title: 'Errores Diarios', description: 'Cantidad de errores registrados por día', type: 'line', data: { labels: [], datasets: [] }, options: this.baseLineOptions, loading: true },
-      { id: 'avgTimeArea', title: 'Tiempo Promedio Procesamiento', description: 'Evolución del tiempo promedio de procesamiento', type: 'line', data: { labels: [], datasets: [] }, options: { ...this.baseLineOptions, elements: { line: { tension: 0.4, fill: true } } }, loading: true },
-      { id: 'topUsers', title: 'Top 10 Usuarios', description: 'Usuarios con más procesamientos', type: 'bar', data: { labels: [], datasets: [] }, options: { ...this.baseBarOptions, indexAxis: 'y' }, loading: true },
+      { id: 'calculationsDaily', title: 'C&aacute;lculos Diarios', description: 'Cantidad de c&aacute;lculos por d&iacute;a', type: 'line', data: { labels: [], datasets: [] }, options: this.baseLineOptions, loading: true },
+      { id: 'calculationsMonthly', title: 'C&aacute;lculos Mensuales', description: 'C&aacute;lculos agregados por mes', type: 'bar', data: { labels: [], datasets: [] }, options: this.baseBarOptions, loading: true },
+      { id: 'calculationsByNetwork', title: 'C&aacute;lculos por Red', description: 'Distribuci&oacute;n por tipo de red', type: 'doughnut', data: { labels: [], datasets: [] }, options: this.doughnutOptions, loading: true },
+      { id: 'avgTimeArea', title: 'Tiempo Promedio de Rastreo', description: 'Evoluci&oacute;n del tiempo promedio de c&aacute;lculo', type: 'line', data: { labels: [], datasets: [] }, options: { ...this.baseLineOptions, elements: { line: { tension: 0.4, fill: true } } }, loading: true },
+      { id: 'topUsers', title: 'Top 10 Usuarios', description: 'Usuarios con m&aacute;s c&aacute;lculos', type: 'bar', data: { labels: [], datasets: [] }, options: { ...this.baseBarOptions, indexAxis: 'y' }, loading: true },
       { id: 'topStations', title: 'Top 10 Estaciones', description: 'Estaciones con más actividad', type: 'bar', data: { labels: [], datasets: [] }, options: { ...this.baseBarOptions, indexAxis: 'y' }, loading: true },
     ]);
   }
@@ -119,13 +116,10 @@ export class AnalyticsComponent implements OnInit {
     this.analyticsService.getUsersActiveHourly().subscribe(data => {
       this.updateChart('activeByHour', this.buildBarData(data, 'Por hora', '#a855f7'));
     });
-    this.analyticsService.getProcessings({ ...params, groupBy: 'day' }).subscribe(data => this.updateChart('processingsDaily', this.buildLineData(data, 'Procesamientos', '#f97316', 'rgba(249,115,22,0.1)')));
-    this.analyticsService.getProcessings({ ...params, groupBy: 'month' }).subscribe(data => this.updateChart('processingsMonthly', this.buildBarData(data, 'Mensuales', '#3b82f6')));
-    this.analyticsService.getProcessingsByModule().subscribe(data => this.updateChart('processingsByModule', this.buildDoughnutData(data, 'Módulo')));
-    this.analyticsService.getProcessingsByRinex().subscribe(data => this.updateChart('processingsByRinex', this.buildBarData(data.map(d => ({ ...d, label: d.status })), 'Versiones', '#14b8a6')));
-    this.analyticsService.getProcessingsByConstellation().subscribe(data => this.updateChart('constellationRadar', this.buildRadarData(data)));
-    this.analyticsService.getErrorsDaily().subscribe(data => this.updateChart('errorsDaily', this.buildLineData(data, 'Errores', '#ef4444', 'rgba(239,68,68,0.1)')));
-    this.analyticsService.getAvgProcessingTime().subscribe(data => this.updateChart('avgTimeArea', this.buildLineData(data, 'Tiempo (s)', '#14b8a6', 'rgba(20,184,166,0.2)')));
+    this.analyticsService.getCalculations({ ...params }).subscribe(data => this.updateChart('calculationsDaily', this.buildLineData(data, 'C&aacute;lculos', '#f97316', 'rgba(249,115,22,0.1)')));
+    this.analyticsService.getCalculations({ ...params }).subscribe(data => this.updateChart('calculationsMonthly', this.buildBarData(data, 'Mensuales', '#3b82f6')));
+    this.analyticsService.getCalculationsByNetwork().subscribe(data => this.updateChart('calculationsByNetwork', this.buildDoughnutData(data, 'Red')));
+    this.analyticsService.getAvgCalculationTime().subscribe(data => this.updateChart('avgTimeArea', this.buildLineData(data, 'Tiempo (min)', '#14b8a6', 'rgba(20,184,166,0.2)')));
     this.analyticsService.getTopUsers().subscribe(data => this.updateChart('topUsers', this.buildBarData(data, 'Top 10', '#eab308')));
     this.analyticsService.getTopStations().subscribe(data => this.updateChart('topStations', this.buildBarData(data.slice(0, 10), 'Top 10', '#6366f1')));
 

@@ -7,8 +7,8 @@ import { RolesGuard } from '../../../common/guards/roles.guard';
 import { Roles } from '../../../common/decorators/roles.decorator';
 import { UserRole } from '../../users/user.entity';
 import { ApiResponse } from '../../../common/dto/api-response.dto';
+import { Calculation } from '../../calculations/calculation.entity';
 import { StationStatistics } from '../entities/station-statistics.entity';
-import { ProcessingHistory } from '../entities/processing-history.entity';
 
 @ApiTags('Enterprise - Station Rankings')
 @ApiBearerAuth()
@@ -19,8 +19,8 @@ export class StationsRankController {
   constructor(
     @InjectRepository(StationStatistics)
     private stationStatsRepository: Repository<StationStatistics>,
-    @InjectRepository(ProcessingHistory)
-    private processingRepository: Repository<ProcessingHistory>,
+    @InjectRepository(Calculation)
+    private calculationRepository: Repository<Calculation>,
   ) {}
 
   @Get('top')
@@ -42,12 +42,14 @@ export class StationsRankController {
       relations: ['station'],
     });
     if (!stats) return ApiResponse.error('Station stats not found', 'NOT_FOUND');
-    const recentProcessings = await this.processingRepository.find({
-      where: { stationId: id },
+    const recentCalculations = await this.calculationRepository.find({
+      where: [
+        { station1Id: id },
+        { station2Id: id },
+      ],
       order: { createdAt: 'DESC' },
       take: 20,
     });
-    return ApiResponse.ok({ stats, recentProcessings });
+    return ApiResponse.ok({ stats, recentCalculations });
   }
 }
-
