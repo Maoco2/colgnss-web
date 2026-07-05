@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException, OnModuleInit, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, Like } from 'typeorm';
+import { Repository, Like, IsNull } from 'typeorm';
 import { getDistance } from 'geolib';
 import { Station, StationType } from './station.entity';
 import { CreateStationDto } from './dto/create-station.dto';
@@ -51,10 +51,14 @@ export class StationsService implements OnModuleInit {
 
   private async ensurePassiveStations() {
     const count = await this.stationRepository.count({ where: { type: StationType.PASSIVE } });
-    if (count >= 10000) return;
+    if (count >= 10000) {
+      const missing = await this.stationRepository.count({ where: { type: StationType.PASSIVE, coordX: IsNull() } });
+      if (missing === 0) return;
+      this.logger.log(`${missing} passive stations missing new fields, re-seeding`);
+    }
 
     if (count > 0) {
-      this.logger.log(`Clearing ${count} incomplete passive stations before re-seed`);
+      this.logger.log(`Clearing ${count} passive stations before re-seed`);
       await this.stationRepository.delete({ type: StationType.PASSIVE });
     }
 
