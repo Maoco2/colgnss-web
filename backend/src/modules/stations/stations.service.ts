@@ -19,11 +19,42 @@ export class StationsService implements OnModuleInit {
   ) {}
 
   async onModuleInit() {
-    const passiveCount = await this.stationRepository.count({ where: { type: StationType.PASSIVE } });
-    if (passiveCount >= 10000) return;
+    await Promise.all([
+      this.ensureActiveStations(),
+      this.ensurePassiveStations(),
+    ]);
+  }
 
-    if (passiveCount > 0) {
-      this.logger.log(`Clearing ${passiveCount} incomplete passive stations before re-seed`);
+  private async ensureActiveStations() {
+    const count = await this.stationRepository.count({ where: { type: StationType.ACTIVE } });
+    if (count >= 200) return;
+
+    if (count > 0) {
+      this.logger.log(`Clearing ${count} incomplete active stations before re-seed`);
+      await this.stationRepository.delete({ type: StationType.ACTIVE });
+    }
+
+    const geoJsonPaths = [
+      path.resolve(__dirname, '../../../../Red_ActivaGNSS_202511.geojson'),
+      path.resolve(process.cwd(), 'Red_ActivaGNSS_202511.geojson'),
+    ];
+    const geoJsonPath = geoJsonPaths.find(p => fs.existsSync(p));
+    if (!geoJsonPath) {
+      this.logger.warn('Red_ActivaGNSS_202511.geojson not found, skipping active seed');
+      return;
+    }
+
+    this.seedActiveStations(geoJsonPath).catch(err =>
+      this.logger.error(`Active seed failed: ${err.message}`)
+    );
+  }
+
+  private async ensurePassiveStations() {
+    const count = await this.stationRepository.count({ where: { type: StationType.PASSIVE } });
+    if (count >= 10000) return;
+
+    if (count > 0) {
+      this.logger.log(`Clearing ${count} incomplete passive stations before re-seed`);
       await this.stationRepository.delete({ type: StationType.PASSIVE });
     }
 
@@ -77,7 +108,7 @@ export class StationsService implements OnModuleInit {
         municipality: String(r[5] || 'Unknown'),
         latitude: r[1],
         longitude: r[2],
-        height: r[3] || null,
+        height: r[3] || undefined,
         materialType: String(r[6] || '').trim() || undefined,
         observations: String(r[7] || '').trim() || undefined,
         geom: { type: 'Point', coordinates: [r[2], r[1]] },
@@ -107,6 +138,67 @@ export class StationsService implements OnModuleInit {
     }
 
     this.logger.log(`Seeded ${imported} passive stations in ${Date.now() - start}ms (${errors} errors)`);
+  }
+
+  private async seedActiveStations(geoJsonPath: string) {
+    const start = Date.now();
+
+    let features: any[];
+    try {
+      const data = JSON.parse(fs.readFileSync(geoJsonPath, 'utf-8'));
+      features = data.features;
+      if (!features || !features.length) {
+        this.logger.warn('No features in GeoJSON');
+        return;
+      }
+    } catch (e) {
+      this.logger.error(`Error reading GeoJSON: ${e.message}`);
+      return;
+    }
+
+    const BATCH_SIZE = 200;
+    let imported = 0;
+    let errors = 0;
+
+    for (let i = 0; i < features.length; i += BATCH_SIZE) {
+      const batch = features.slice(i, i + BATCH_SIZE).map((f: any) => {
+        const p = f.properties;
+        const c = f.geometry.coordinates;
+        return {
+          code: String(p.MRTNomencl || 'UNKNOWN'),
+          name: String(p.MDANMNombr || 'Unknown'),
+          type: StationType.ACTIVE,
+          department: String(p.DeNombre || 'Unknown'),
+          municipality: String(p.MDANMNombr || 'Unknown'),
+          latitude: c[1],
+          longitude: c[0],
+          height: parseFloat(String(p.AlturaElip || '0').replace(',', '.')) || undefined,
+          receiverType: p.RedGeoAc_RedNacional_MRTMaterial || undefined,
+          observations: p.Nota_Aclaratoria || undefined,
+          geom: { type: 'Point', coordinates: [c[0], c[1]] },
+          status: 'active',
+        };
+      });
+
+      try {
+        await this.stationRepository.insert(batch);
+        imported += batch.length;
+      } catch (e) {
+        this.logger.warn(`Active batch ${i / BATCH_SIZE} failed, trying individual`);
+        errors += batch.length;
+        for (const record of batch) {
+          try {
+            await this.stationRepository.insert(record);
+            imported++;
+            errors--;
+          } catch (e2) {
+            this.logger.warn(`Skipping active ${record.code}: ${e2.message}`);
+          }
+        }
+      }
+    }
+
+    this.logger.log(`Seeded ${imported} active stations in ${Date.now() - start}ms (${errors} errors)`);
   }
 
   async create(dto: CreateStationDto): Promise<Station> {
