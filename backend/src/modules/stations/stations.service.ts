@@ -32,40 +32,53 @@ export class StationsService implements OnModuleInit {
       return;
     }
 
+    this.seedPassiveStations(gpkgPath).catch(err =>
+      this.logger.error(`Passive seed failed: ${err.message}`)
+    );
+  }
+
+  private async seedPassiveStations(gpkgPath: string) {
+    const start = Date.now();
+
     try {
       const initSqlJs = require('sql.js');
       const SQL = await initSqlJs();
       const buf = fs.readFileSync(gpkgPath);
       const db = new SQL.Database(buf);
-      const rows = db.exec('SELECT Nomenc, Lat, Long, AltElips, NomDpto, NomMpio, Tipo_Mat, Obs, Orden FROM VertGeod ORDER BY OBJECTID');
+      const result = db.exec('SELECT Nomenc, Lat, Long, AltElips, NomDpto, NomMpio, Tipo_Mat, Obs FROM VertGeod ORDER BY OBJECTID');
       db.close();
 
-      if (!rows.length) { this.logger.warn('No data in VertGeod table'); return; }
-
-      let imported = 0;
-      for (const row of rows[0].values) {
-        const [nomenc, lat, lng, altElips, nomDpto, nomMpio, tipoMat, obs, orden] = row;
-        try {
-          await this.create({
-            code: String(nomenc || 'UNKNOWN'),
-            name: `${String(nomMpio || 'Unknown')} - ${String(nomenc || '')}`,
-            type: StationType.PASSIVE,
-            department: String(nomDpto || 'Unknown'),
-            municipality: String(nomMpio || 'Unknown'),
-            latitude: lat,
-            longitude: lng,
-            height: altElips || null,
-            materialType: String(tipoMat || '').trim() || undefined,
-            observations: String(obs || '').trim() || undefined,
-          });
-          imported++;
-        } catch (e) {
-          this.logger.error(`Failed to import passive station ${nomenc}: ${e.message}`);
-        }
+      if (!result.length || !result[0].values.length) {
+        this.logger.warn('No data in VertGeod table');
+        return;
       }
-      this.logger.log(`Seeded ${imported} passive stations from GeoPackage`);
+
+      const rows = result[0].values;
+      const BATCH_SIZE = 500;
+      let imported = 0;
+
+      for (let i = 0; i < rows.length; i += BATCH_SIZE) {
+        const batch = rows.slice(i, i + BATCH_SIZE).map((r: any[]) => ({
+          code: String(r[0] || 'UNKNOWN'),
+          name: `${String(r[5] || 'Unknown')} - ${String(r[0] || '')}`,
+          type: StationType.PASSIVE,
+          department: String(r[4] || 'Unknown'),
+          municipality: String(r[5] || 'Unknown'),
+          latitude: r[1],
+          longitude: r[2],
+          height: r[3] || null,
+          materialType: String(r[6] || '').trim() || undefined,
+          observations: String(r[7] || '').trim() || undefined,
+          geom: { type: 'Point', coordinates: [r[2], r[1]] },
+          status: 'active',
+        }));
+        await this.stationRepository.insert(batch);
+        imported += batch.length;
+      }
+
+      this.logger.log(`Seeded ${imported} passive stations in ${Date.now() - start}ms`);
     } catch (e) {
-      this.logger.error(`Error reading GeoPackage: ${e.message}`);
+      this.logger.error(`Error seeding passive stations: ${e.message}`);
     }
   }
 
