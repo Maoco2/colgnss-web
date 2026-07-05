@@ -22,8 +22,12 @@ export class StationsService implements OnModuleInit {
     const passiveCount = await this.stationRepository.count({ where: { type: StationType.PASSIVE } });
     if (passiveCount > 0) return;
 
-    const gpkgPath = path.resolve(process.cwd(), 'RedPasivaGNSSCeM.gpkg');
-    if (!fs.existsSync(gpkgPath)) {
+    const gpkgPaths = [
+      path.resolve(__dirname, '../../../../RedPasivaGNSSCeM.gpkg'),
+      path.resolve(process.cwd(), 'RedPasivaGNSSCeM.gpkg'),
+    ];
+    const gpkgPath = gpkgPaths.find(p => fs.existsSync(p));
+    if (!gpkgPath) {
       this.logger.warn('RedPasivaGNSSCeM.gpkg not found, skipping passive seed');
       return;
     }
