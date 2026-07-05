@@ -15,7 +15,8 @@
     "typeorm": "typeorm-ts-node-commonjs",
     "migration:run": "typeorm-ts-node-commonjs migration:run -d src/database/data-source.ts",
     "migration:generate": "typeorm-ts-node-commonjs migration:generate -d src/database/data-source.ts",
-    "seed": "ts-node src/database/seeds/seed.ts"
+    "seed": "ts-node src/database/seeds/seed.ts",
+    "seed:admin": "ts-node src/database/seeds/seed-admin.ts"
   },
   "dependencies": {
     "@nestjs/common": "^10.3.0",

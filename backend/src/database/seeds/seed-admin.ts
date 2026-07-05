@@ -1,24 +1,19 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from '../../app.module';
 import { User, UserRole, Gender } from '../../modules/users/user.entity';
-import { StationsService } from '../../modules/stations/stations.service';
-import { StationType } from '../../modules/stations/station.entity';
 import * as bcrypt from 'bcryptjs';
-import * as fs from 'fs';
-import * as path from 'path';
-
-const PROJECT_ROOT = path.resolve(__dirname, '../../../../');
 
 async function seedAdmin() {
   const app = await NestFactory.createApplicationContext(AppModule);
   const userRepo = app.get('UserRepository');
-  const stationsService = app.get(StationsService);
 
-  const existing = await userRepo.findOne({ where: { email: 'concivtop@gmail.com' } });
+  const adminEmail = 'concivtop@gmail.com';
+  const existing = await userRepo.findOne({ where: { email: adminEmail } });
+
   if (!existing) {
     const hashedPassword = await bcrypt.hash('Sarasofia1-', 10);
     const admin = userRepo.create({
-      email: 'concivtop@gmail.com',
+      email: adminEmail,
       password: hashedPassword,
       fullName: 'Mauricio Orozco',
       surname: 'Orozco',
@@ -30,17 +25,21 @@ async function seedAdmin() {
       isVerified: true,
     });
     await userRepo.save(admin);
-    console.log('Admin user created: concivtop@gmail.com / Sarasoofia1-');
+    console.log(`Admin user created: ${adminEmail}`);
+  } else if (existing.role !== UserRole.ADMIN) {
+    existing.role = UserRole.ADMIN;
+    await userRepo.save(existing);
+    console.log(`User ${adminEmail} promoted to ADMIN`);
   } else {
-    console.log('Admin user already exists');
+    console.log(`User ${adminEmail} is already ADMIN`);
   }
 
-  const user2Repo = app.get('UserRepository');
-  const existing2 = await user2Repo.findOne({ where: { email: 'coralj203@gmail.com' } });
+  const user2Email = 'coralj203@gmail.com';
+  const existing2 = await userRepo.findOne({ where: { email: user2Email } });
   if (!existing2) {
     const hashedPassword = await bcrypt.hash('Sarasofia1-', 10);
-    const user = user2Repo.create({
-      email: 'coralj203@gmail.com',
+    const user = userRepo.create({
+      email: user2Email,
       password: hashedPassword,
       fullName: 'Coral Morales',
       surname: 'Morales',
@@ -51,41 +50,10 @@ async function seedAdmin() {
       isActive: true,
       isVerified: true,
     });
-    await user2Repo.save(user);
-    console.log('User created: coralj203@gmail.com');
+    await userRepo.save(user);
+    console.log(`User created: ${user2Email}`);
   } else {
-    console.log('User coralj203@gmail.com already exists');
-  }
-
-  const geoJsonPath = path.join(PROJECT_ROOT, 'Red_ActivaGNSS_202511.geojson');
-  if (fs.existsSync(geoJsonPath)) {
-    console.log('Seeding active stations...');
-    const data = JSON.parse(fs.readFileSync(geoJsonPath, 'utf-8'));
-    let imported = 0;
-    for (const feature of data.features) {
-      const props = feature.properties;
-      const coords = feature.geometry.coordinates;
-      try {
-        await stationsService.create({
-          code: props.MRTNomencl || 'UNKNOWN',
-          name: props.MDANMNombr || 'Unknown',
-          type: StationType.ACTIVE,
-          department: props.DeNombre || 'Unknown',
-          municipality: props.MDANMNombr || 'Unknown',
-          latitude: coords[1],
-          longitude: coords[0],
-          height: parseFloat(String(props.AlturaElip || '0').replace(',', '.')),
-          receiverType: props.RedGeoAc_RedNacional_MRTMaterial || null,
-          observations: props.Nota_Aclaratoria || undefined,
-        });
-        imported++;
-      } catch (e) {
-        console.error(`Failed ${props.MRTNomencl}: ${e.message}`);
-      }
-    }
-    console.log(`Imported ${imported} active stations`);
-  } else {
-    console.log('GeoJSON not found, skipping active stations');
+    console.log(`User ${user2Email} already exists`);
   }
 
   await app.close();
